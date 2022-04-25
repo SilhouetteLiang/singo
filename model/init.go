@@ -9,6 +9,9 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+	//"fmt"
+	_ "github.com/lib/pq"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 // DB 数据库链接单例
