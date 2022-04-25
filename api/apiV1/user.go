@@ -1,4 +1,4 @@
-package api
+package apiV1
 
 import (
 	"singo/serializer"
