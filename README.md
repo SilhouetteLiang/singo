@@ -1,4 +1,149 @@
 # Singo
+本地Go项目
+
+
+1、运行
+
+go run asciijson.go
+go build
+
+
+2、木木不会
+
+- [ ] GROM操作mysql数据库
+
+	https://blog.csdn.net/qq_43514659/article/details/121466144?spm=1001.2014.3001.5502
+
+- [ ] Go_web gin框架开发（通用脚手架）
+https://blog.csdn.net/qq_43514659/article/details/121587913?spm=1001.2014.3001.5502
+
+- [ ] zap日志的基本使用（go必会知识*）
+
+	https://blog.csdn.net/qq_43514659/article/details/121567519?spm=1001.2014.3001.5502
+
+
+
+
+3、使用Singo 搭建本地项目
+	https://gourouting.github.io/
+
+仓库地址：origin	https://github.com/SilhouetteLiang/singo.git (fetch)
+
+liangpengzhan@outlook.com
+Wslpz888888
+
+	Personal access tokens:	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
+
+	git remote set-url origin https://<your_token>@github.com/<USERNAME>/<REPO>.git
+
+
+	git remote set-url origin https://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@github.com/SilhouetteLiang/singo.git
+
+
+在/Users/pengzhanliang/go/src/gin-liang/singo执行  go run main.go
+
+Redis  密码
+sl2016SL!
+
+	mysql账户密码		test  Lpz888888.
+	修改mysql权限，
+	1、需要想修改  vim /usr/local/etc/my.cnf  跳过权限表  
+	2、然后使用 root登录  添加用户或者删除用户，执行flush privileges才能成功
+	3、/usr/local/Cellar/mysql/8.0.17/bin执行mysql.server stop	加载修改后的usr/local/etc/my.cnf 文件
+	4、vim /usr/local/etc/my.cnf  调整为需要权限表  
+
+
+4、接口
+	host：http://127.0.0.1:3000
+	
+		post：请求		
+
+			1.检测是否可以ping通		/api/v1/ping
+			2.注册接口				/api/v1/user/register
+											nickname:nickname1
+											user_name:user_name2
+											password:123456
+											password_confirm:123456
+			3.登录接口				api/v1/user/login
+								user_name
+								password
+			
+			4、微信注册、手机号注册接口
+			5、获取手机短信验证码接口(需要花钱购买第移动短信服务系统)
+			6、
+		get：请求
+			
+			1.关于我					v1/user/me
+		
+
+		delete：请求
+			1.登出接口				v1/user/logout
+			
+
+
+												
+									
+					
+使用算法实现一个机器人，关于
+	心里咨询的
+		实现一个算法给不同人推荐不同的心里咨询方案
+
+	
+	心理资讯：
+		把客户自己浏览的内容、某一类内容的浏览时间 ======== 作为推荐内容的依据，推荐相关联的咨询。
+		
+
+
+
+
+
+	心里咨询
+
+推荐算法
+平台应用
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Singo: Simple Single Golang Web Service
 
