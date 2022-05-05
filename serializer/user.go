@@ -30,3 +30,4 @@ func BuildUserResponse(user model.User) Response {
 		Data: BuildUser(user),
 	}
 }
+

@@ -47,3 +47,14 @@ func UserLogout(c *gin.Context) {
 		Msg:  "登出成功",
 	})
 }
+
+// UserLogin 用户输入接口
+func UserInput(c *gin.Context) {
+	var service service.UserInputService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.InputContent(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}

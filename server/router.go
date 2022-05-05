@@ -36,11 +36,16 @@ func NewRouter() *gin.Engine {
 			// User Routing
 			auth.GET("user/me", apiV1.UserMe)
 			auth.DELETE("user/logout", apiV1.UserLogout)
+			auth.POST("user/input", apiV1.UserInput)
 		}
+
 	}
+
+	//彩票算法接口
 	v2 := r.Group("/api/v2")
 	{
 		v2.POST("pings", apiV2.Pings)
+		v2.GET("lottery/algorithm", apiV2.LotteryAlgorithm)
 
 	}
 
