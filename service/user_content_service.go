@@ -2,7 +2,7 @@ package service
 
 import (
 	//"singo/model"
-//	//"singo/serializer"
+	//	//"singo/serializer"
 	"github.com/gin-gonic/gin"
 	"singo/model"
 	"singo/serializer"
@@ -11,15 +11,13 @@ import (
 // UserInputService 管理用户新增内容服务
 type UserInputService struct {
 	UserName string `form:"user_name" json:"user_name" binding:"required,min=5,max=30"`
-	Content string `form:"content" json:"content" binding:"required"`
+	Content  string `form:"content" json:"content" binding:"required"`
 }
-
-
 
 //用户输入内容
 func (service *UserInputService) InputContent(c *gin.Context) serializer.Response {
-	content :=model.Content{
-		Content: service.Content,
+	content := model.Content{
+		Content:  service.Content,
 		UserName: service.UserName,
 	}
 	// 新增数据
@@ -28,7 +26,6 @@ func (service *UserInputService) InputContent(c *gin.Context) serializer.Respons
 	}
 	return serializer.BuildUserResponses(content)
 }
-
 
 //Register 用户注册
 //func (service *UserRegisterService) Register() serializer.Response {
@@ -59,36 +56,3 @@ func (service *UserInputService) InputContent(c *gin.Context) serializer.Respons
 //
 //	return serializer.BuildUserResponse(user)
 //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -2,7 +2,6 @@ package serializer
 
 import "singo/model"
 
-
 // Content 内容序列化器
 type Content struct {
 	ID        uint   `json:"id"`
@@ -11,7 +10,6 @@ type Content struct {
 	Status    string `json:"status"`
 	CreatedAt int64  `json:"created_at"`
 }
-
 
 // BuildUserResponse 序列化内容响应
 func BuildUserResponses(content model.Content) Response {

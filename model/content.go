@@ -8,11 +8,10 @@ import (
 // ontent	内容模型
 type Content struct {
 	gorm.Model
-	Content        string
-	Status         string
-	UserName       string
+	Content  string
+	Status   string
+	UserName string
 }
-
 
 // GetConten 用ID获取内容
 func GetContent(ID interface{}) (User, error) {
@@ -27,5 +26,3 @@ func GetUsers(ID interface{}) (User, error) {
 	result := DB.First(&user, ID)
 	return user, result.Error
 }
-
-

@@ -4,6 +4,7 @@ import (
 	"os"
 	"singo/api/apiV1"
 	"singo/api/apiV2"
+	"singo/api/apiV3"
 	"singo/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -44,8 +45,24 @@ func NewRouter() *gin.Engine {
 	//彩票算法接口
 	v2 := r.Group("/api/v2")
 	{
-		v2.POST("pings", apiV2.Pings)
+		v2.POST("ping", apiV2.Pings)
 		v2.GET("lottery/algorithm", apiV2.LotteryAlgorithm)
+
+	}
+
+	//心里测试小工具
+	v3 := r.Group("/api/v3")
+	{
+
+		v3.POST("ping", apiV3.Pings)
+		v3.POST("psychologicalTest/subject/input", apiV3.Input) //用户输入题目接口
+
+		v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //1、题目列表接口
+		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //2、题目结果返回接口
+		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //2.1性格色彩测试接口
+		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //2.2荣格测试接口
+		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //2.3 蜘蛛图接口
+		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //3、论坛发帖接口
 
 	}
 
