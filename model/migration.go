@@ -7,4 +7,6 @@ func migration() {
 	_ = DB.AutoMigrate(&User{})
 	_ = DB.AutoMigrate(&Content{})
 	_ = DB.AutoMigrate(&Psychological{})
+	_ = DB.AutoMigrate(&Craft{})
+	_ = DB.AutoMigrate(&Tag{})
 }

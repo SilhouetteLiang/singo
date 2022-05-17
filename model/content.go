@@ -1,11 +1,10 @@
 package model
 
 import (
-	//"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
-// ontent	内容模型
+// content	内容模型
 type Content struct {
 	gorm.Model
 	Content  string
@@ -14,15 +13,8 @@ type Content struct {
 }
 
 // GetConten 用ID获取内容
-func GetContent(ID interface{}) (User, error) {
-	var user User
-	result := DB.First(&user, ID)
-	return user, result.Error
-}
-
-// GetConten 用ID获取内容
-func GetUsers(ID interface{}) (User, error) {
-	var user User
-	result := DB.First(&user, ID)
-	return user, result.Error
+func GetContent(ID interface{}) (Content, error) {
+	var content Content
+	result := DB.First(&content, ID)
+	return content, result.Error
 }

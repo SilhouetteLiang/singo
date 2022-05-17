@@ -53,11 +53,17 @@ func NewRouter() *gin.Engine {
 	//心里测试小工具
 	v3 := r.Group("/api/v3")
 	{
-
 		v3.POST("ping", apiV3.Pings)
-		v3.POST("psychologicalTest/subject/input", apiV3.Input) //用户输入题目接口
+		v3.GET("psychologicalTest/subject/list", apiV3.SubjectList)      //题目列表接口
+		v3.GET("psychologicalTest/user/list", apiV3.UserList)            //用户列表
+		v3.POST("psychologicalTest/subject/input", apiV3.InputTitle)     //输入题目
+		v3.POST("psychologicalTest/craft/input", apiV3.InputSpeechCraft) //输入话术
+		v3.POST("psychologicalTest/userinfo/input", apiV3.InputUserInfo) //获取用户信息
+		v3.GET("psychologicalTest/subject/result1", apiV3.Result1)       //结果1
+		v3.GET("psychologicalTest/subject/result2", apiV3.Result2)       //结果2
+		v3.GET("psychologicalTest/subject/result3", apiV3.Result3)       //结果3
+		v3.GET("psychologicalTest/index", apiV3.Index)                   //首页
 
-		v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //1、题目列表接口
 		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //2、题目结果返回接口
 		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //2.1性格色彩测试接口
 		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //2.2荣格测试接口

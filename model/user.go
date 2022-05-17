@@ -11,8 +11,13 @@ type User struct {
 	UserName       string
 	PasswordDigest string
 	Nickname       string
-	Status         string
 	Avatar         string `gorm:"size:1000"`
+	User           string `gorm:"size:255;type:char(255)"` // 设置字段大小为255
+	Tell           string `gorm:"size:255;type:char(12)"`
+	DrawTag        string `gorm:"size:255;type:char(255)"`
+	Image          string `gorm:"size:255;type:char(255)"`
+	AccessNum      int64
+	Status         string
 }
 
 const (

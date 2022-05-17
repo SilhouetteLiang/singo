@@ -26,33 +26,3 @@ func (service *UserInputService) InputContent(c *gin.Context) serializer.Respons
 	}
 	return serializer.BuildUserResponses(content)
 }
-
-//Register 用户注册
-//func (service *UserRegisterService) Register() serializer.Response {
-//	user := model.User{
-//		Nickname: service.Nickname,
-//		UserName: service.UserName,
-//		Status:   model.Active,
-//	}
-//
-//	// 表单验证
-//	if err := service.valid(); err != nil {
-//		return *err
-//	}
-//
-//	// 加密密码
-//	if err := user.SetPassword(service.Password); err != nil {
-//		return serializer.Err(
-//			serializer.CodeEncryptError,
-//			"密码加密失败",
-//			err,
-//		)
-//	}
-//
-//	// 创建用户
-//	if err := model.DB.Create(&user).Error; err != nil {
-//		return serializer.ParamErr("注册失败", err)
-//	}
-//
-//	return serializer.BuildUserResponse(user)
-//}

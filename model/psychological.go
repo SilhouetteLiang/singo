@@ -1,36 +1,22 @@
 package model
 
 import (
-	//"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
-// ontent	内容模型
+//题库表
 type Psychological struct {
-	gorm.Model
-	Status uint64
-	Title  string
-}
-type ResPsychological struct {
-	Items []Item
-}
-
-// PsychologicalService 管理用户新增内容服务
-type Item struct {
-	Title  string
-	Status uint64
+	gorm.Model `json:"-"` //隐藏字段不输出
+	Status     uint64     `gorm:"type:uint(1)"`
+	Title      string     `gorm:"size:255;type:char(255)"` // 设置字段大小为255
+	A          string
+	B          string
+	C          string
+	D          string
 }
 
-// GetPsychological 用ID获取内容
 func GetPsychological(ID interface{}) (Psychological, error) {
 	var psychological Psychological
 	result := DB.First(&psychological, ID)
 	return psychological, result.Error
 }
-
-// GetConten 用ID获取内容
-//func GetUsers(ID interface{}) (User, error) {
-//	var user User
-//	result := DB.First(&user, ID)
-//	return user, result.Error
-//}

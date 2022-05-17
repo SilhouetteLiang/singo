@@ -15,8 +15,8 @@ type User struct {
 // BuildUser 序列化用户
 func BuildUser(user model.User) User {
 	return User{
-		ID:        user.ID,
-		UserName:  user.UserName,
+		//ID:        user.ID,
+		//UserName:  user.UserName,
 		Nickname:  user.Nickname,
 		Status:    user.Status,
 		Avatar:    user.Avatar,
@@ -30,4 +30,3 @@ func BuildUserResponse(user model.User) Response {
 		Data: BuildUser(user),
 	}
 }
-
