@@ -1,29 +1,70 @@
-# Singo
-本地Go项目
+创业本地Go项目
+
+资源						信息管理系统平台					中国    			美国
+	司机、汽车			阳光 							
+	房产					贝壳
+	商家					阿里
+	图书					亚马逊
+	资讯					字节
+	社交用户				微博
+	二手车		
+机械化			降低成本
+量产				降低成本			造火箭的成本  特斯拉的成本  因为科技变的很低很低
+智能化			降低成本
 
 
-连接远程的token
+使用科技降低成本
 
-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
-
-
-心里咨询：
-性格测试
+MAC下使用docker搭建环境
+基于Docker镜像部署go项目（实例详解)
+https://www.php.cn/docker/488707.html
 
 
-http://www.sosoapi.com/pass/apidoc/share/forward.htm?shareKey=2c06993de448ecebdb7554870146e1ae
+本地用Docker搭建go开发环境
+https://blog.csdn.net/weixin_42687353/article/details/124656022
 
-密码：123456
 
 
-	get	 1、题目列表接口
+docker命令总结
 
-	get  2、题目结果返回接口
-			2.1 性格色彩测试接口
-			2.2	荣格测试接口
-			2.3 蜘蛛图接口
+命令	用途
+docker pull	远程拉取image
+docker build	创建image
+docker images	列出本地所有的image
+docker run	运行容器container
+docker ps	列出当前运行的容器container
+docker rm	删除已经结束的容器container
+docker cp	在本地和容器之间拷贝文件
+docker commit	保存改动生成新的image
+docker rmi	删除image
 
-	post 3、论坛发帖接口
+
+
+自己总结
+docker怎么删除镜像
+	docker rm 
+	1.首先用docker ps -a 列出所有容器 可以看到这里有两个mysql正在运行 我们想要删除镜像 就必须先删除容器 不然就会报各种错误
+	2.然后我们输入docker rm 7887634e4663删除容器
+	3.找到镜像id docker images
+	4.这时候输入 docker rmi 镜像id 就可以删除我们想要删除的镜像了
+
+
+我自己的
+
+1.启动容器使用docker软件
+2.停止容器  docker  stop 6610d427f4a4
+3.docker进入容器
+	docker ps -a
+	docker exec -it 6610d427f4a4 /bin/bash
+4.给自己的容器建立本地映射添加名字为	golang-1.18.1-pengzhan
+	docker run -itd -p 8080:8080 -v /Users/pengzhanliang/go/src:/go --name golang-1.18.1-pengzhan golang-local
+
+
+连接远程的token  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
+	Personal access tokens:	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
+	git remote set-url origin https://<your_token>@github.com/<USERNAME>/<REPO>.git
+	git remote set-url origin https://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@github.com/SilhouetteLiang/singo.git
+http://www.sosoapi.com/pass/apidoc/share/forward.htm?shareKey=2c06993de448ecebdb7554870146e1ae  密码：123456
 
 题库录入，话术录入，性格测试结果展示，用户列表，支付记录
 	1、首页
@@ -33,35 +74,6 @@ http://www.sosoapi.com/pass/apidoc/share/forward.htm?shareKey=2c06993de448ecebdb
 	5、结果2
 	6、结果3
 	7、获取用户信息
-	
-
-
-
-
-/api/v3/psychologicalTest/subject/input
-
-	（int）状态值：（默认是1）status:1     
-	（string）题目标题：title:  示例：30、以下有四组格言，哪组里符合我感觉的数目最多？
-	（string）选项A: A:		示例：A最深刻的真理是最简单和最平凡的。↵  要在人世间取得成功必定大智如愚。↵  好脾气是一个人在社交中所能穿着的最佳服饰。↵  知足是人生在世最大的幸福。↵
-	（string）选项B: B:		示例：B走自己的路，让人家去说吧。↵  虽然世界充满了苦难，但苦难总能被战胜。↵  有所成就是人生唯一的真正的乐趣。↵  对我而言，解决一个问题和享受一个假期一样好。↵
-	（string）选项C: C:		示例：C一个不注意小事的人，永远不会成就大事。↵  理性是灵魂中最高贵的因素。↵  切忌浮夸，与其说得过分，不如说得不全。↵  谨慎比大胆要有力量得多。↵
-	（string）选项D: D:		示例：D与其在死的时候握着一大把钱，还不如活时活得丰富多彩。↵  任何时候都要最真实地对待你自己，这比什么都重要。↵  使生活变成幻想，再把幻想化为现实。↵  和喜欢的人在一起做喜欢做的事是莫大的快乐。↵
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 1、运行
 
@@ -70,180 +82,46 @@ go build
 
 
 2、木木不会
-
-- [ ] GROM操作mysql数据库
-
+    GROM操作mysql数据库
 	https://blog.csdn.net/qq_43514659/article/details/121466144?spm=1001.2014.3001.5502
-
-- [ ] Go_web gin框架开发（通用脚手架）
-https://blog.csdn.net/qq_43514659/article/details/121587913?spm=1001.2014.3001.5502
-
-- [ ] zap日志的基本使用（go必会知识*）
-
-	https://blog.csdn.net/qq_43514659/article/details/121567519?spm=1001.2014.3001.5502
-
-
-
-
+    Go_web gin框架开发（通用脚手架）
+    https://blog.csdn.net/qq_43514659/article/details/121587913?spm=1001.2014.3001.5502
+    zap日志的基本使用（go必会知识*）
+    https://blog.csdn.net/qq_43514659/article/details/121567519?spm=1001.2014.3001.5502
 3、使用Singo 搭建本地项目
-	https://gourouting.github.io/
-
-仓库地址：origin	https://github.com/SilhouetteLiang/singo.git (fetch)
-
-liangpengzhan@outlook.com
-Wslpz888888
-
-	Personal access tokens:	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
-
-	git remote set-url origin https://<your_token>@github.com/<USERNAME>/<REPO>.git
-
-
-	git remote set-url origin https://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@github.com/SilhouetteLiang/singo.git
-
+    liangpengzhan@outlook.com       Wslpz888888
 
 在/Users/pengzhanliang/go/src/gin-liang/singo执行  go run main.go
+Redis  密码   sl2016SL!
 
-Redis  密码
-sl2016SL!
-
-	mysql账户密码		test  Lpz888888.
-	修改mysql权限，
-	1、需要想修改  vim /usr/local/etc/my.cnf  跳过权限表  
-	2、然后使用 root登录  添加用户或者删除用户，执行flush privileges才能成功
-	3、/usr/local/Cellar/mysql/8.0.17/bin执行mysql.server stop	加载修改后的usr/local/etc/my.cnf 文件
-	4、vim /usr/local/etc/my.cnf  调整为需要权限表  
-
-
-4、接口
-	host：http://127.0.0.1:3000
-	
-		post：请求		
-
-			1.检测是否可以ping通		/api/v1/ping
-			2.注册接口				/api/v1/user/register
-											nickname:nickname1
-											user_name:user_name2
-											password:123456
-											password_confirm:123456
-			3.登录接口				api/v1/user/login
-								user_name
-								password
-			
-			4、微信注册、手机号注册接口
-			5、获取手机短信验证码接口(需要花钱购买第移动短信服务系统)
-			6、
-		get：请求
-			
-			1.关于我					v1/user/me
-		
-
-		delete：请求
-			1.登出接口				v1/user/logout
-			
-
-
-V1版本
-
-	注册：
-	登录：
-	关于我：
-	登出：
-	上传内容：
-	
-	
-	
-
+mysql账户密码		test  Lpz888888.
+修改mysql权限，
+1、需要想修改  vim /usr/local/etc/my.cnf  跳过权限表  
+2、然后使用 root登录  添加用户或者删除用户，执行flush privileges才能成功
+3、/usr/local/Cellar/mysql/8.0.17/bin执行mysql.server stop	加载修改后的usr/local/etc/my.cnf 文件
+4、vim /usr/local/etc/my.cnf  调整为需要权限表  
 
 V2版本
 	
-
-												
-									
-					
+				
 使用算法实现一个机器人，关于
 	心里咨询的
 		实现一个算法给不同人推荐不同的心里咨询方案
-
-	
 	心理资讯：
 		把客户浏览的内容、某一类内容的浏览时间 ======== 作为推荐内容的依据，推荐相关联的咨询。
-		
-
-
-
-
-
-
-
-
-
 
 推荐算法平台
 实物平台应用
+平台化＋算法推荐
 
 
 
+一、抖音算推荐法机制是什么？
 
+其实我们可以简单的理解为这是一个针对看视频的人和生成视频的人的一套分发机制。这个机制会把生成视频的人的内容进行分类和打标签，然后根据分类和标签去分发给对应标签的视频观看者。视频观看者在观看视频的时候会有浏览时长，完播率和点赞评论等操作，这些操作会反馈给平台分析出这个视频的质量度。然后根据数据的结果再去决定是否再次分发给更多的用户浏览。这个就是抖音推荐算法机制的一个简单解读，实际的算法会涉及更多的维度。
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
+二、抖音推荐算法机制有什么用
+抖音推荐算法可以帮助视频观看者和视频生产者更好的链接起来，同时还能根据视频数据更加精准的对用户进行标签定位。平台可以根据这些标签定位和数据结构进行反馈，不断的提升用户体验，吸引更多的用户使用，形成一个平台-视频生产者-视频观看者之间的一个良性循环。
 
 
 Singo: Simple Single Golang Web Service
@@ -334,3 +212,4 @@ go run main.go
 ```
 
 项目运行后启动在3000端口（可以修改，参考gin文档)
+
