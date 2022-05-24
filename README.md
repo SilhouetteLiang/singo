@@ -1,208 +1,82 @@
 # Singo
+
+
+
+
+
+
+
 本地Go项目
-
-
-连接远程的token
-
-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
-
-
-心里咨询：
-性格测试
-
-
-http://www.sosoapi.com/pass/apidoc/share/forward.htm?shareKey=2c06993de448ecebdb7554870146e1ae
-
-密码：123456
-
-
-	get	 1、题目列表接口
-
-	get  2、题目结果返回接口
-			2.1 性格色彩测试接口
-			2.2	荣格测试接口
-			2.3 蜘蛛图接口
-
-	post 3、论坛发帖接口
-
-题库录入，话术录入，性格测试结果展示，用户列表，支付记录
-	1、首页
-	2、题库录入
-	3、话术录入
-	4、结果1
-	5、结果2
-	6、结果3
-	7、获取用户信息
-	
+1.连接远程的token 		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
+2.接口文档	http://www.sosoapi.com/pass/apidoc/share/forward.htm?shareKey=2c06993de448ecebdb7554870146e1ae	密码：123456
+3.交叉编译
+	一、Windows下编译成Linux可执行文件
+	# cmd
+	go env -w GOARCH=amd64
+	go env -w GOOS=linux
+	# 进入项目目录
+	二、Linux下编译成Windows可执行文件
+	# cmd
+	go env -w GOARCH=amd64
+	go env -w GOOS=windows
+	# 进入项目目录
+	go build
 
 
 
 
-/api/v3/psychologicalTest/subject/input
+云上Go项目
+1.主机 	   
+	103.153.138.60
+  	项目目录：/data/src/singos
+	go run main.go
+2.mysql安装：https://blog.csdn.net/p445098355/article/details/124338426
+	启动服务
+	systemctl start mysqld.service
+	查看状态
+	service mysqld status
+	查看初始密码
+	grep 'password' /var/log/mysqld.log
+	重启服务
+	service mysqld restart
+	update user set authentication_string=password('123456') where user='root';
+3.redis安装：
+	https://baijiahao.baidu.com/s?id=1722728002073366376&wfr=spider&for=pc
+	https://blog.csdn.net/ssslpk/article/details/111060475
+	Redis  密码 sl2016SL!
 
-	（int）状态值：（默认是1）status:1     
-	（string）题目标题：title:  示例：30、以下有四组格言，哪组里符合我感觉的数目最多？
-	（string）选项A: A:		示例：A最深刻的真理是最简单和最平凡的。↵  要在人世间取得成功必定大智如愚。↵  好脾气是一个人在社交中所能穿着的最佳服饰。↵  知足是人生在世最大的幸福。↵
-	（string）选项B: B:		示例：B走自己的路，让人家去说吧。↵  虽然世界充满了苦难，但苦难总能被战胜。↵  有所成就是人生唯一的真正的乐趣。↵  对我而言，解决一个问题和享受一个假期一样好。↵
-	（string）选项C: C:		示例：C一个不注意小事的人，永远不会成就大事。↵  理性是灵魂中最高贵的因素。↵  切忌浮夸，与其说得过分，不如说得不全。↵  谨慎比大胆要有力量得多。↵
-	（string）选项D: D:		示例：D与其在死的时候握着一大把钱，还不如活时活得丰富多彩。↵  任何时候都要最真实地对待你自己，这比什么都重要。↵  使生活变成幻想，再把幻想化为现实。↵  和喜欢的人在一起做喜欢做的事是莫大的快乐。↵
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1、运行
-
-go run asciijson.go
-go build
-
-
-2、木木不会
 
 - [ ] GROM操作mysql数据库
-
 	https://blog.csdn.net/qq_43514659/article/details/121466144?spm=1001.2014.3001.5502
-
 - [ ] Go_web gin框架开发（通用脚手架）
 https://blog.csdn.net/qq_43514659/article/details/121587913?spm=1001.2014.3001.5502
-
 - [ ] zap日志的基本使用（go必会知识*）
-
 	https://blog.csdn.net/qq_43514659/article/details/121567519?spm=1001.2014.3001.5502
 
 
 
-
-3、使用Singo 搭建本地项目
+4、使用Singo 搭建本地项目
 	https://gourouting.github.io/
-
-仓库地址：origin	https://github.com/SilhouetteLiang/singo.git (fetch)
-
-liangpengzhan@outlook.com
-Wslpz888888
-
+	仓库地址：origin	https://github.com/SilhouetteLiang/singo.git (fetch)
+	liangpengzhan@outlook.com
+	Wslpz888888
 	Personal access tokens:	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
-
 	git remote set-url origin https://<your_token>@github.com/<USERNAME>/<REPO>.git
-
-
 	git remote set-url origin https://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@github.com/SilhouetteLiang/singo.git
-
-
-在/Users/pengzhanliang/go/src/gin-liang/singo执行  go run main.go
-
-Redis  密码
-sl2016SL!
-
 	mysql账户密码		test  Lpz888888.
 	修改mysql权限，
 	1、需要想修改  vim /usr/local/etc/my.cnf  跳过权限表  
 	2、然后使用 root登录  添加用户或者删除用户，执行flush privileges才能成功
 	3、/usr/local/Cellar/mysql/8.0.17/bin执行mysql.server stop	加载修改后的usr/local/etc/my.cnf 文件
 	4、vim /usr/local/etc/my.cnf  调整为需要权限表  
-
-
-4、接口
-	host：http://127.0.0.1:3000
-	
-		post：请求		
-
-			1.检测是否可以ping通		/api/v1/ping
-			2.注册接口				/api/v1/user/register
-											nickname:nickname1
-											user_name:user_name2
-											password:123456
-											password_confirm:123456
-			3.登录接口				api/v1/user/login
-								user_name
-								password
-			
-			4、微信注册、手机号注册接口
-			5、获取手机短信验证码接口(需要花钱购买第移动短信服务系统)
-			6、
-		get：请求
-			
-			1.关于我					v1/user/me
-		
-
-		delete：请求
-			1.登出接口				v1/user/logout
-			
-
-
-V1版本
-
-	注册：
-	登录：
-	关于我：
-	登出：
-	上传内容：
-	
-	
-	
-
-
-V2版本
-	
-
-												
-									
-					
-使用算法实现一个机器人，关于
+5、其他
+	使用算法实现一个机器人，关于
 	心里咨询的
-		实现一个算法给不同人推荐不同的心里咨询方案
-
-	
+	实现一个算法给不同人推荐不同的心里咨询方案
 	心理资讯：
-		把客户浏览的内容、某一类内容的浏览时间 ======== 作为推荐内容的依据，推荐相关联的咨询。
-		
-
-
-
-
-
-
-
-
-
-
-推荐算法平台
-实物平台应用
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	把客户浏览的内容、某一类内容的浏览时间 ======== 作为推荐内容的依据，推荐相关联的咨询。
+	推荐算法平台
+	实物平台应用
 
 
 
