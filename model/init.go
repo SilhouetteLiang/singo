@@ -9,7 +9,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	//"fmt"
+	"fmt"
 	_ "github.com/lib/pq"
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -29,6 +29,8 @@ func Database(connString string) {
 			Colorful:                  false,       // Disable color
 		},
 	)
+
+	fmt.Printf("connString   ==   \n",connString)
 
 	db, err := gorm.Open(mysql.Open(connString), &gorm.Config{
 		Logger: newLogger,

@@ -7,7 +7,7 @@ import (
 //题库表
 type Psychological struct {
 	gorm.Model `json:"-"` //隐藏字段不输出
-	Status     uint64     `gorm:"type:uint(1)"`
+	Status     uint64     `gorm:"type:int(1)"`
 	Title      string     `gorm:"size:255;type:char(255)"` // 设置字段大小为255
 	A          string
 	B          string
