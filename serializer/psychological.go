@@ -4,6 +4,18 @@ import (
 	"singo/model"
 )
 
+// Luntan 内容序列化器
+type LunTan struct {
+	ID        uint   `json:"id"`
+	Status    uint64 `json:"status"`
+	Title     string `json:"title"`
+	CreatedAt int64  `json:"created_at"`
+	Content   string
+	Img       string
+	UserId    string
+}
+
+
 // Psychological 内容序列化器
 type Psychological struct {
 	ID        uint   `json:"id"`
@@ -77,6 +89,24 @@ func BuildCraft(psychological model.Craft) Craft {
 		Title: psychological.Title,
 		A:     psychological.A,
 		B:     psychological.B,
+	}
+}
+//序列化响应 新增论坛
+func BuildLuntanResponse(luntan model.Luntan) Response {
+	return Response{
+		Data: BuildLuntan(luntan),
+	}
+}
+
+//序列化内容 新增论坛
+func BuildLuntan(Luntan model.Luntan) LunTan {
+	return LunTan{
+		ID:        Luntan.ID,
+		Title:     Luntan.Title,
+		Content:   Luntan.Content,
+		Img:         Luntan.Img,
+		UserId:         Luntan.UserId,
+		CreatedAt: Luntan.CreatedAt.Unix(),
 	}
 }
 
