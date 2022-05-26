@@ -131,7 +131,7 @@ func Index(c *gin.Context) {
 
 //论坛新增
 func LuntanAdd(c *gin.Context) {
-	var service service.PsychologicalService
+	var service service.Luntan
 	if err := c.ShouldBind(&service); err == nil {
 		fmt.Printf("service  : %v \n", service)
 		res := service.LuntanAdd(c)
