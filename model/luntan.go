@@ -10,4 +10,5 @@ type Luntan struct {
 	Content    string
 	Img        string
 	UserId     string
+	Status     int64
 }

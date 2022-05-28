@@ -11,11 +11,11 @@ import (
 //新增论坛
 
 type Luntan struct {
-	Content    string
-	Img        string
-	UserId     string
-	Title  string `form:"title" json:"title"`
-	Status uint64 `form:"status" json:"status"`
+	Content    string	`form:"content" json:"content"`
+	Img        string	`form:"img" json:"img"`
+	UserId     string 	`form:"userid" json:"userid"`
+	Title  	   string 		`form:"title" json:"title"`
+	Status 	   int64 		`form:"status" json:"status"`
 }
 // 新增题目
 type PsychologicalService struct {
@@ -71,13 +71,14 @@ func (service *PsychologicalService) GetSubjectList(c *gin.Context) serializer.R
 
 //新增论坛
 func (service *Luntan) LuntanAdd(c *gin.Context) serializer.Response {
-	//fmt.Printf("service  %v  \n", service)
+	fmt.Printf("1111111  %v  \n")
 
 	luntan := model.Luntan{
 		Title:  service.Title,
 		Content:    service.Content,
 		Img:       service.Img,
 		UserId:     service.UserId,
+		Status:     service.Status,
 	}
 	fmt.Printf("luntan  %v  \n", luntan)
 

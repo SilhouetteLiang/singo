@@ -7,12 +7,12 @@ import (
 // Luntan 内容序列化器
 type LunTan struct {
 	ID        uint   `json:"id"`
-	Status    uint64 `json:"status"`
+	Status    int64  `json:"status"`
 	Title     string `json:"title"`
 	CreatedAt int64  `json:"created_at"`
-	Content   string
-	Img       string
-	UserId    string
+	Content   string`json:"content"`
+	Img       string`json:"img"`
+	UserId    string`json:"Userid"`
 }
 
 
@@ -107,6 +107,7 @@ func BuildLuntan(Luntan model.Luntan) LunTan {
 		Content:   Luntan.Content,
 		Img:         Luntan.Img,
 		UserId:         Luntan.UserId,
+		Status:         Luntan.Status,
 		CreatedAt: Luntan.CreatedAt.Unix(),
 	}
 }
