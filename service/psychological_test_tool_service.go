@@ -25,6 +25,7 @@ type PsychologicalService struct {
 	D      string
 	Title  string `form:"title" json:"title"`
 	Status uint64 `form:"status" json:"status"`
+	Type   uint64 `form:"type" json:"type"`
 }
 
 // 输入用户信息
@@ -70,7 +71,7 @@ func (service *PsychologicalService) GetSubjectList(c *gin.Context) serializer.R
 
 //新增论坛
 func (service *Luntan) LuntanAdd(c *gin.Context) serializer.Response {
-	fmt.Printf("service  %v  \n", service)
+	//fmt.Printf("service  %v  \n", service)
 
 	luntan := model.Luntan{
 		Title:  service.Title,
@@ -87,6 +88,40 @@ func (service *Luntan) LuntanAdd(c *gin.Context) serializer.Response {
 	return serializer.BuildLuntanResponse(luntan)
 }
 
+//论坛列表
+func (service *Luntan) LuntanList(c *gin.Context) serializer.Response {
+	//fmt.Printf("service  %v  \n", service)
+
+	Luntan := make([]model.Luntan, 0)
+
+	// 获取全部数据
+	if err := model.DB.Find(&Luntan).Error; err != nil {
+		return serializer.ParamErr("获取数据失败", err)
+	}
+	//打印结果
+	//fmt.Printf("result : %v \n", psychological)
+
+	return serializer.BuildLuntanResponses(Luntan)
+
+
+
+
+
+
+	luntan := model.Luntan{
+		Title:  service.Title,
+		Content:    service.Content,
+		Img:       service.Img,
+		UserId:     service.UserId,
+	}
+	fmt.Printf("luntan  %v  \n", luntan)
+
+	// 新增数据
+	if err := model.DB.Create(&luntan).Error; err != nil {
+		return serializer.ParamErr("新增失败", err)
+	}
+	return serializer.BuildLuntanResponse(luntan)
+}
 //输入题目
 func (service *PsychologicalService) InputTitle(c *gin.Context) serializer.Response {
 	fmt.Printf("service  %v  \n", service)
@@ -98,6 +133,7 @@ func (service *PsychologicalService) InputTitle(c *gin.Context) serializer.Respo
 		B:      service.B,
 		C:      service.C,
 		D:      service.D,
+		Type:	service.Type,
 	}
 	fmt.Printf("psychological  %v  \n", psychological)
 

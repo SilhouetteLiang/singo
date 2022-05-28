@@ -26,6 +26,7 @@ type Psychological struct {
 	B         string
 	C         string
 	D         string
+	Type      uint64 `json:"type"`
 }
 
 // Craft 内容序列化器
@@ -122,6 +123,7 @@ func BuildpSychologicals(psychological model.Psychological) Psychological {
 	return Psychological{
 		ID:        psychological.ID,
 		Title:     psychological.Title,
+		Type:	   psychological.Type,
 		A:         psychological.A,
 		B:         psychological.B,
 		C:         psychological.C,
@@ -142,4 +144,12 @@ func BuildPsychologicalResponses(psychological []model.Psychological) Response {
 //  序列化内容
 func BuildpSychological(psychological []model.Psychological) model.Psychological {
 	return model.Psychological{}
+}
+
+//序列化 论坛 响应
+func BuildLuntanResponses(Luntan []model.Luntan) Response {
+	return Response{
+		//Data: BuildpSychological(psychological),
+		Data: Luntan,
+	}
 }

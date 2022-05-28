@@ -142,10 +142,21 @@ func LuntanAdd(c *gin.Context) {
 }
 //论坛列表
 func LuntanList(c *gin.Context) {
-	array := [4]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业"}
-	c.JSON(200, gin.H{
-		"code": 200,
-		"data": array,
-		"msg":  "获取成功",
-	})
+
+	var service service.Luntan
+
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.LuntanList(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, " ErrorResponse(err)")
+	}
+
+
+	//array := [4]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业"}
+	//c.JSON(200, gin.H{
+	//	"code": 200,
+	//	"data": array,
+	//	"msg":  "获取成功",
+	//})
 }

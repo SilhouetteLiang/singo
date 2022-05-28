@@ -13,6 +13,7 @@ type Psychological struct {
 	B          string
 	C          string
 	D          string
+	Type	   uint64     `gorm:"type:int(1)"`
 }
 
 func GetPsychological(ID interface{}) (Psychological, error) {
@@ -21,11 +22,3 @@ func GetPsychological(ID interface{}) (Psychological, error) {
 	return psychological, result.Error
 }
 
-//题库表
-type Luntan struct {
-	gorm.Model `json:"-"` //隐藏字段不输出
-	Title      string     `gorm:"size:255;type:char(255)"` // 设置字段大小为255
-	Content    string
-	Img        string
-	UserId     string
-}

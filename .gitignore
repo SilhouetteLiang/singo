@@ -3,3 +3,4 @@
 go.sum
 nohup.out
 singo
+.env.example
