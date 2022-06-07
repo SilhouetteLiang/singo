@@ -11,6 +11,8 @@ func main() {
 
 	// 装载路由
 	r := server.NewRouter()
-	r.Run(":3000")
-	//r.RunTLS(":3000", "./server.pem", "./server.key") //将r.run(":8000")修改即可
+
+	r.Run(":80")
+
+	//r.RunTLS(":80","./server.crt","./server.key")   //将r.run(":8000")修改即可
 }

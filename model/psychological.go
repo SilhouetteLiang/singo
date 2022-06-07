@@ -13,6 +13,7 @@ type Psychological struct {
 	B          string
 	C          string
 	D          string
+	Type	   uint64     `gorm:"type:int(1)"`
 }
 
 func GetPsychological(ID interface{}) (Psychological, error) {
@@ -20,3 +21,4 @@ func GetPsychological(ID interface{}) (Psychological, error) {
 	result := DB.First(&psychological, ID)
 	return psychological, result.Error
 }
+

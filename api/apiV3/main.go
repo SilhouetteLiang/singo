@@ -128,3 +128,35 @@ func Index(c *gin.Context) {
 		"msg":  "获取成功",
 	})
 }
+
+//论坛新增
+func LuntanAdd(c *gin.Context) {
+	var service service.Luntan
+	if err := c.ShouldBind(&service); err == nil {
+		fmt.Printf("service  : %v \n", service)
+		res := service.LuntanAdd(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, "ErrorResponse")
+	}
+}
+//论坛列表
+func LuntanList(c *gin.Context) {
+
+	var service service.Luntan
+
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.LuntanList(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, " ErrorResponse(err)")
+	}
+
+
+	//array := [4]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业"}
+	//c.JSON(200, gin.H{
+	//	"code": 200,
+	//	"data": array,
+	//	"msg":  "获取成功",
+	//})
+}

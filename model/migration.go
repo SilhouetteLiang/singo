@@ -9,4 +9,5 @@ func migration() {
 	_ = DB.AutoMigrate(&Psychological{})
 	_ = DB.AutoMigrate(&Craft{})
 	_ = DB.AutoMigrate(&Tag{})
+	_ = DB.AutoMigrate(&Luntan{})
 }

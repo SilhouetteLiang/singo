@@ -11,6 +11,7 @@ require (
 	github.com/joho/godotenv v1.3.0
 	github.com/lib/pq v1.10.5
 	github.com/onsi/gomega v1.12.0 // indirect
+	github.com/ossrs/go-oryx/httpx-static v0.0.0-20220126025656-2eebe4ef2e2d // indirect
 	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a
 	gopkg.in/go-playground/validator.v8 v8.18.2
 	gopkg.in/yaml.v2 v2.4.0
