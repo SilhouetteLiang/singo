@@ -11,12 +11,13 @@ import (
 //新增论坛
 
 type Luntan struct {
-	Content    string	`form:"content" json:"content"`
-	Img        string	`form:"img" json:"img"`
-	UserId     string 	`form:"userid" json:"userid"`
-	Title  	   string 		`form:"title" json:"title"`
-	Status 	   int64 		`form:"status" json:"status"`
+	Content string `form:"content" json:"content"`
+	Img     string `form:"img" json:"img"`
+	UserId  string `form:"userid" json:"userid"`
+	Title   string `form:"title" json:"title"`
+	Status  int64  `form:"status" json:"status"`
 }
+
 // 新增题目
 type PsychologicalService struct {
 	A      string
@@ -68,17 +69,16 @@ func (service *PsychologicalService) GetSubjectList(c *gin.Context) serializer.R
 	return serializer.BuildPsychologicalResponses(psychological)
 }
 
-
 //新增论坛
 func (service *Luntan) LuntanAdd(c *gin.Context) serializer.Response {
 	fmt.Printf("1111111  %v  \n")
 
 	luntan := model.Luntan{
-		Title:  service.Title,
-		Content:    service.Content,
-		Img:       service.Img,
-		UserId:     service.UserId,
-		Status:     service.Status,
+		Title:   service.Title,
+		Content: service.Content,
+		Img:     service.Img,
+		UserId:  service.UserId,
+		Status:  service.Status,
 	}
 	fmt.Printf("luntan  %v  \n", luntan)
 
@@ -104,16 +104,11 @@ func (service *Luntan) LuntanList(c *gin.Context) serializer.Response {
 
 	return serializer.BuildLuntanResponses(Luntan)
 
-
-
-
-
-
 	luntan := model.Luntan{
-		Title:  service.Title,
-		Content:    service.Content,
-		Img:       service.Img,
-		UserId:     service.UserId,
+		Title:   service.Title,
+		Content: service.Content,
+		Img:     service.Img,
+		UserId:  service.UserId,
 	}
 	fmt.Printf("luntan  %v  \n", luntan)
 
@@ -123,6 +118,7 @@ func (service *Luntan) LuntanList(c *gin.Context) serializer.Response {
 	}
 	return serializer.BuildLuntanResponse(luntan)
 }
+
 //输入题目
 func (service *PsychologicalService) InputTitle(c *gin.Context) serializer.Response {
 	fmt.Printf("service  %v  \n", service)
@@ -134,7 +130,7 @@ func (service *PsychologicalService) InputTitle(c *gin.Context) serializer.Respo
 		B:      service.B,
 		C:      service.C,
 		D:      service.D,
-		Type:	service.Type,
+		Type:   service.Type,
 	}
 	fmt.Printf("psychological  %v  \n", psychological)
 
@@ -152,8 +148,6 @@ func (service *SpeechSkillService) InputSpeechCraft(c *gin.Context) serializer.R
 	speechSkillService := model.Craft{
 		Title:  service.Title,
 		Status: service.Status,
-		A:      service.A,
-		B:      service.B,
 	}
 	fmt.Printf("speechSkillService  %v  \n", speechSkillService)
 

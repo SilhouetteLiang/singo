@@ -10,11 +10,10 @@ type LunTan struct {
 	Status    int64  `json:"status"`
 	Title     string `json:"title"`
 	CreatedAt int64  `json:"created_at"`
-	Content   string`json:"content"`
-	Img       string`json:"img"`
-	UserId    string`json:"Userid"`
+	Content   string `json:"content"`
+	Img       string `json:"img"`
+	UserId    string `json:"Userid"`
 }
-
 
 // Psychological 内容序列化器
 type Psychological struct {
@@ -88,10 +87,9 @@ func BuildCraftResponse(psychological model.Craft) Response {
 func BuildCraft(psychological model.Craft) Craft {
 	return Craft{
 		Title: psychological.Title,
-		A:     psychological.A,
-		B:     psychological.B,
 	}
 }
+
 //序列化响应 新增论坛
 func BuildLuntanResponse(luntan model.Luntan) Response {
 	return Response{
@@ -105,9 +103,9 @@ func BuildLuntan(Luntan model.Luntan) LunTan {
 		ID:        Luntan.ID,
 		Title:     Luntan.Title,
 		Content:   Luntan.Content,
-		Img:         Luntan.Img,
-		UserId:         Luntan.UserId,
-		Status:         Luntan.Status,
+		Img:       Luntan.Img,
+		UserId:    Luntan.UserId,
+		Status:    Luntan.Status,
 		CreatedAt: Luntan.CreatedAt.Unix(),
 	}
 }
@@ -124,7 +122,7 @@ func BuildpSychologicals(psychological model.Psychological) Psychological {
 	return Psychological{
 		ID:        psychological.ID,
 		Title:     psychological.Title,
-		Type:	   psychological.Type,
+		Type:      psychological.Type,
 		A:         psychological.A,
 		B:         psychological.B,
 		C:         psychological.C,
