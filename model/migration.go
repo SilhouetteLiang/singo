@@ -10,4 +10,8 @@ func migration() {
 	_ = DB.AutoMigrate(&Craft{})
 	_ = DB.AutoMigrate(&Tag{})
 	_ = DB.AutoMigrate(&Luntan{})
+	_ = DB.AutoMigrate(&TestResult{})
+	_ = DB.AutoMigrate(&TestBasic{})
+	_ = DB.AutoMigrate(&KeyWordScene{})
+	_ = DB.AutoMigrate(&Object{})
 }
