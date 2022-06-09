@@ -7,7 +7,7 @@ type Content struct {
 	ID        uint   `json:"id"`
 	UserName  string `json:"user_name"`
 	Content   string `json:"content"`
-	Status    string `json:"status"`
+	Status    int64  `json:"status"`
 	CreatedAt int64  `json:"created_at"`
 }
 

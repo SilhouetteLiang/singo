@@ -8,7 +8,6 @@ import (
 type Tag struct {
 	gorm.Model `json:"-"` //隐藏字段不输出
 	Title      string     `gorm:"size:255;type:char(255)"` // 设置字段大小为255
-	Status     int64      `gorm:"type:int(1)"`
 }
 
 func GetTag(ID interface{}) (Tag, error) {

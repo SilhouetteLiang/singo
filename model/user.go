@@ -5,19 +5,21 @@ import (
 	"gorm.io/gorm"
 )
 
+//`gorm:"size:255;type:char(255);not null;default:0;comment:内容"` // 设置字段大小为255
+
 // User 用户模型
 type User struct {
 	gorm.Model
-	UserName       string
-	PasswordDigest string
-	Nickname       string
-	Avatar         string `gorm:"size:1000"`
-	User           string `gorm:"size:255;type:char(255)"` // 设置字段大小为255
-	Tell           string `gorm:"size:255;type:char(12)"`
-	DrawTag        string `gorm:"size:255;type:char(255)"`
-	Image          string `gorm:"size:255;type:char(255)"`
-	AccessNum      int64
-	Status         string
+	User           string `gorm:"size:255;type:char(255);not null;default:0;comment:用户"`         // 设置字段大小为255
+	UserName       string `gorm:"size:255;type:char(255);not null;default:0;comment:用户真实名字"`     // 设置字段大小为255
+	Nickname       string `gorm:"size:255;type:char(255);not null;default:0;comment:用户昵称"`       // 设置字段大小为255
+	Avatar         string `gorm:"size:1000;not null;default:0;comment:用户头像"`                     // 设置字段大小为255
+	PasswordDigest string `gorm:"size:255;type:char(255);not null;default:0;comment:用户密码"`       // 设置字段大小为255
+	Tell           string `gorm:"size:255;type:char(255);not null;default:999999;comment:用户手机号"` // 设置字段大小为255
+	DrawTag        string `gorm:"size:255;type:char(255);not null;default:0;comment:用户标签"`       // 设置字段大小为255
+	Image          string `gorm:"size:255;type:char(255);not null;default:0;comment:用户补充图片"`     // 设置字段大小为255
+	AccessNum      int64  `gorm:"size:255;type:char(255);not null;default:1;comment:用户访问次数"`     // 设置字段大小为255
+	Status         string `gorm:"type:char(255);not null;default:0;comment:状态值 1正常 2异常"`
 }
 
 const (

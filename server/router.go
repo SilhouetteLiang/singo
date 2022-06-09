@@ -52,7 +52,33 @@ func NewRouter() *gin.Engine {
 	//心里测试项目--小众人群的社交软件
 	v3 := r.Group("/api/v3")
 	{
-		v3.POST("ping", apiV3.Pings)
+		v3.POST("ping", apiV3.Ping)
+		v3.GET("psychologicalTest/index", apiV3.Index)                                      //1首页
+		v3.POST("psychologicalTest/index/search", apiV3.IndexSearch)                        //2首页 搜索
+		v3.GET("psychologicalTest/index/basicinfo", apiV3.IndexBasicInfo)                   //3首页 获取对象和场景
+		v3.POST("psychologicalTest/index/publish/script", apiV3.IndexPublishScript)         //4首页 发布话术
+		v3.GET("psychologicalTest/forum/list", apiV3.ForumList)                             //5论坛 列表
+		v3.POST("psychologicalTest/forum/publish/invitation", apiV3.ForumPublishInvitation) //6论坛 发布论坛
+		v3.GET("psychologicalTest/forum/comment/list", apiV3.ForumCommentList)              //7论坛 评论列表
+		v3.POST("psychologicalTest/forum/publish/comment", apiV3.ForumPublishComment)       //8论坛 发布评论
+		v3.POST("psychologicalTest/forum/zan", apiV3.ForumZan)                              //8论坛 点赞
+		v3.GET("psychologicalTest/evaluation/index", apiV3.EvaluationIndex)                 //9测评 首页
+		v3.GET("psychologicalTest/evaluation/xingge", apiV3.EvaluationXingge)               //10测评 get 性格测试
+		v3.GET("psychologicalTest/evaluation/MBTI", apiV3.EvaluationMBTI)                   //11测评 get MBTI测试
+		v3.GET("psychologicalTest/evaluation/kuaile", apiV3.EvaluationKuaile)               //12测评 get 快乐指数测试
+		v3.GET("psychologicalTest/evaluation/qingshang", apiV3.EvaluationQingshang)         //13测评 get 情商测试
+		v3.POST("psychologicalTest/evaluation/xingge", apiV3.EvaluationXingges)             //14测评 post 性格测试
+		v3.POST("psychologicalTest/evaluation/MBTI", apiV3.EvaluationMBTIs)                 //15测评 post MBTI测试
+		v3.POST("psychologicalTest/evaluation/kuaile", apiV3.EvaluationKuailes)             //16测评 post 快乐指数测试
+		v3.POST("psychologicalTest/evaluation/qingshang", apiV3.EvaluationQingshangs)       //17测评 post 情商测试
+		v3.GET("psychologicalTest/mine/index", apiV3.MineIndex)                             //18我的 首页
+		v3.GET("psychologicalTest/mine/report", apiV3.MineReport)                           //19我的 报告
+		v3.GET("psychologicalTest/mine/public", apiV3.MinePublic)                           //20我的 我发布的话术
+		v3.GET("psychologicalTest/mine/invitation", apiV3.MineInvitation)                   //21我的 邀请用户
+		v3.GET("psychologicalTest/mine/rule", apiV3.MineRule)                               //22我的 规则说明 积分规则 积分享受的权益
+		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //2.2荣格测试接口
+		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //2.3 蜘蛛图接口
+		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //3、论坛发帖接口
 		v3.GET("psychologicalTest/subject/list", apiV3.SubjectList)      //题目列表接口
 		v3.GET("psychologicalTest/user/list", apiV3.UserList)            //用户列表
 		v3.POST("psychologicalTest/subject/input", apiV3.InputTitle)     //输入题目
@@ -61,14 +87,10 @@ func NewRouter() *gin.Engine {
 		v3.GET("psychologicalTest/subject/result1", apiV3.Result1)       //结果1
 		v3.GET("psychologicalTest/subject/result2", apiV3.Result2)       //结果2
 		v3.GET("psychologicalTest/subject/result3", apiV3.Result3)       //结果3
-		v3.GET("psychologicalTest/index", apiV3.Index)                   //首页
-
-		v3.POST("psychologicalTest/luntan/add", apiV3.LuntanAdd)     //1.新增论坛
-		v3.GET("psychologicalTest/luntan/list", apiV3.LuntanList) 	//2.论坛列表
-		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //2.1性格色彩测试接口
-		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //2.2荣格测试接口
-		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //2.3 蜘蛛图接口
-		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //3、论坛发帖接口
+		v3.POST("psychologicalTest/luntan/add", apiV3.LuntanAdd)         //1.新增论坛
+		v3.GET("psychologicalTest/luntan/list", apiV3.LuntanList)        //2.论坛列表
+		//首页
+		v3.POST("psychologicalTest/subject/list", apiV3.SubjectList) //2.1性格色彩测试接口
 
 	}
 	//点餐小工具   工具类的
@@ -113,7 +135,6 @@ func NewRouter() *gin.Engine {
 		v10.POST("ping", apiV10.Pings)
 		v10.GET("lottery/algorithm", apiV10.LotteryAlgorithm)
 	}
-
 
 	return r
 }

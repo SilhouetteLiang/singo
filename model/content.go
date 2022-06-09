@@ -4,11 +4,13 @@ import (
 	"gorm.io/gorm"
 )
 
+//`gorm:"size:255;type:char(255);not null;default:0;comment:内容"` // 设置字段大小为255
+
 // content	内容模型
 type Content struct {
 	gorm.Model
-	Content  string
-	Status   string
+	Content  string `gorm:"size:255;type:char(255);not null;default:0;comment:内容"` // 设置字段大小为255
+	Status   int64  `gorm:"type:int(1);not null;default:0;comment:状态值 1正常 2异常"`
 	UserName string
 }
 
