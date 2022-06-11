@@ -305,3 +305,17 @@ func BuildEvaluationXinggeResponse(Psychological []model.Psychological) Response
 		Data: Psychological,
 	}
 }
+
+//18.我的 首页
+func BuildMineIndexResponse(User model.UserMine) Response {
+	return Response{
+		Data: User,
+	}
+}
+
+//19.我的 报告
+func BuildMineReportResponse(UserReportList []model.UserReportList) Response {
+	return Response{
+		Data: UserReportList,
+	}
+}

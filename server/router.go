@@ -57,9 +57,9 @@ func NewRouter() *gin.Engine {
 		v3.POST("psychologicalTest/index/search", apiV3.IndexSearch)                        //2首页 搜索
 		v3.GET("psychologicalTest/index/basicinfo", apiV3.IndexBasicInfo)                   //3首页 获取对象和场景
 		v3.POST("psychologicalTest/index/publish/script", apiV3.IndexPublishScript)         //4首页 发布话术
-		v3.GET("psychologicalTest/forum/list", apiV3.ForumList)                             //5论坛 列表
+		v3.GET("psychologicalTest/forum/list", apiV3.ForumList)                             //5论坛 列表 		desc
 		v3.POST("psychologicalTest/forum/publish/invitation", apiV3.ForumPublishInvitation) //6论坛 发布论坛
-		v3.GET("psychologicalTest/forum/comment/list", apiV3.ForumCommentList)              //7论坛 评论列表
+		v3.GET("psychologicalTest/forum/comment/list", apiV3.ForumCommentList)              //7论坛 评论列表	desc
 		v3.POST("psychologicalTest/forum/publish/comment", apiV3.ForumPublishComment)       //8论坛 发布评论
 		v3.POST("psychologicalTest/forum/zan", apiV3.ForumZan)                              //8论坛 点赞
 		v3.GET("psychologicalTest/evaluation/index", apiV3.EvaluationIndex)                 //9测评 首页
@@ -73,7 +73,7 @@ func NewRouter() *gin.Engine {
 		v3.POST("psychologicalTest/evaluation/qingshang", apiV3.EvaluationQingshangs)       //17测评 post 情商测试
 		v3.GET("psychologicalTest/mine/index", apiV3.MineIndex)                             //18我的 首页
 		v3.GET("psychologicalTest/mine/report", apiV3.MineReport)                           //19我的 报告
-		v3.GET("psychologicalTest/mine/public", apiV3.MinePublic)                           //20我的 我发布的话术
+		v3.GET("psychologicalTest/mine/public", apiV3.MinePublic)                           //20我的 我发布的话术 desc
 		v3.GET("psychologicalTest/mine/invitation", apiV3.MineInvitation)                   //21我的 邀请用户
 		v3.GET("psychologicalTest/mine/rule", apiV3.MineRule)                               //22我的 规则说明 积分规则 积分享受的权益
 		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //2.2荣格测试接口

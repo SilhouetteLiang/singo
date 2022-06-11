@@ -18,8 +18,14 @@ type User struct {
 	Tell           string `gorm:"size:255;type:char(255);not null;default:999999;comment:用户手机号"` // 设置字段大小为255
 	DrawTag        string `gorm:"size:255;type:char(255);not null;default:0;comment:用户标签"`       // 设置字段大小为255
 	Image          string `gorm:"size:255;type:char(255);not null;default:0;comment:用户补充图片"`     // 设置字段大小为255
-	AccessNum      int64  `gorm:"size:255;type:char(255);not null;default:1;comment:用户访问次数"`     // 设置字段大小为255
+	AccessNum      int64  `gorm:"type:int(10);not null;default:1;comment:用户访问次数"`                // 设置字段大小为255
 	Status         string `gorm:"type:char(255);not null;default:0;comment:状态值 1正常 2异常"`
+	UserPoints     int64  `gorm:"type:int(10);not null;default:0;comment:用户积分"`
+}
+type UserMine struct {
+	Nickname   string `gorm:"size:255;type:char(255);not null;default:0;comment:用户昵称"` // 设置字段大小为255
+	Avatar     string `gorm:"size:1000;not null;default:0;comment:用户头像"`               // 设置字段大小为255
+	UserPoints int64  `gorm:"type:int(10);not null;default:0;comment:用户积分"`
 }
 
 const (

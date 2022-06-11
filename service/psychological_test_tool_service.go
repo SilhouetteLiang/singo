@@ -99,6 +99,42 @@ type ForumZanService struct {
 	Type     int64 `form:"type" json:"type"`
 }
 
+//User           string `gorm:"size:255;type:char(255);not null;default:0;comment:用户"`         // 设置字段大小为255
+//UserName       string `gorm:"size:255;type:char(255);not null;default:0;comment:用户真实名字"`     // 设置字段大小为255
+//Nickname       string `gorm:"size:255;type:char(255);not null;default:0;comment:用户昵称"`       // 设置字段大小为255
+//Avatar         string `gorm:"size:1000;not null;default:0;comment:用户头像"`                     // 设置字段大小为255
+//PasswordDigest string `gorm:"size:255;type:char(255);not null;default:0;comment:用户密码"`       // 设置字段大小为255
+//Tell           string `gorm:"size:255;type:char(255);not null;default:999999;comment:用户手机号"` // 设置字段大小为255
+//DrawTag        string `gorm:"size:255;type:char(255);not null;default:0;comment:用户标签"`       // 设置字段大小为255
+//Image          string `gorm:"size:255;type:char(255);not null;default:0;comment:用户补充图片"`     // 设置字段大小为255
+//AccessNum      int64  `gorm:"type:int(10);not null;default:1;comment:用户访问次数"`                // 设置字段大小为255
+//Status         string `gorm:"type:char(255);not null;default:0;comment:状态值 1正常 2异常"`
+//UserPoints     int64  `gorm:"type:int(10);not null;default:0;comment:用户积分"`
+
+//18我的 首页
+type MineIndexService struct {
+	Nickname   string `form:"nickname" json:"nickname"`
+	Avatar     string `form:"nickname" json:"nickname"`
+	UserPoints int64  `form:"userpoints" json:"userpoints"`
+}
+
+//Grade         int64  `gorm:"type:int(10);not null;default:0;comment:用户得分"`
+//Status        int64  `gorm:"type:int(1);not null;default:0;comment:状态值 1正常 2异常"`
+//UserName      string `gorm:"size:255;type:char(255);not null;default:0;comment:用户名字"`   // 设置字段大小为255
+//NickName      string `gorm:"size:255;type:char(255);not null;default:0;comment:用户昵称"`   // 设置字段大小为255
+//Uid           int64  `gorm:"type:int(1);not null;default:10001;comment:用户ID"`           // 设置字段大小为255
+//ReportContent string `gorm:"size:255;type:char(255);not null;default:0;comment:报告附加内容"` // 设置字段大小为255
+//ReportContent string `gorm:"size:255;type:char(255);not null;default:0;comment:报告附加内容"` // 设置字段大小为255
+//ReportType    int64  `gorm:"int(10);not null;default:1;comment:报告类型"`                   // 设置字段大小为255
+//ReportName    string `gorm:"size:255;type:char(255);not null;default:0;comment:报告名字"`   // 设置字段大小为255
+//19我的 报告
+type MineReportService struct {
+	Grade      string `form:"grade" json:"grade"`
+	UserName   string `form:"username" json:"username"`
+	UserPoints int64  `form:"userpoints" json:"userpoints"`
+	ReportName string `form:"reportname" json:"reportname"`
+}
+
 //LuntanId   int64      `gorm:"int(11);not null;default:99999999;comment:帖子ID"`
 //Content    string     `gorm:"not null;default:内容;comment:评论内容"`
 //UserId     string     `gorm:"int(10);not null;default:100001;comment:用户ID"`
@@ -152,7 +188,8 @@ func (service *Luntan) LuntanAdd(c *gin.Context) serializer.Response {
 func (service *Luntan) LuntanList(c *gin.Context) serializer.Response {
 	Luntan := make([]model.Luntan, 0)
 	// 获取全部数据
-	if err := model.DB.Find(&Luntan).Error; err != nil {
+	//db.Order("age desc")
+	if err := model.DB.Order("id desc").Find(&Luntan).Error; err != nil {
 		return serializer.ParamErr("获取数据失败", err)
 	}
 	//打印结果
@@ -307,7 +344,7 @@ func (service *IndexSearchService) ForumCommentList(c *gin.Context, id int64) se
 	// 获取全部数据
 	//db.Where("name = ? AND age >= ?", "jinzhu", "22").Find(&users)
 	//db.Where("name LIKE ?", "%jin%").Find(&users)
-	if err := model.DB.Select("*").Where("luntan_id = ? ", id).Find(&LuntanComment).Error; err != nil {
+	if err := model.DB.Select("*").Where("luntan_id = ? ", id).Order("id desc").Find(&LuntanComment).Error; err != nil {
 		return serializer.ParamErr("获取数据失败", err)
 	}
 	//打印结果
@@ -366,4 +403,70 @@ func (service *PsychologicalService) EvaluationXingge(c *gin.Context, id int64) 
 	//	return serializer.ParamErr("新增失败", err)
 	//}
 	return serializer.BuildEvaluationXinggeResponse(Psychological)
+}
+
+// 11测评 get MBTI测试
+func (service *PsychologicalService) EvaluationMBTI(c *gin.Context) serializer.Response {
+	Psychological := []model.Psychological{}
+	model.DB.Table("psychologicals").Select("*").Where("type = ?", 1).Find(&Psychological)
+	// 新增数据
+	//model.DB.Table("luntans").Where("id = ?", service.LuntanId).Update("zan", 10)
+	//if err := model.DB.Create(&Luntan).Error; err != nil {
+	//	return serializer.ParamErr("新增失败", err)
+	//}
+	return serializer.BuildEvaluationXinggeResponse(Psychological)
+}
+
+// 12测评 get 快乐指数测试
+func (service *PsychologicalService) EvaluationKuaile(c *gin.Context) serializer.Response {
+	Psychological := []model.Psychological{}
+	arr := [4]int64{5, 6, 7, 8}
+	model.DB.Table("psychologicals").Select("*").Where("type in ?", arr).Find(&Psychological)
+	// 新增数据
+	//model.DB.Table("luntans").Where("id = ?", service.LuntanId).Update("zan", 10)
+	//if err := model.DB.Create(&Luntan).Error; err != nil {
+	//	return serializer.ParamErr("新增失败", err)
+	//}
+	return serializer.BuildEvaluationXinggeResponse(Psychological)
+}
+
+// 13测评 get 情商测试
+func (service *PsychologicalService) EvaluationQingshang(c *gin.Context) serializer.Response {
+	Psychological := []model.Psychological{}
+	arr := [4]int64{5, 6, 7, 8}
+	model.DB.Table("psychologicals").Select("*").Where("type in ?", arr).Find(&Psychological)
+	// 新增数据
+	//model.DB.Table("luntans").Where("id = ?", service.LuntanId).Update("zan", 10)
+	//if err := model.DB.Create(&Luntan).Error; err != nil {
+	//	return serializer.ParamErr("新增失败", err)
+	//}
+	return serializer.BuildEvaluationXinggeResponse(Psychological)
+}
+
+// 18.我的 首页
+func (service *MineIndexService) MineIndex(c *gin.Context) serializer.Response {
+	User := model.UserMine{}
+	//arr := [4]int64{5, 6, 7, 8}
+	uid := 1
+	model.DB.Table("users").Select("id,nickname,user_points,avatar").Where("id = ?", uid).Find(&User)
+	// 新增数据
+	//model.DB.Table("luntans").Where("id = ?", service.LuntanId).Update("zan", 10)
+	//if err := model.DB.Create(&Luntan).Error; err != nil {
+	//	return serializer.ParamErr("新增失败", err)
+	//}
+	return serializer.BuildMineIndexResponse(User)
+}
+
+//19.我的 报告
+func (service *MineReportService) MineReport(c *gin.Context) serializer.Response {
+	UserReportList := []model.UserReportList{}
+	//arr := [4]int64{5, 6, 7, 8}
+	uid := 1
+	model.DB.Table("user_reports").Select("*").Where("id = ?", uid).Find(&UserReportList)
+	// 新增数据
+	//model.DB.Table("luntans").Where("id = ?", service.LuntanId).Update("zan", 10)
+	//if err := model.DB.Create(&Luntan).Error; err != nil {
+	//	return serializer.ParamErr("新增失败", err)
+	//}
+	return serializer.BuildMineReportResponse(UserReportList)
 }

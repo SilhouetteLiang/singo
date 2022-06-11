@@ -23,7 +23,7 @@ func main() {
 //
 //func GinHttps(isHttps bool) error {
 //
-//	r := gin.Default()
+//	r := gin.Default()s
 //	r.GET("/test", func(c *gin.Context) {
 //		c.String(200, "test for 【%s】", "https")
 //	})

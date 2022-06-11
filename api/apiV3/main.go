@@ -232,32 +232,53 @@ func EvaluationXingge(c *gin.Context) {
 
 //11.测评 MBTI测试
 func EvaluationMBTI(c *gin.Context) {
-	array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
-	c.JSON(200, gin.H{
-		"code": 200,
-		"msg":  "获取成功",
-		"data": array,
-	})
+	var service service.PsychologicalService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.EvaluationMBTI(c) //TestSelect
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, "ErrorResponse")
+	}
+	//array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
+	//c.JSON(200, gin.H{
+	//	"code": 200,
+	//	"msg":  "获取成功",
+	//	"data": array,
+	//})
 }
 
 //12.测评 快乐指数测试
 func EvaluationKuaile(c *gin.Context) {
-	array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
-	c.JSON(200, gin.H{
-		"code": 200,
-		"msg":  "获取成功",
-		"data": array,
-	})
+	var service service.PsychologicalService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.EvaluationKuaile(c) //TestSelect
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, "ErrorResponse")
+	}
+	//array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
+	//c.JSON(200, gin.H{
+	//	"code": 200,
+	//	"msg":  "获取成功",
+	//	"data": array,
+	//})
 }
 
 //13.测评 情商测试
 func EvaluationQingshang(c *gin.Context) {
-	array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
-	c.JSON(200, gin.H{
-		"code": 200,
-		"msg":  "获取成功",
-		"data": array,
-	})
+	var service service.PsychologicalService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.EvaluationQingshang(c) //TestSelect
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, "ErrorResponse")
+	}
+	//array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
+	//c.JSON(200, gin.H{
+	//	"code": 200,
+	//	"msg":  "获取成功",
+	//	"data": array,
+	//})
 }
 
 //14.测评 性格测试
@@ -302,22 +323,37 @@ func EvaluationQingshangs(c *gin.Context) {
 
 //18.我的 首页
 func MineIndex(c *gin.Context) {
-	array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
-	c.JSON(200, gin.H{
-		"code": 200,
-		"msg":  "获取成功",
-		"data": array,
-	})
+
+	var service service.MineIndexService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.MineIndex(c) //TestSelect
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, "ErrorResponse")
+	}
+	//array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
+	//c.JSON(200, gin.H{
+	//	"code": 200,
+	//	"msg":  "获取成功",
+	//	"data": array,
+	//})
 }
 
 //19.我的 报告
 func MineReport(c *gin.Context) {
-	array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
-	c.JSON(200, gin.H{
-		"code": 200,
-		"msg":  "获取成功",
-		"data": array,
-	})
+	var service service.MineReportService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.MineReport(c) //TestSelect
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, "ErrorResponse")
+	}
+	//array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
+	//c.JSON(200, gin.H{
+	//	"code": 200,
+	//	"msg":  "获取成功",
+	//	"data": array,
+	//})
 }
 
 //20.我的 我发布的话术
