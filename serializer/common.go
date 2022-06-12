@@ -5,6 +5,7 @@ import "github.com/gin-gonic/gin"
 // Response 基础序列化器
 type Response struct {
 	Code  int         `json:"code"`
+	Count int64       `json:"count"`
 	Data  interface{} `json:"data,omitempty"`
 	Msg   string      `json:"msg"`
 	Error string      `json:"error,omitempty"`

@@ -99,6 +99,17 @@ type ForumZanService struct {
 	Type     int64 `form:"type" json:"type"`
 }
 
+//9.测评 首页
+type EvaluationIndexService struct {
+	Name    string `form:"name" json:"name"`
+	TestNum int64  `form:"testnum" json:"testnum"`
+	Price   int64  `form:"price" json:"price"`
+}
+
+//Name    string `gorm:"size:255;type:char(255);not null;default:0;comment:测试题目名称"` // 设置字段大小为255
+//TestNum int64  `gorm:"type:int(11);not null;default:0;comment:已使用过的测试人数 "`        // 设置字段大小为255
+//Price   int64  `gorm:"type:int(11);not null;default:0;comment:测试价格"`              // 设置字段大小为255
+//Status  int64  `gorm:"type:int(1);not null;default:0;comment:状态值 1正常 2异常"`
 //User           string `gorm:"size:255;type:char(255);not null;default:0;comment:用户"`         // 设置字段大小为255
 //UserName       string `gorm:"size:255;type:char(255);not null;default:0;comment:用户真实名字"`     // 设置字段大小为255
 //Nickname       string `gorm:"size:255;type:char(255);not null;default:0;comment:用户昵称"`       // 设置字段大小为255
@@ -185,15 +196,19 @@ func (service *Luntan) LuntanAdd(c *gin.Context) serializer.Response {
 }
 
 //论坛列表
-func (service *Luntan) LuntanList(c *gin.Context) serializer.Response {
+func (service *Luntan) LuntanList(c *gin.Context, pageId int) serializer.Response1 {
+	Offset := (pageId - 1) * 10
 	Luntan := make([]model.Luntan, 0)
+	var count int64
+	//model.DB.Count(&count)
+	model.DB.Table("luntans").Count(&count)
 	// 获取全部数据
-	//db.Order("age desc")
-	if err := model.DB.Order("id desc").Find(&Luntan).Error; err != nil {
-		return serializer.ParamErr("获取数据失败", err)
+	//db.Limit(10).Offset(5).Find(&users)
+	if err := model.DB.Order("id desc").Limit(10).Offset(Offset).Find(&Luntan).Error; err != nil {
+		return serializer.ParamErr1("获取数据失败", err)
 	}
 	//打印结果
-	//fmt.Printf("result : %v \n", psychological)
+	fmt.Printf("count : %v \n", count)
 	//return serializer.BuildLuntanResponses(Luntan)
 	//luntan := model.Luntan{
 	//	Title:   service.Title,
@@ -216,7 +231,7 @@ func (service *Luntan) LuntanList(c *gin.Context) serializer.Response {
 	//if err := model.DB.Create(&luntan).Error; err != nil {
 	//	return serializer.ParamErr("新增失败", err)
 	//}
-	return serializer.BuildLuntanResponses(Luntan)
+	return serializer.BuildLuntanResponses(Luntan, count)
 }
 
 //func (service *Luntan) ForumPublishComment(c *gin.Context) interface{} {
@@ -339,17 +354,21 @@ func (service *IndexSearchService) IndexSearch(c *gin.Context) serializer.Respon
 
 // 7.获取评论列表
 
-func (service *IndexSearchService) ForumCommentList(c *gin.Context, id int64) serializer.Response {
+func (service *IndexSearchService) ForumCommentList(c *gin.Context, id int64, pageId int) serializer.Response {
 	LuntanComment := make([]model.LuntanComment, 0)
+	var count int64
+	Offset := (pageId - 1) * 10
+	//model.DB.Count(&count)
+	model.DB.Table("luntan_comments").Where("luntan_id = ? ", id).Count(&count)
 	// 获取全部数据
 	//db.Where("name = ? AND age >= ?", "jinzhu", "22").Find(&users)
 	//db.Where("name LIKE ?", "%jin%").Find(&users)
-	if err := model.DB.Select("*").Where("luntan_id = ? ", id).Order("id desc").Find(&LuntanComment).Error; err != nil {
+	if err := model.DB.Select("*").Where("luntan_id = ? ", id).Order("id desc").Limit(10).Offset(Offset).Find(&LuntanComment).Error; err != nil {
 		return serializer.ParamErr("获取数据失败", err)
 	}
 	//打印结果
 	fmt.Printf("result : %v \n", LuntanComment)
-	return serializer.BuildForumCommentListResponse(LuntanComment)
+	return serializer.BuildForumCommentListResponse(LuntanComment, count)
 }
 
 // 8.论坛 发布评论
@@ -371,7 +390,7 @@ func (service *ForumPublishCommentService) ForumPublishComment(c *gin.Context) s
 	return serializer.BuildPublishCommentResponse(LuntanComment)
 }
 
-// 9.论坛 点赞
+// 8.论坛 点赞
 func (service *ForumZanService) ForumZan(c *gin.Context) serializer.Response {
 	Luntan := model.Luntan{}
 	model.DB.Table("luntans").Select("zan").Where("id = ?", service.LuntanId).Find(&Luntan)
@@ -391,6 +410,13 @@ func (service *ForumZanService) ForumZan(c *gin.Context) serializer.Response {
 	//	return serializer.ParamErr("新增失败", err)
 	//}
 	return serializer.BuildForumZanResponse(Luntan)
+}
+
+// 9.测评 首页
+func (service *EvaluationIndexService) EvaluationIndex(c *gin.Context) serializer.Response {
+	TestType := []model.TestInfo{}
+	model.DB.Table("test_types").Select("name,test_num,price").Where("status = ?", 1).Find(&TestType)
+	return serializer.BuildEvaluationIndexResponse(TestType)
 }
 
 // 10测评 get 性格测试

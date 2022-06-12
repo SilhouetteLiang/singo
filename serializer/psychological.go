@@ -1,6 +1,7 @@
 package serializer
 
 import (
+	"github.com/gin-gonic/gin"
 	"singo/model"
 )
 
@@ -26,6 +27,16 @@ type LunTans struct {
 	Sort       int64  `gorm:"type:int(1);not null;default:2;comment:是否置顶 1 是 2否"`
 	Zan        int64  `gorm:"type:int(11);not null;default:1;comment:点赞数量"`
 	CommentNum int64  `gorm:"type:int(11);default:0;comment:评论数量"`
+}
+
+//Name    string `gorm:"size:255;type:char(255);not null;default:0;comment:测试题目名称"` // 设置字段大小为255
+//TestNum int64  `gorm:"type:int(11);not null;default:0;comment:已使用过的测试人数 "`        // 设置字段大小为255
+//Price   int64  `gorm:"type:int(11);not null;default:0;comment:测试价格"`              // 设置字段大小为255
+// Luntan 内容序列化器
+type TestInfos struct {
+	Name    string `form:"name" json:"name"`
+	TestNum int64  `form:"testnum" json:"testnum"`
+	Price   int64  `form:"price" json:"price"`
 }
 
 //Title      string     `gorm:"size:255;type:char(255);not null;default:标题;comment:标题"` // 设置字段大小为255
@@ -218,11 +229,40 @@ func BuildpSychological(psychological []model.Psychological) model.Psychological
 	return model.Psychological{}
 }
 
+type Response1 struct {
+	Code  int         `json:"code"`
+	Count int64       `json:"count"`
+	Data  interface{} `json:"data,omitempty"`
+	Msg   string      `json:"msg"`
+	Error string      `json:"error,omitempty"`
+}
+
+func ParamErr1(msg string, err error) Response1 {
+	if msg == "" {
+		msg = "参数错误"
+	}
+	return Err1(CodeParamErr, msg, err)
+}
+
+// Err 通用错误处理
+func Err1(errCode int, msg string, err error) Response1 {
+	res := Response1{
+		Code: errCode,
+		Msg:  msg,
+	}
+	// 生产环境隐藏底层报错
+	if err != nil && gin.Mode() != gin.ReleaseMode {
+		res.Error = err.Error()
+	}
+	return res
+}
+
 //序列化 论坛 响应
-func BuildLuntanResponses(Luntan []model.Luntan) Response {
-	return Response{
+func BuildLuntanResponses(Luntan []model.Luntan, count int64) Response1 {
+	return Response1{
 		//Data: BuildpSychological(psychological),
-		Data: Luntan,
+		Data:  Luntan,
+		Count: count,
 	}
 }
 
@@ -250,10 +290,10 @@ func BuildIndexSearchResponse(Craft []model.Crafts) Response {
 }
 
 //7. 论坛 评论列表
-
-func BuildForumCommentListResponse(Craft []model.LuntanComment) Response {
+func BuildForumCommentListResponse(Craft []model.LuntanComment, count int64) Response {
 	return Response{
-		Data: Craft,
+		Data:  Craft,
+		Count: count,
 	}
 }
 
@@ -280,14 +320,14 @@ func BuildPublishComment(LuntanComment model.LuntanComment) LuntanComments {
 	}
 }
 
-//序列化响应 9 论坛 点赞
+//序列化响应 8 论坛 点赞
 func BuildForumZanResponse(Luntan model.Luntan) Response {
 	return Response{
 		Data: BuildForumZan(Luntan),
 	}
 }
 
-//序列化内容 9 论坛 点赞
+//序列化内容 8 论坛 点赞
 func BuildForumZan(Luntan model.Luntan) LunTans {
 	return LunTans{
 		//LuntanId   int64      `gorm:"int(11);not null;default:99999999;comment:帖子ID"`
@@ -298,6 +338,25 @@ func BuildForumZan(Luntan model.Luntan) LunTans {
 		Zan: Luntan.Zan,
 	}
 }
+
+//序列化响应 9.测评 首页
+func BuildEvaluationIndexResponse(TestInfo []model.TestInfo) Response {
+	return Response{
+		Data: TestInfo,
+	}
+}
+
+//序列化内容 9 测评 首页
+//func BuildEvaluationIndex(TestInfo []model.TestInfo) TestInfos {
+//	return TestInfos{
+//		//Name    string `gorm:"size:255;type:char(255);not null;default:0;comment:测试题目名称"` // 设置字段大小为255
+//		//TestNum int64  `gorm:"type:int(11);not null;default:0;comment:已使用过的测试人数 "`        // 设置字段大小为255
+//		//Price   int64  `gorm:"type:int(11);not null;default:0;comment:测试价格"`              // 设置字段大小为255
+//		Name:    TestInfo.Name,
+//		TestNum: TestInfo.TestNum,
+//		Price:   TestInfo.Price,
+//	}
+//}
 
 //序列化响应 10 测评 get 性格测试
 func BuildEvaluationXinggeResponse(Psychological []model.Psychological) Response {

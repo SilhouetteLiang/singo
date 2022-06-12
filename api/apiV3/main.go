@@ -91,9 +91,12 @@ func IndexPublishScript(c *gin.Context) {
 
 //5.论坛 列表
 func ForumList(c *gin.Context) {
+	pageId := c.Request.URL.Query().Get("pageId")
+	id, _ := strconv.Atoi(pageId)
+	//id, _ := strconv.ParseInt(pageId, 10, 64)
 	var service service.Luntan
 	if err := c.ShouldBind(&service); err == nil {
-		res := service.LuntanList(c)
+		res := service.LuntanList(c, id)
 		c.JSON(200, res)
 	} else {
 		c.JSON(200, " ErrorResponse(err)")
@@ -127,13 +130,15 @@ func ForumPublishInvitation(c *gin.Context) {
 //7.论坛 评论列表
 func ForumCommentList(c *gin.Context) {
 	commentId := c.Request.URL.Query().Get("commentId")
+	pageId := c.Request.URL.Query().Get("pageId")
+	pageIds, _ := strconv.Atoi(pageId)
 	id, _ := strconv.ParseInt(commentId, 10, 64)
 	//name := c.Param("name")
 	//c.String(http.StatusOK, "Hello %s", id)
 	var service service.IndexSearchService
 	if err := c.ShouldBind(&service); err == nil {
 		fmt.Printf("2  : %v \n", service)
-		res := service.ForumCommentList(c, id) //TestSelect
+		res := service.ForumCommentList(c, id, pageIds) //TestSelect
 		c.JSON(200, res)
 	} else {
 		c.JSON(200, "ErrorResponse")
@@ -199,12 +204,22 @@ func ForumZan(c *gin.Context) {
 
 //9.测评 首页
 func EvaluationIndex(c *gin.Context) {
-	array := [5]string{"性格色彩", "MBTI测试", "快乐指数", "情商测试"}
-	c.JSON(200, gin.H{
-		"code": 200,
-		"msg":  "获取成功",
-		"data": array,
-	})
+	var service service.EvaluationIndexService
+	if err := c.ShouldBind(&service); err == nil {
+		fmt.Printf("service  : %v \n", service)
+		res := service.EvaluationIndex(c)
+		c.JSON(200, res)
+	} else {
+		fmt.Printf("err  : %v \n", err)
+
+		c.JSON(200, "ErrorResponse")
+	}
+	//array := [5]string{"性格色彩", "MBTI测试", "快乐指数", "情商测试"}
+	//c.JSON(200, gin.H{
+	//	"code": 200,
+	//	"msg":  "获取成功",
+	//	"data": array,
+	//})
 }
 
 //10.测评 性格测试
@@ -502,13 +517,13 @@ func LuntanAdd(c *gin.Context) {
 
 //论坛列表
 func LuntanList(c *gin.Context) {
-	var service service.Luntan
-	if err := c.ShouldBind(&service); err == nil {
-		res := service.LuntanList(c)
-		c.JSON(200, res)
-	} else {
-		c.JSON(200, " ErrorResponse(err)")
-	}
+	//var service service.Luntan
+	//if err := c.ShouldBind(&service); err == nil {
+	//	res := service.LuntanList(c)
+	//	c.JSON(200, res)
+	//} else {
+	//	c.JSON(200, " ErrorResponse(err)")
+	//}
 
 	//array := [4]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业"}
 	//c.JSON(200, gin.H{
