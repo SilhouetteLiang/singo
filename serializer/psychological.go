@@ -1,6 +1,7 @@
 package serializer
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"singo/model"
 )
@@ -104,6 +105,17 @@ type ResPsychological struct {
 type Item struct {
 	Title  string `form:"title" json:"title" binding:"required,min=5,max=30"`
 	Status uint64 `form:"status" json:"status" binding:"required"`
+}
+
+type XinggeResult struct {
+	Title   string `form:"title" json:"title" binding:"required,min=5,max=30"`
+	Answers []*Lists
+	Status  uint64 `form:"status" json:"status" binding:"required"`
+}
+
+type Lists struct {
+	Answerno string `form:"answerno" json:"answerno" `
+	Content  string `form:"content" json:"content" `
 }
 
 // Users 内容序列化器
@@ -360,8 +372,47 @@ func BuildEvaluationIndexResponse(TestInfo []model.TestInfo) Response {
 
 //序列化响应 10 测评 get 性格测试
 func BuildEvaluationXinggeResponse(Psychological []model.Psychological) Response {
+	var dat = []*XinggeResult{}
+	var arr = []*Lists{}
+
+	var A map[int]string
+	A = make(map[int]string)
+	for k, item := range Psychological {
+		A[k] = item.A
+	}
+	var B map[int]string
+	B = make(map[int]string)
+	for k, item := range Psychological {
+		B[k] = item.B
+	}
+	var C map[int]string
+	C = make(map[int]string)
+	for k, item := range Psychological {
+		C[k] = item.C
+	}
+	var D map[int]string
+	D = make(map[int]string)
+	for k, item := range Psychological {
+		D[k] = item.D
+	}
+
+	for k, item := range Psychological {
+		dat = append(dat, &XinggeResult{
+			Title: item.Title,
+			Answers: []*Lists{
+				{Answerno: "A", Content: A[k]},
+				{Answerno: "B", Content: B[k]},
+				{Answerno: "C", Content: C[k]},
+				{Answerno: "D", Content: D[k]},
+			},
+		})
+	}
+
+	fmt.Printf("res == %v /n", arr)
 	return Response{
-		Data: Psychological,
+		Data: dat,
+		//Data: A,
+		//Data: arr,
 	}
 }
 

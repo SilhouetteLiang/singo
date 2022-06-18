@@ -422,6 +422,7 @@ func (service *EvaluationIndexService) EvaluationIndex(c *gin.Context) serialize
 // 10测评 get 性格测试
 func (service *PsychologicalService) EvaluationXingge(c *gin.Context, id int64) serializer.Response {
 	Psychological := []model.Psychological{}
+	id = 3
 	model.DB.Table("psychologicals").Select("*").Where("type = ?", id).Find(&Psychological)
 	// 新增数据
 	//model.DB.Table("luntans").Where("id = ?", service.LuntanId).Update("zan", 10)
