@@ -21,6 +21,10 @@ type User struct {
 	AccessNum      int64  `gorm:"type:int(10);not null;default:1;comment:用户访问次数"`                // 设置字段大小为255
 	Status         string `gorm:"type:char(255);not null;default:0;comment:状态值 1正常 2异常"`
 	UserPoints     int64  `gorm:"type:int(10);not null;default:0;comment:用户积分"`
+	OpenId         string `gorm:"size:255;type:char(255);not null;default:0;comment:用户OPENID"`
+	UserCode       string `gorm:"size:255;type:char(255);not null;default:0;comment:用户code"`
+	Appid          string `gorm:"size:255;type:char(255);not null;default:0;comment:小程序AppId"`
+	AppSecret      string `gorm:"size:255;type:char(255);not null;default:0;comment:小程序AppSecret"`
 }
 type UserMine struct {
 	Nickname   string `gorm:"size:255;type:char(255);not null;default:0;comment:用户昵称"` // 设置字段大小为255

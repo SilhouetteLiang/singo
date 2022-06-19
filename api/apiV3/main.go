@@ -224,7 +224,6 @@ func EvaluationIndex(c *gin.Context) {
 
 //10.测评 性格测试
 func EvaluationXingge(c *gin.Context) {
-
 	commentId := c.Request.URL.Query().Get("type")
 	id, _ := strconv.ParseInt(commentId, 10, 64)
 	//name := c.Param("name")
@@ -298,12 +297,19 @@ func EvaluationQingshang(c *gin.Context) {
 
 //14.测评 性格测试
 func EvaluationXingges(c *gin.Context) {
-	array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
-	c.JSON(200, gin.H{
-		"code": 200,
-		"msg":  "获取成功",
-		"data": array,
-	})
+	var service service.XinggesService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.ResXingges(c) //TestSelect
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, "ErrorResponse")
+	}
+	//array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
+	//c.JSON(200, gin.H{
+	//	"code": 200,
+	//	"msg":  "获取成功",
+	//	"data": array,
+	//})
 }
 
 //15.测评 MBTI测试
@@ -399,6 +405,44 @@ func MineRule(c *gin.Context) {
 		"msg":  "获取成功",
 		"data": array,
 	})
+}
+
+//23我的 从微信获取我的信息
+func MineUserinfo(c *gin.Context) {
+	var service service.MineUserinfoService
+	if err := c.ShouldBind(&service); err == nil {
+		fmt.Printf("service  : %v \n", service)
+		res := service.MineUserinfo(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, "ErrorResponse")
+	}
+
+	//array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
+	//c.JSON(200, gin.H{
+	//	"code": 200,
+	//	"msg":  "获取成功",
+	//	"data": array,
+	//})
+}
+
+//24我的 返回系统定义的uid为openid
+func MineReturnUid(c *gin.Context) {
+	var service service.MineReturnUidService
+	if err := c.ShouldBind(&service); err == nil {
+		fmt.Printf("service  : %v \n", service)
+		res := service.MineReturnUid(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, "ErrorResponse")
+	}
+
+	//array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
+	//c.JSON(200, gin.H{
+	//	"code": 200,
+	//	"msg":  "获取成功",
+	//	"data": array,
+	//})
 }
 
 //题目列表

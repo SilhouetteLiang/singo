@@ -72,6 +72,27 @@ type Craft struct {
 	Status  int64  `form:"status" json:"status"`
 }
 
+//23我的 从微信获取我的信息
+type UserInfo struct {
+	//Object  string `form:"object" json:"object"`
+	//Scene   string `form:"scene" json:"scene"`
+	//Content string `form:"content" json:"content"`
+	//Source  string `form:"source" json:"source"`
+	//Status  int64  `form:"status" json:"status"`
+
+	UserName string `form:"userName" json:"userName"`
+	Nickname string `form:"nickname" json:"nickname"`
+	Avatar   string `form:"avatar" json:"avatar"`
+	Tell     string `form:"tell" json:"tell"`
+	DrawTag  string `form:"drawTag" json:"drawTag"`
+	OpenId   string `form:"openId" json:"openId"`
+}
+
+//24我的 返回系统定义的uid为openid
+type ReturnUid struct {
+	OpenId string `form:"openId" json:"openId"`
+}
+
 // Users 内容序列化器
 type LuntanComments struct {
 	//LuntanId   int64      `gorm:"int(11);not null;default:99999999;comment:帖子ID"`
@@ -319,11 +340,6 @@ func BuildPublishCommentResponse(LuntanComment model.LuntanComment) Response {
 //序列化内容 8 论坛发布评论
 func BuildPublishComment(LuntanComment model.LuntanComment) LuntanComments {
 	return LuntanComments{
-		//LuntanId   int64      `gorm:"int(11);not null;default:99999999;comment:帖子ID"`
-		//Content    string     `gorm:"not null;default:内容;comment:评论内容"`
-		//UserId     int64      `gorm:"int(10);not null;default:100001;comment:用户ID"`
-		//Nickname   string     `gorm:"size:255;type:char(255);not null;default:张三;comment:用户昵称"`
-		//Status     int64      `gorm:"type:int(1);not null;default:0;comment:状态值 1正常 2异常"`
 		LuntanId: LuntanComment.LuntanId,
 		Content:  LuntanComment.Content,
 		UserId:   LuntanComment.UserId,
@@ -397,6 +413,7 @@ func BuildEvaluationXinggeResponse(Psychological []model.Psychological) Response
 	}
 
 	for k, item := range Psychological {
+
 		dat = append(dat, &XinggeResult{
 			Title: item.Title,
 			Answers: []*Lists{
@@ -416,6 +433,39 @@ func BuildEvaluationXinggeResponse(Psychological []model.Psychological) Response
 	}
 }
 
+//14测评 post 性格测试
+func BuildResXinggesResponse(User model.UserReport) Response {
+	return Response{
+		Data: User,
+	}
+}
+
+//, apiV3.EvaluationXingges)             //14测评 post 性格测试
+//v3.POST("psychologicalTest/evaluation/MBTI", apiV3.EvaluationMBTIs)                 //15测评 post MBTI测试
+//v3.POST("psychologicalTest/evaluation/kuaile", apiV3.EvaluationKuailes)             //16测评 post 快乐指数测试
+//v3.POST("psychologicalTest/evaluation/qingshang", apiV3.EvaluationQingshangs)       //17测评 post 情商测试
+
+//15测评 post MBTI测试
+func BuildResMBTIsResponse(User model.UserReport) Response {
+	return Response{
+		Data: User,
+	}
+}
+
+//16测评 post 快乐指数测试
+func BuildResKuailesResponse(User model.UserReport) Response {
+	return Response{
+		Data: User,
+	}
+}
+
+//17测评 post 情商测试
+func BuildResQingshangsResponse(User model.UserReport) Response {
+	return Response{
+		Data: User,
+	}
+}
+
 //18.我的 首页
 func BuildMineIndexResponse(User model.UserMine) Response {
 	return Response{
@@ -427,5 +477,38 @@ func BuildMineIndexResponse(User model.UserMine) Response {
 func BuildMineReportResponse(UserReportList []model.UserReportList) Response {
 	return Response{
 		Data: UserReportList,
+	}
+}
+
+//23我的 从微信获取我的信息
+func BuildMineUserinfoResponse(userInfo model.User) Response {
+	return Response{
+		Data: BuildMineUserinfo(userInfo),
+	}
+}
+
+//23我的 从微信获取我的信息
+func BuildMineUserinfo(userInfo model.User) UserInfo {
+	return UserInfo{
+		UserName: userInfo.UserName,
+		Nickname: userInfo.Nickname,
+		Avatar:   userInfo.Avatar,
+		Tell:     userInfo.Tell,
+		DrawTag:  userInfo.DrawTag,
+		OpenId:   userInfo.OpenId,
+	}
+}
+
+//24我的 返回系统定义的uid为openid
+func BuildMineReturnUidResponse(userInfo model.User) Response {
+	return Response{
+		Data: BuildMineReturnUid(userInfo),
+	}
+}
+
+//24我的 返回系统定义的uid为openid
+func BuildMineReturnUid(userInfo model.User) ReturnUid {
+	return ReturnUid{
+		OpenId: userInfo.OpenId,
 	}
 }

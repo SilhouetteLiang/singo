@@ -76,6 +76,9 @@ func NewRouter() *gin.Engine {
 		v3.GET("psychologicalTest/mine/public", apiV3.MinePublic)                           //20我的 我发布的话术 desc
 		v3.GET("psychologicalTest/mine/invitation", apiV3.MineInvitation)                   //21我的 邀请用户
 		v3.GET("psychologicalTest/mine/rule", apiV3.MineRule)                               //22我的 规则说明 积分规则 积分享受的权益
+		v3.POST("psychologicalTest/mine/getuserinfo", apiV3.MineUserinfo)                   //23我的 从微信获取我的信息  只有昵称和头像
+		v3.POST("psychologicalTest/mine/getUid", apiV3.MineReturnUid)                       //24我的 返回系统定义的uid为openid
+
 		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //2.2荣格测试接口
 		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //2.3 蜘蛛图接口
 		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //3、论坛发帖接口
