@@ -153,16 +153,6 @@ func ForumCommentList(c *gin.Context) {
 
 //8.论坛 发布评论
 func ForumPublishComment(c *gin.Context) {
-	//ForumPublishCommentService
-	//var service service.ForumPublishCommentService
-	//if err := c.ShouldBind(&service); err == nil {
-	//	fmt.Printf("2  : %v \n", service)
-	//	res := service.liang(c) //TestSelect
-	//	c.JSON(200, res)
-	//} else {
-	//	c.JSON(200, "ErrorResponse")
-	//}
-
 	var service service.ForumPublishCommentService
 	if err := c.ShouldBind(&service); err == nil {
 		fmt.Printf("service  : %v \n", service)
@@ -304,6 +294,17 @@ func EvaluationXingges(c *gin.Context) {
 	} else {
 		c.JSON(200, "ErrorResponse")
 	}
+}
+
+//15.测评 MBTI测试
+func EvaluationMBTIs(c *gin.Context) {
+	var service service.MBTIService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.ResMBTIs(c) //TestSelect
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, "ErrorResponse")
+	}
 	//array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
 	//c.JSON(200, gin.H{
 	//	"code": 200,
@@ -312,34 +313,38 @@ func EvaluationXingges(c *gin.Context) {
 	//})
 }
 
-//15.测评 MBTI测试
-func EvaluationMBTIs(c *gin.Context) {
-	array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
-	c.JSON(200, gin.H{
-		"code": 200,
-		"msg":  "获取成功",
-		"data": array,
-	})
-}
-
 //16.测评 快乐指数测试
 func EvaluationKuailes(c *gin.Context) {
-	array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
-	c.JSON(200, gin.H{
-		"code": 200,
-		"msg":  "获取成功",
-		"data": array,
-	})
+	var service service.KuaileService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.ResKuailes(c) //TestSelect
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, "ErrorResponse")
+	}
+	//array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
+	//c.JSON(200, gin.H{
+	//	"code": 200,
+	//	"msg":  "获取成功",
+	//	"data": array,
+	//})
 }
 
 //17.测评 情商测试
 func EvaluationQingshangs(c *gin.Context) {
-	array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
-	c.JSON(200, gin.H{
-		"code": 200,
-		"msg":  "获取成功",
-		"data": array,
-	})
+	var service service.QingShangService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.ResQingshangs(c) //TestSelect
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, "ErrorResponse")
+	}
+	//array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
+	//c.JSON(200, gin.H{
+	//	"code": 200,
+	//	"msg":  "获取成功",
+	//	"data": array,
+	//})
 }
 
 //18.我的 首页

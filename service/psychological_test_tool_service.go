@@ -109,6 +109,24 @@ type XinggesService struct {
 	OpenId string `form:"openid" json:"openid"`
 }
 
+//15测评 post MBTI测试
+type MBTIService struct {
+	Grade  int64  `form:"grade" json:"grade"`
+	OpenId string `form:"openid" json:"openid"`
+}
+
+//16测评 post 快乐指数测试
+type KuaileService struct {
+	Grade  int64  `form:"grade" json:"grade"`
+	OpenId string `form:"openid" json:"openid"`
+}
+
+//17测评 post 情商测试
+type QingShangService struct {
+	Grade  int64  `form:"grade" json:"grade"`
+	OpenId string `form:"openid" json:"openid"`
+}
+
 //Grade         int64  `gorm:"type:int(10);not null;default:0;comment:用户得分"`
 //Status        int64  `gorm:"type:int(1);not null;default:0;comment:状态值 1正常 2异常"`
 //UserName      string `gorm:"size:255;type:char(255);not null;default:0;comment:用户名字"`   // 设置字段大小为255
@@ -192,13 +210,13 @@ func (service *PsychologicalService) GetSubjectList(c *gin.Context) serializer.R
 
 //新增论坛
 func (service *Luntan) LuntanAdd(c *gin.Context) serializer.Response {
-	fmt.Printf("1111111  %v  \n")
 	luntan := model.Luntan{
 		Content:  service.Content,
 		Img:      service.Img,
 		UserId:   service.UserId,
 		Nickname: service.Nickname,
 		Status:   service.Status,
+		Openid:   service.OpenId,
 	}
 	fmt.Printf("luntan  %v  \n", luntan)
 
@@ -286,6 +304,7 @@ func (service *SpeechSkillService) InputSpeechCraft(c *gin.Context) serializer.R
 		Content: service.Content,
 		Source:  service.Source,
 		Status:  service.Status,
+		Openid:  service.OpenId,
 	}
 	fmt.Printf("speechSkillService  %v  \n", speechSkillService)
 
@@ -394,6 +413,7 @@ func (service *ForumPublishCommentService) ForumPublishComment(c *gin.Context) s
 		UserId:   service.UserId,
 		Nickname: service.Nickname,
 		Status:   service.Status,
+		Openid:   service.OpenId,
 	}
 	fmt.Printf("user  %v  \n", LuntanComment)
 	// 新增数据
@@ -501,7 +521,7 @@ func (service *XinggesService) ResXingges(c *gin.Context) serializer.Response {
 }
 
 // 15测评 post MBTI测试 EvaluationMBTIs
-func (service *XinggesService) ResMBTIs(c *gin.Context) serializer.Response {
+func (service *MBTIService) ResMBTIs(c *gin.Context) serializer.Response {
 	UserReport := model.UserReport{
 		Grade:      service.Grade,
 		OpenId:     service.OpenId,
@@ -517,7 +537,7 @@ func (service *XinggesService) ResMBTIs(c *gin.Context) serializer.Response {
 }
 
 // 16测评 post 快乐指数测试 EvaluationKuailes
-func (service *XinggesService) ResKuailes(c *gin.Context) serializer.Response {
+func (service *KuaileService) ResKuailes(c *gin.Context) serializer.Response {
 	UserReport := model.UserReport{
 		Grade:      service.Grade,
 		OpenId:     service.OpenId,
@@ -533,7 +553,7 @@ func (service *XinggesService) ResKuailes(c *gin.Context) serializer.Response {
 }
 
 // 17测评 post 情商测试 EvaluationQingshangs
-func (service *XinggesService) ResQingshangs(c *gin.Context) serializer.Response {
+func (service *QingShangService) ResQingshangs(c *gin.Context) serializer.Response {
 	UserReport := model.UserReport{
 		Grade:      service.Grade,
 		OpenId:     service.OpenId,

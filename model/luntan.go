@@ -17,4 +17,5 @@ type Luntan struct {
 	Sort       int64      `gorm:"type:int(1);not null;default:2;comment:是否置顶 1 是 2否"`
 	Zan        int64      `gorm:"type:int(11);not null;default:1;comment:点赞数量"`
 	CommentNum int64      `gorm:"type:int(11);default:0;comment:评论数量"`
+	Openid     string     `gorm:"size:255;type:char(255);not null;default:0;comment:用户openid"` // 设置字段大小为255
 }

@@ -13,4 +13,5 @@ type LuntanComment struct {
 	UserId     int64      `gorm:"int(10);not null;default:100001;comment:用户ID"`
 	Nickname   string     `gorm:"size:255;type:char(255);not null;default:张三;comment:用户昵称"`
 	Status     int64      `gorm:"type:int(1);not null;default:0;comment:状态值 1正常 2异常"`
+	Openid     string     `gorm:"size:255;type:char(255);not null;default:0;comment:用户openid"` // 设置字段大小为255
 }
