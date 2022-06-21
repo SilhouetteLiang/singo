@@ -206,6 +206,10 @@ type PayService struct {
 	PaySign   string `form:"paySign" json:"paySign"`
 }
 
+type PayServices struct {
+	Openid string `form:"openid" json:"openid"`
+}
+
 //获取题目列表
 func (service *PsychologicalService) GetSubjectList(c *gin.Context) serializer.Response {
 	//var user model.ResPsychological
@@ -683,22 +687,15 @@ func (service *MineReturnUidService) MineReturnUid(c *gin.Context) serializer.Re
 	fmt.Printf("332  : %v \n", err)
 	//
 	json := gojsonq.New().FromString(string(body)).Find("openid")
+	//微信code  5分钟之后过期
 	if json == nil {
 		return serializer.Response{
 			Error: "获取微信openid失败 需要重新code",
 		}
 	}
 	fmt.Printf("333  : %v \n", json)
-
-	//if json == nil {
-	//	return serializer.Response{
-	//		Error: "获取微信openid失败",
-	//	}
-	//}
-
 	openId := json.(string)
 	fmt.Printf("334  : %v \n", json)
-
 	fmt.Println("my openid is: ", openId)
 
 	//id := uuid.NewV4()

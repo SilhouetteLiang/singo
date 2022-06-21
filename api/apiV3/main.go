@@ -447,6 +447,13 @@ func MineReturnUid(c *gin.Context) {
 
 //25我的 支付
 func Pay(c *gin.Context) {
+	var services service.PayServices
+	if err := c.ShouldBind(&services); err == nil {
+		fmt.Printf("services  : %v \n", services)
+	} else {
+		fmt.Printf("err  : %v \n", err)
+		c.JSON(200, "ErrorResponse")
+	}
 	var service service.PayService
 	var appId, mchId, apiKey, apiSecret string
 	appId = "wx6902b88cb7e7ea61"
@@ -466,7 +473,7 @@ func Pay(c *gin.Context) {
 	param.Add("spbill_create_ip", "127.0.0.1")
 	param.Add("notify_url", "https://www.qxxa.top/api/v3/psychologicalTest/pay/notify")
 	param.Add("trade_type", "JSAPI")
-	param.Add("openid", "oIX8v5UgNgLAyaomNmAPs3NNKAF8")
+	param.Add("openid", services.Openid)
 	result, err := client.UnifiedOrder(param)
 	if err != nil {
 		handleErr(err)
