@@ -650,6 +650,21 @@ func (service *MineReturnUidService) MineReturnUid(c *gin.Context) serializer.Re
 		}
 	}
 	fmt.Printf("UserID  : %v \n", UserID.ID)
+	fmt.Printf("11111  : %v \n", UserID.ID)
+
+	//调用auth.code2Session接口获取openid
+	//url := fmt.Sprintf(code2sessionURL, service.Appid, service.Appsecret, service.Code)
+	//resp, err := http.Get(url)
+	//if err != nil {
+	//	return serializer.Response{
+	//		Error: "用户已经存在无法新增",
+	//	}
+	//}
+	//defer resp.Body.Close()
+	//body, err := ioutil.ReadAll(resp.Body)
+	//json := gojsonq.New().FromString(string(body)).Find("openid")
+	//openId := json.(string)
+	//fmt.Println("my openid is: ", openId)
 
 	//调用auth.code2Session接口获取openid
 	url := fmt.Sprintf(code2sessionURL, service.Appid, service.Appsecret, service.Code)
@@ -659,10 +674,31 @@ func (service *MineReturnUidService) MineReturnUid(c *gin.Context) serializer.Re
 			Error: "获取微信openid失败",
 		}
 	}
+	fmt.Printf("22  : %v \n", resp)
+
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
+
+	fmt.Printf("331  : %v \n", body)
+	fmt.Printf("332  : %v \n", err)
+	//
 	json := gojsonq.New().FromString(string(body)).Find("openid")
+	if json == nil {
+		return serializer.Response{
+			Error: "获取微信openid失败 需要重新code",
+		}
+	}
+	fmt.Printf("333  : %v \n", json)
+
+	//if json == nil {
+	//	return serializer.Response{
+	//		Error: "获取微信openid失败",
+	//	}
+	//}
+
 	openId := json.(string)
+	fmt.Printf("334  : %v \n", json)
+
 	fmt.Println("my openid is: ", openId)
 
 	//id := uuid.NewV4()
@@ -676,11 +712,16 @@ func (service *MineReturnUidService) MineReturnUid(c *gin.Context) serializer.Re
 		OpenId:    openId,
 	}
 	fmt.Printf("userService  %v  \n", userService)
+	fmt.Printf("333335  : %v \n", UserID.ID)
 
 	// 新增数据
 	if err := model.DB.Create(&userService).Error; err != nil {
+		fmt.Printf("44  : %v \n", UserID.ID)
+
 		return serializer.ParamErr("新增失败", err)
 	}
+	fmt.Printf("55  : %v \n", UserID.ID)
+
 	return serializer.BuildMineReturnUidResponse(userService)
 }
 
