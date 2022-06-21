@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"
+	"github.com/thedevsaddam/gojsonq/v2"
+	"io/ioutil"
+	"net/http"
 	"singo/model"
 	"singo/serializer"
 )
@@ -180,7 +183,7 @@ type MineReportService struct {
 //23我的 从微信获取我的信息
 type MineUserinfoService struct {
 	UserName string `form:"userName" json:"userName"`
-	Nickname string `form:"nickname" json:"nickname"`
+	Nickname string `form:"nickName" json:"nickname"`
 	Avatar   string `form:"avatar" json:"avatar"`
 	Tell     string `form:"tell" json:"tell"`
 	DrawTag  string `form:"drawTag" json:"drawTag"`
@@ -194,11 +197,19 @@ type MineReturnUidService struct {
 	Appsecret string `form:"appsecret" json:"appsecret"`
 }
 
+//24我的 支付
+type PayService struct {
+	TimeStamp string `form:"timeStamp" json:"timeStamp"`
+	NonceStr  string `form:"nonceStr" json:"nonceStr"`
+	Package   string `form:"package" json:"package"`
+	SignType  string `form:"signType" json:"signType"`
+	PaySign   string `form:"paySign" json:"paySign"`
+}
+
 //获取题目列表
 func (service *PsychologicalService) GetSubjectList(c *gin.Context) serializer.Response {
 	//var user model.ResPsychological
 	psychological := make([]model.Psychological, 0)
-
 	// 获取全部数据
 	if err := model.DB.Find(&psychological).Error; err != nil {
 		return serializer.ParamErr("获取数据失败", err)
@@ -613,7 +624,6 @@ func (service *MineUserinfoService) MineUserinfo(c *gin.Context) serializer.Resp
 		OpenId:   service.OpenId,
 	}
 	fmt.Printf("userService  %v  \n", userService)
-
 	// 新增数据
 	if err := model.DB.Create(&userService).Error; err != nil {
 		return serializer.ParamErr("新增失败", err)
@@ -621,8 +631,61 @@ func (service *MineUserinfoService) MineUserinfo(c *gin.Context) serializer.Resp
 	return serializer.BuildMineUserinfoResponse(userService)
 }
 
+const (
+	code2sessionURL = "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code"
+	//appID           = "你的appid"		wx6902b88cb7e7ea61
+	//appSecret       = "你的appsecret" 1f568972901352eb6814e4dc1b9d50e1
+	//Code								053dzQml22LZp94GGMkl2Bdmcl4dzQmJ
+)
+
 //24我的 返回系统定义的uid为openid
 func (service *MineReturnUidService) MineReturnUid(c *gin.Context) serializer.Response {
+	//获取code
+	//code := c.PostForm("code")
+	UserID := model.User{}
+	model.DB.Table("users").Select("id").Where("user_code = ?", service.Code).Find(&UserID)
+	if UserID.ID != 0 {
+		return serializer.Response{
+			Error: "用户已经存在无法新增",
+		}
+	}
+	fmt.Printf("UserID  : %v \n", UserID.ID)
+
+	//调用auth.code2Session接口获取openid
+	url := fmt.Sprintf(code2sessionURL, service.Appid, service.Appsecret, service.Code)
+	resp, err := http.Get(url)
+	if err != nil {
+		return serializer.Response{
+			Error: "获取微信openid失败",
+		}
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	json := gojsonq.New().FromString(string(body)).Find("openid")
+	openId := json.(string)
+	fmt.Println("my openid is: ", openId)
+
+	//id := uuid.NewV4()
+	//ids := id.String()
+	//fmt.Printf("id  : %v \n", id)
+	//fmt.Printf("ids  : %v \n", ids)
+	userService := model.User{
+		UserCode:  service.Code,
+		Appid:     service.Appid,
+		AppSecret: service.Appsecret,
+		OpenId:    openId,
+	}
+	fmt.Printf("userService  %v  \n", userService)
+
+	// 新增数据
+	if err := model.DB.Create(&userService).Error; err != nil {
+		return serializer.ParamErr("新增失败", err)
+	}
+	return serializer.BuildMineReturnUidResponse(userService)
+}
+
+//25我的 支付
+func (service *MineReturnUidService) Pay(c *gin.Context) serializer.Response {
 	UserID := model.User{}
 	id := uuid.NewV4()
 	ids := id.String()

@@ -3,9 +3,11 @@ package apiV3
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	dev "github.com/pyihe/wechat-sdk"
 	"singo/serializer"
 	"singo/service"
 	"strconv"
+	"time"
 )
 
 type ret struct {
@@ -441,13 +443,151 @@ func MineReturnUid(c *gin.Context) {
 	} else {
 		c.JSON(200, "ErrorResponse")
 	}
+}
 
-	//array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
-	//c.JSON(200, gin.H{
-	//	"code": 200,
-	//	"msg":  "获取成功",
-	//	"data": array,
+//25我的 支付
+func Pay(c *gin.Context) {
+	var service service.PayService
+	var appId, mchId, apiKey, apiSecret string
+	appId = "wx6902b88cb7e7ea61"
+	mchId = "1513195931"
+	apiKey = "sdewCSEwefafnk798moaklfja23rerwc"
+	apiSecret = "365bb1ab8d91e0eb9dcbd3a8d9ef8b12"
+
+	client := dev.NewPayer(dev.WithAppId(appId), dev.WithMchId(mchId), dev.WithApiKey(apiKey), dev.WithSecret(apiSecret))
+
+	// unified order（统一下单）
+	param := dev.NewParam()
+	param.Add("nonce_str", "jgOUy(#oiDhbLMkTU")
+	param.Add("body", "yourBody")
+	param.Add("out_trade_no", "11112")
+	param.Add("total_fee", 1)
+	//map[string]interface{}{"total": amount * 100, "currency": "CNY"}
+	param.Add("spbill_create_ip", "127.0.0.1")
+	param.Add("notify_url", "https://www.qxxa.top/api/v3/psychologicalTest/pay/notify")
+	param.Add("trade_type", "JSAPI")
+	param.Add("openid", "oIX8v5UgNgLAyaomNmAPs3NNKAF8")
+	result, err := client.UnifiedOrder(param)
+	if err != nil {
+		handleErr(err)
+		c.JSON(200, "ErrorResponse")
+	}
+	fmt.Printf("result %v /n", result)
+
+	//appId, _ = result.GetString("apppid")
+	//prepayId, _ := result.GetString("prepay_id")
+	//param = dev.NewParam()
+	//param.Add("appId", appId)
+	//param.Add("timeStamp", time.Now().Unix())
+	//param.Add("nonceStr", "yourNonceStr1")
+	//param.Add("package", "prepay_id="+prepayId)
+	//param.Add("signType", "MD5")
+
+	//use to evoke wechat pay
+	sign := param.Sign("MD5")
+	//param.Add("sign", sign)
+
+	//result1, err := client.UnifiedOrder(param)
+	//if err != nil {
+	//	handleErr(err)
+	//}
+	//result map[appid:wx6902b88cb7e7ea61 mch_id:1513195931 nonce_str:DNRDy7I29yq0ioT9 prepay_id:wx21124652538668b2579dbeea9aae2b0000 result_code:SUCCESS return_code:SUCCESS return_msg:OK sign:9578AB835F2E7A04B689AB34937E5282 trade_type:JSAPI]
+	appid := result.Data()["mch_id"]
+	fmt.Printf("appid %v /n", appid)
+
+	timeUnix := strconv.FormatInt(time.Now().Unix(), 10)
+
+	service.TimeStamp = timeUnix
+	service.NonceStr = result.Data()["nonce_str"]
+	service.Package = result.Data()["prepay_id"]
+	service.SignType = "MD5"
+	service.PaySign = sign
+
+	for _, item := range result.Data() {
+		fmt.Printf("item %v /n", item)
+
+	}
+
+	fmt.Printf("sign %v /n", sign)
+	c.JSON(200, gin.H{
+		"code": 200,
+		"msg":  "获取成功",
+		"data": service,
+	})
+	//fmt.Printf("result1 %v /n", result1)
+
+	// download bill
+	//param = dev.NewParam()
+	//param.Add("nonce_str", "yourNonceStr")
+	//param.Add("bill_date", "yourDate")
+	//param.Add("bill_type", "ALL")
+	//param.Add("tar_type", "GZIP")
+	//err = client.DownloadBill(param, "./bill")
+	//if err != nil {
+	//	handleErr(err)
+	//}
+
+	// get phone for mini program user
+	//result, err = client.GetUserPhoneForMini("code", "encryptedData", "iv")
+	//if err != nil {
+	//	handleErr(err)
+	//}
+	//var phone string
+	//if countryCode := result.Get("countryCode"); countryCode != nil && countryCode.(string) == "86" {
+	//	purePhone := result.Get("purePhoneNumber")
+	//	phone = purePhone.(string)
+	//} else {
+	//	phoneNumber := result.Get("phoneNumber")
+	//	phone = phoneNumber.(string)
+	//}
+	//fmt.Printf("user phone is %s\n", phone)
+	//var service service.MineReturnUidService
+	//if err := c.ShouldBind(&service); err == nil {
+	//	fmt.Printf("service  : %v \n", service)
+	//	res := service.Pay(c)
+	//	c.JSON(200, res)
+	//} else {
+	//	c.JSON(200, "ErrorResponse")
+	//}
+}
+
+func Notify(c *gin.Context) {
+
+	fmt.Println("微信支付回调成功")
+	var resXml string
+
+	//var appId, mchId, apiKey, apiSecret string
+	//
+	//client := dev.NewPayer(dev.WithAppId(appId), dev.WithMchId(mchId), dev.WithApiKey(apiKey), dev.WithSecret(apiSecret))
+
+	// handle refund notify
+	//http.HandleFunc("/refund_notify", func(writer http.ResponseWriter, request *http.Request) {
+	//	defer request.Body.Close()
+	//	result, err := client.RefundNotify(request.Body)
+	//	if err != nil {
+	//		handleErr(err)
+	//	}
+	//	fmt.Printf("RefundNotify Result = %v\n", result.Data())
 	//})
+
+	fmt.Println("dsadawdwdadwd")
+
+	err := "dsadawdasdwd"
+	fmt.Printf("err %v /n", err)
+	//res := "11111111111111111"
+	//c.JSON(http.StatusOK, &wechat.V3NotifyRsp{Code: gopay.SUCCESS, Message: "成功"})
+	resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>" + "<return_msg><![CDATA[FAIL]]></return_msg>" + "</xml> "
+	resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>" + "<return_msg><![CDATA[OK]]></return_msg>" + "</xml> "
+	c.JSON(200, gin.H{
+		"code": 200,
+		"data": resXml,
+		"msg":  "获取成功",
+	})
+
+}
+func handleErr(err error) {
+	fmt.Printf("err %v /n", err)
+
 }
 
 //题目列表
