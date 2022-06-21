@@ -79,7 +79,7 @@ func NewRouter() *gin.Engine {
 		v3.POST("psychologicalTest/mine/getuserinfo", apiV3.MineUserinfo)                   //23我的 从微信获取我的信息  只有昵称和头像
 		v3.POST("psychologicalTest/mine/getUid", apiV3.MineReturnUid)                       //24我的 返回系统定义的uid为openid
 		v3.POST("psychologicalTest/pay/pay", apiV3.Pay)                                     //25我的 支付
-		v3.GET("psychologicalTest/pay/notify", apiV3.Notify)                                //26我的 支付回调
+		v3.GET("psychologicalTest/pay/notify", apiV3.Notify)                                //26我的 支付回调 1
 
 		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //2.2荣格测试接口
 		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //2.3 蜘蛛图接口
