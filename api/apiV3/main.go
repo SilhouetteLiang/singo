@@ -1,6 +1,7 @@
 package apiV3
 
 import (
+	"crypto/md5"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	dev "github.com/pyihe/wechat-sdk"
@@ -470,7 +471,7 @@ func Pay(c *gin.Context) {
 	t2 := time.Now()
 	//yy.ext = time.Now().Format("2006-01-02 15:04:05")
 	orderId = Generate(t2)
-	fmt.Printf("orderId %v /n", orderId)
+	//fmt.Printf("orderId %v /n", orderId)
 
 	// unified order（统一下单）
 	param := dev.NewParam()
@@ -488,7 +489,7 @@ func Pay(c *gin.Context) {
 		handleErr(err)
 		c.JSON(200, "ErrorResponse")
 	}
-	fmt.Printf("result %v /n", result)
+	fmt.Printf("result %v \n", result)
 
 	//appId, _ = result.GetString("apppid")
 	//prepayId, _ := result.GetString("prepay_id")
@@ -500,13 +501,31 @@ func Pay(c *gin.Context) {
 	//param.Add("signType", "MD5")
 	timeUnix := strconv.FormatInt(time.Now().Unix(), 10)
 	//use to evoke wechat pay
-	param.Add("appId", appId)
-	param.Add("nonceStr", result.Data()["nonce_str"])
+	params := dev.NewParam()
+
+	params.Add("appId", appId)
+	params.Add("nonceStr", result.Data()["nonce_str"])
 	//param.Add("prepay_id", result.Data()["prepay_id"])
-	param.Add("package", `prepay_id=`+`result.Data()["prepay_id"]`)
-	param.Add("timeStamp", timeUnix)
-	param.Add("key", apiKey)
-	sign := param.Sign("MD5")
+	params.Add("package", `prepay_id=`+result.Data()["prepay_id"])
+	params.Add("signType", "MD5")
+	params.Add("timeStamp", timeUnix)
+	params.Add("key", apiKey)
+	fmt.Printf("params %v \n", params)
+	sign := params.Sign("MD5")
+
+	//var qianduan string
+	//qianduan = `appId=` + appId + `&nonceStr=` + result.Data()["nonce_str"] + `&package=prepay_id=` + result.Data()["prepay_id"] + `&signType=MD5` + `&timeStamp=` + timeUnix + `&key=` + apiKey
+	//fmt.Printf("qianduan %v \n", qianduan)
+	//sign := MD5(qianduan)
+	//fmt.Println(str)
+	//appId=wx6902b88cb7e7ea61&nonceStr=Nmy6Zi1zYwkrPDG9&package=prepay_id=wx22225653766517cc8904bee566e0b50000&signType=MD5&timeStamp=1655909813&key=sdewCSEwefafnk798moaklfja23rerwc
+
+	//
+	//  timeStamp: "1655908417",
+	//       nonceStr: "VgB3UDCgBjYOJuwR",
+	//       package:`prepay_id=${aa}`,
+	//       signType: "MD5",
+	//       paySign: "B4FBDBCAB66CAD0358DBDA1837DD1580",
 
 	//param.Add("sign", sign)
 
@@ -515,8 +534,8 @@ func Pay(c *gin.Context) {
 	//	handleErr(err)
 	//}
 	//result map[appid:wx6902b88cb7e7ea61 mch_id:1513195931 nonce_str:DNRDy7I29yq0ioT9 prepay_id:wx21124652538668b2579dbeea9aae2b0000 result_code:SUCCESS return_code:SUCCESS return_msg:OK sign:9578AB835F2E7A04B689AB34937E5282 trade_type:JSAPI]
-	appid := result.Data()["mch_id"]
-	fmt.Printf("appid %v /n", appid)
+	//mch_id := result.Data()["mch_id"]
+	//fmt.Printf("appid %v /n", mch_id)
 
 	service.TimeStamp = timeUnix
 	service.NonceStr = result.Data()["nonce_str"]
@@ -570,6 +589,12 @@ func Pay(c *gin.Context) {
 	//} else {
 	//	c.JSON(200, "ErrorResponse")
 	//}
+}
+func MD5(str string) string {
+	data := []byte(str) //切片
+	has := md5.Sum(data)
+	md5str := fmt.Sprintf("%x", has) //将[]byte转成16进制
+	return md5str
 }
 
 //生成单号
