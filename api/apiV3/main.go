@@ -507,6 +507,7 @@ func Pay(c *gin.Context) {
 	param.Add("timeStamp", timeUnix)
 	param.Add("key", apiKey)
 	sign := param.Sign("MD5")
+	
 	//param.Add("sign", sign)
 
 	//result1, err := client.UnifiedOrder(param)
