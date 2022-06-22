@@ -498,8 +498,14 @@ func Pay(c *gin.Context) {
 	//param.Add("nonceStr", "yourNonceStr1")
 	//param.Add("package", "prepay_id="+prepayId)
 	//param.Add("signType", "MD5")
-
+	timeUnix := strconv.FormatInt(time.Now().Unix(), 10)
 	//use to evoke wechat pay
+	param.Add("appId", appId)
+	param.Add("nonceStr", result.Data()["nonce_str"])
+	//param.Add("prepay_id", result.Data()["prepay_id"])
+	param.Add("package", `prepay_id=`+`result.Data()["prepay_id"]`)
+	param.Add("timeStamp", timeUnix)
+	param.Add("key", apiKey)
 	sign := param.Sign("MD5")
 	//param.Add("sign", sign)
 
@@ -510,8 +516,6 @@ func Pay(c *gin.Context) {
 	//result map[appid:wx6902b88cb7e7ea61 mch_id:1513195931 nonce_str:DNRDy7I29yq0ioT9 prepay_id:wx21124652538668b2579dbeea9aae2b0000 result_code:SUCCESS return_code:SUCCESS return_msg:OK sign:9578AB835F2E7A04B689AB34937E5282 trade_type:JSAPI]
 	appid := result.Data()["mch_id"]
 	fmt.Printf("appid %v /n", appid)
-
-	timeUnix := strconv.FormatInt(time.Now().Unix(), 10)
 
 	service.TimeStamp = timeUnix
 	service.NonceStr = result.Data()["nonce_str"]
@@ -626,6 +630,8 @@ var num int64
 
 //生成24位订单号
 //前面17位代表时间精确到毫秒，中间3位代表进程id，最后4位代表序号
+//1.固定24位长度订单号，毫秒+进程id+序号。
+//2.同一毫秒内只要不超过一万次并发，则订单号不会重复。
 func Generate(t time.Time) string {
 	s := t.Format(timeformat.Continuity)
 	m := t.UnixNano()/1e6 - t.UnixNano()/1e9*1e3
