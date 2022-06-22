@@ -640,6 +640,8 @@ const (
 	code2sessionURL = "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code"
 	//appID           = "你的appid"		wx6902b88cb7e7ea61
 	//appSecret       = "你的appsecret" 1f568972901352eb6814e4dc1b9d50e1
+	appID     = "wx6902b88cb7e7ea61"
+	appSecret = "1f568972901352eb6814e4dc1b9d50e1"
 	//Code								053dzQml22LZp94GGMkl2Bdmcl4dzQmJ
 )
 
@@ -672,7 +674,7 @@ func (service *MineReturnUidService) MineReturnUid(c *gin.Context) serializer.Re
 	//fmt.Println("my openid is: ", openId)
 
 	//调用auth.code2Session接口获取openid
-	url := fmt.Sprintf(code2sessionURL, service.Appid, service.Appsecret, service.Code)
+	url := fmt.Sprintf(code2sessionURL, appID, appSecret, service.Code)
 	resp, err := http.Get(url)
 	if err != nil {
 		return serializer.Response{
