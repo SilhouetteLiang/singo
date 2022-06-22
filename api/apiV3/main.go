@@ -4,9 +4,12 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	dev "github.com/pyihe/wechat-sdk"
+	"github.com/w3liu/go-common/constant/timeformat"
+	"os"
 	"singo/serializer"
 	"singo/service"
 	"strconv"
+	"sync/atomic"
 	"time"
 )
 
@@ -463,14 +466,21 @@ func Pay(c *gin.Context) {
 
 	client := dev.NewPayer(dev.WithAppId(appId), dev.WithMchId(mchId), dev.WithApiKey(apiKey), dev.WithSecret(apiSecret))
 
+	var orderId string
+	var yy time.Time
+
+	//yy.ext = time.Now().Format("2006-01-02 15:04:05")
+	orderId = Generate(yy)
+	fmt.Printf("orderId %v /n", orderId)
+
 	// unified order（统一下单）
 	param := dev.NewParam()
 	param.Add("nonce_str", "jgOUy(#oiDhbLMkTU")
 	param.Add("body", "yourBody")
-	param.Add("out_trade_no", "11112")
-	param.Add("total_fee", 1)
+	param.Add("out_trade_no", orderId)
+	param.Add("total_fee", services.Amount)
 	//map[string]interface{}{"total": amount * 100, "currency": "CNY"}
-	param.Add("spbill_create_ip", "127.0.0.1")
+	param.Add("spbill_create_ip", "39.105.90.51")
 	param.Add("notify_url", "https://www.qxxa.top/api/v3/psychologicalTest/pay/notify")
 	param.Add("trade_type", "JSAPI")
 	param.Add("openid", services.Openid)
@@ -556,6 +566,33 @@ func Pay(c *gin.Context) {
 	//} else {
 	//	c.JSON(200, "ErrorResponse")
 	//}
+}
+
+var num int64
+
+//生成24位订单号
+//前面17位代表时间精确到毫秒，中间3位代表进程id，最后4位代表序号
+func Generate(t time.Time) string {
+	s := t.Format(timeformat.Continuity)
+	m := t.UnixNano()/1e6 - t.UnixNano()/1e9*1e3
+	ms := sup(m, 3)
+	p := os.Getpid() % 1000
+	ps := sup(int64(p), 3)
+	i := atomic.AddInt64(&num, 1)
+	r := i % 10000
+	rs := sup(r, 4)
+	n := fmt.Sprintf("%s%s%s%s", s, ms, ps, rs)
+	return n
+
+}
+
+//对长度不足n的数字前面补0
+func sup(i int64, n int) string {
+	m := fmt.Sprintf("%d", i)
+	for len(m) < n {
+		m = fmt.Sprintf("0%s", m)
+	}
+	return m
 }
 
 func Notify(c *gin.Context) {

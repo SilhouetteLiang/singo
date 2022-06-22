@@ -208,6 +208,7 @@ type PayService struct {
 
 type PayServices struct {
 	Openid string `form:"openid" json:"openid"`
+	Amount int64  `form:"amount" json:"amount"`
 }
 
 //获取题目列表

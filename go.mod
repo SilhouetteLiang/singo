@@ -14,6 +14,7 @@ require (
 	github.com/pyihe/wechat-sdk v1.0.0
 	github.com/satori/go.uuid v1.2.0
 	github.com/thedevsaddam/gojsonq/v2 v2.5.2 // indirect
+	github.com/w3liu/go-common v0.0.0-20210108072342-826b2f3582be // indirect
 	github.com/wechatpay-apiv3/wechatpay-go v0.2.14
 	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a
 	gopkg.in/go-playground/validator.v8 v8.18.2
