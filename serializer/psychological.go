@@ -342,7 +342,6 @@ func BuildPublishComment(LuntanComment model.LuntanComment) LuntanComments {
 	return LuntanComments{
 		LuntanId: LuntanComment.LuntanId,
 		Content:  LuntanComment.Content,
-		UserId:   LuntanComment.UserId,
 		Nickname: LuntanComment.Nickname,
 		Status:   LuntanComment.Status,
 	}

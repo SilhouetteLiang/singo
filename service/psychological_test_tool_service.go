@@ -86,9 +86,7 @@ type IndexSearchService struct {
 type ForumPublishCommentService struct {
 	LuntanId int64  `form:"luntanId" json:"luntanId"`
 	Content  string `form:"content" json:"content"`
-	UserId   int64  `form:"userId" json:"userId"`
 	Nickname string `form:"nickname" json:"nickname"`
-	Status   int64  `form:"status" json:"status"`
 	OpenId   string `form:"openid" json:"openid"`
 }
 
@@ -231,7 +229,7 @@ func (service *Luntan) LuntanAdd(c *gin.Context) serializer.Response {
 		Img:      service.Img,
 		UserId:   service.UserId,
 		Nickname: service.Nickname,
-		Status:   service.Status,
+		Status:   1,
 		Openid:   service.OpenId,
 	}
 	fmt.Printf("luntan  %v  \n", luntan)
@@ -243,7 +241,7 @@ func (service *Luntan) LuntanAdd(c *gin.Context) serializer.Response {
 	return serializer.BuildLuntanResponse(luntan)
 }
 
-//论坛列表
+//5论坛 GET列表 		desc
 func (service *Luntan) LuntanList(c *gin.Context, pageId int) serializer.Response1 {
 	Offset := (pageId - 1) * 10
 	Luntan := make([]model.Luntan, 0)
@@ -257,28 +255,6 @@ func (service *Luntan) LuntanList(c *gin.Context, pageId int) serializer.Respons
 	}
 	//打印结果
 	fmt.Printf("count : %v \n", count)
-	//return serializer.BuildLuntanResponses(Luntan)
-	//luntan := model.Luntan{
-	//	Title:   service.Title,
-	//	Content: service.Content,
-	//	Img:     service.Img,
-	//	UserId:  service.UserId,
-	//	//Title      string     `gorm:"size:255;type:char(255);not null;default:标题;comment:标题"` // 设置字段大小为255
-	//	//Content    string     `gorm:"not null;default:内容;comment:内容"`
-	//	//Img        string     `gorm:"not null;default:Img;comment:论坛图片地址"`
-	//	//UserId     string     `gorm:"int(10);not null;default:100001;comment:用户ID"`
-	//	//Nickname   string     `gorm:"size:255;type:char(255);not null;default:张三;comment:用户昵称"`
-	//	//Status     int64      `gorm:"type:int(1);not null;default:0;comment:状态值 1正常 2异常"`
-	//	//Sort       int64      `gorm:"type:int(1);not null;default:2;comment:是否置顶 1 是 2否"`
-	//	//Zan        int64      `gorm:"type:int(11);not null;default:1;comment:点赞数量"`
-	//	//CommentNum int64      `gorm:"type:int(11);default:0;comment:评论数量"`
-	//}
-	//fmt.Printf("luntan  %v  \n", luntan)
-
-	// 新增数据
-	//if err := model.DB.Create(&luntan).Error; err != nil {
-	//	return serializer.ParamErr("新增失败", err)
-	//}
 	return serializer.BuildLuntanResponses(Luntan, count)
 }
 
@@ -306,29 +282,6 @@ func (service *PsychologicalService) InputTitle(c *gin.Context) serializer.Respo
 		return serializer.ParamErr("新增失败", err)
 	}
 	return serializer.BuildPsychologicalResponse(psychological)
-}
-
-//输入话术
-func (service *SpeechSkillService) InputSpeechCraft(c *gin.Context) serializer.Response {
-	//Object string `form:"object" json:"object"`
-	//Scene  string `form:"scene" json:"scene"`
-	//Source string `form:"source" json:"source"`
-	//Status int64  `form:"status" json:"status"`
-	speechSkillService := model.Craft{
-		Object:  service.Object,
-		Scene:   service.Scene,
-		Content: service.Content,
-		Source:  service.Source,
-		Status:  service.Status,
-		Openid:  service.OpenId,
-	}
-	fmt.Printf("speechSkillService  %v  \n", speechSkillService)
-
-	// 新增数据
-	if err := model.DB.Create(&speechSkillService).Error; err != nil {
-		return serializer.ParamErr("新增失败", err)
-	}
-	return serializer.BuildCraftResponse(speechSkillService)
 }
 
 //新增用户
@@ -363,18 +316,6 @@ type SceneService struct {
 //}
 func (service *IndexSearchService) Index(c *gin.Context) serializer.Response {
 	KeyWordScene := make([]model.Scene, 0)
-
-	//result := map[string]interface{}{}
-	//model.DB.Raw("select * from users").Scan(&result)
-	//result = db.Exec("select * from users ")
-
-	//db.Table("key_word_scenes").Take(&result)
-	//fmt.Printf("result : %v \n", result)
-	// 获取全部数据
-	//db.Table("users").Select("COALESCE(age,?)", 42).Rows()
-	//db.Where("name = ? AND age >= ?", "jinzhu", "22").Find(&users)
-	//db.Where("name LIKE ?", "%jin%").Find(&users)
-	//if err := db.Table("key_word_scenes").Select("Scene").Find(&KeyWordScene).Error; err != nil {
 	if err := model.DB.Table("key_word_scenes").Select("Scene,key_word").Find(&KeyWordScene).Error; err != nil {
 		return serializer.ParamErr("获取数据失败", err)
 	}
@@ -390,15 +331,34 @@ type Crafts struct {
 
 func (service *IndexSearchService) IndexSearch(c *gin.Context) serializer.Response {
 	Craft := make([]model.Crafts, 0)
+	service.Status = 1
 	// 获取全部数据
 	//db.Where("name = ? AND age >= ?", "jinzhu", "22").Find(&users)
 	//db.Where("name LIKE ?", "%jin%").Find(&users)
-	if err := model.DB.Select("content,source").Where("status = ? AND keyword LIKE ? OR content LIKE ? OR scene LIKE ?", service.Status, "%"+service.Keyword+"%", "%"+service.Keyword+"%", "%"+service.Keyword+"%").Find(&Craft).Error; err != nil {
+	if err := model.DB.Select("content,source").Where("status = ? AND openid = ? OR keyword LIKE ? OR content LIKE ? OR scene LIKE ?", service.Status, service.OpenId, "%"+service.Keyword+"%", "%"+service.Keyword+"%", "%"+service.Keyword+"%").Find(&Craft).Error; err != nil {
 		return serializer.ParamErr("获取数据失败", err)
 	}
 	//打印结果
 	fmt.Printf("result : %v \n", Craft)
 	return serializer.BuildIndexSearchResponse(Craft)
+}
+
+//4首页 POST发布话术
+func (service *SpeechSkillService) InputSpeechCraft(c *gin.Context) serializer.Response {
+	speechSkillService := model.Craft{
+		Object:  service.Object,
+		Scene:   service.Scene,
+		Content: service.Content,
+		Source:  service.Source,
+		Status:  1,
+		Openid:  service.OpenId,
+	}
+
+	// 新增数据
+	if err := model.DB.Create(&speechSkillService).Error; err != nil {
+		return serializer.ParamErr("新增失败", err)
+	}
+	return serializer.BuildCraftResponse(speechSkillService)
 }
 
 // 7.获取评论列表
@@ -426,9 +386,8 @@ func (service *ForumPublishCommentService) ForumPublishComment(c *gin.Context) s
 	LuntanComment := model.LuntanComment{
 		LuntanId: service.LuntanId,
 		Content:  service.Content,
-		UserId:   service.UserId,
 		Nickname: service.Nickname,
-		Status:   service.Status,
+		Status:   1,
 		Openid:   service.OpenId,
 	}
 	fmt.Printf("user  %v  \n", LuntanComment)
@@ -638,11 +597,8 @@ func (service *MineUserinfoService) MineUserinfo(c *gin.Context) serializer.Resp
 
 const (
 	code2sessionURL = "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code"
-	//appID           = "你的appid"		wx6902b88cb7e7ea61
-	//appSecret       = "你的appsecret" 1f568972901352eb6814e4dc1b9d50e1
-	appID     = "wx6902b88cb7e7ea61"
-	appSecret = "1f568972901352eb6814e4dc1b9d50e1"
-	//Code								053dzQml22LZp94GGMkl2Bdmcl4dzQmJ
+	appID           = "wx6902b88cb7e7ea61"
+	appSecret       = "1f568972901352eb6814e4dc1b9d50e1"
 )
 
 //24我的 返回系统定义的uid为openid

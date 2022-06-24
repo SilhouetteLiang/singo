@@ -53,37 +53,44 @@ func NewRouter() *gin.Engine {
 	v3 := r.Group("/api/v3")
 	{
 		v3.POST("ping", apiV3.Ping)
-		v3.GET("psychologicalTest/index", apiV3.Index)                                      //1首页
-		v3.POST("psychologicalTest/index/search", apiV3.IndexSearch)                        //2首页 搜索
-		v3.GET("psychologicalTest/index/basicinfo", apiV3.IndexBasicInfo)                   //3首页 获取对象和场景
-		v3.POST("psychologicalTest/index/publish/script", apiV3.IndexPublishScript)         //4首页 发布话术
-		v3.GET("psychologicalTest/forum/list", apiV3.ForumList)                             //5论坛 列表 		desc
-		v3.POST("psychologicalTest/forum/publish/invitation", apiV3.ForumPublishInvitation) //6论坛 发布论坛
-		v3.GET("psychologicalTest/forum/comment/list", apiV3.ForumCommentList)              //7论坛 评论列表	desc
-		v3.POST("psychologicalTest/forum/publish/comment", apiV3.ForumPublishComment)       //8论坛 发布评论
-		v3.POST("psychologicalTest/forum/zan", apiV3.ForumZan)                              //8论坛 点赞
-		v3.GET("psychologicalTest/evaluation/index", apiV3.EvaluationIndex)                 //9测评 首页
-		v3.GET("psychologicalTest/evaluation/xingge", apiV3.EvaluationXingge)               //10测评 get 性格测试
-		v3.GET("psychologicalTest/evaluation/MBTI", apiV3.EvaluationMBTI)                   //11测评 get MBTI测试
-		v3.GET("psychologicalTest/evaluation/kuaile", apiV3.EvaluationKuaile)               //12测评 get 快乐指数测试
-		v3.GET("psychologicalTest/evaluation/qingshang", apiV3.EvaluationQingshang)         //13测评 get 情商测试
-		v3.POST("psychologicalTest/evaluation/xingge", apiV3.EvaluationXingges)             //14测评 post 性格测试
-		v3.POST("psychologicalTest/evaluation/MBTI", apiV3.EvaluationMBTIs)                 //15测评 post MBTI测试
-		v3.POST("psychologicalTest/evaluation/kuaile", apiV3.EvaluationKuailes)             //16测评 post 快乐指数测试
-		v3.POST("psychologicalTest/evaluation/qingshang", apiV3.EvaluationQingshangs)       //17测评 post 情商测试
-		v3.GET("psychologicalTest/mine/index", apiV3.MineIndex)                             //18我的 首页
-		v3.GET("psychologicalTest/mine/report", apiV3.MineReport)                           //19我的 报告
-		v3.GET("psychologicalTest/mine/public", apiV3.MinePublic)                           //20我的 我发布的话术 desc
-		v3.GET("psychologicalTest/mine/invitation", apiV3.MineInvitation)                   //21我的 邀请用户
-		v3.GET("psychologicalTest/mine/rule", apiV3.MineRule)                               //22我的 规则说明 积分规则 积分享受的权益
-		v3.POST("psychologicalTest/mine/getuserinfo", apiV3.MineUserinfo)                   //23我的 从微信获取我的信息  只有昵称和头像
-		v3.POST("psychologicalTest/mine/getUid", apiV3.MineReturnUid)                       //24我的 返回系统定义的uid为openid
-		v3.POST("psychologicalTest/pay/pay", apiV3.Pay)                                     //25我的 支付
-		v3.GET("psychologicalTest/pay/notify", apiV3.Notify)                                //26我的 支付回调 1
+		v3.GET("psychologicalTest/index", apiV3.Index)                              //1首页 GET
+		v3.POST("psychologicalTest/index/search", apiV3.IndexSearch)                //2首页 POST搜索
+		v3.GET("psychologicalTest/index/basicinfo", apiV3.IndexBasicInfo)           //3首页 GET获取对象和场景
+		v3.POST("psychologicalTest/index/publish/script", apiV3.IndexPublishScript) //4首页 POST发布话术
 
-		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //2.2荣格测试接口
-		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //2.3 蜘蛛图接口
-		//v3.GET("psychologicalTest/subject/list", apiV3.SubjectList) //3、论坛发帖接口
+		v3.GET("psychologicalTest/forum/list", apiV3.ForumList)                             //1论坛 GET列表 		desc
+		v3.POST("psychologicalTest/forum/publish/invitation", apiV3.ForumPublishInvitation) //2论坛 POST发布论坛
+		v3.GET("psychologicalTest/forum/comment/list", apiV3.ForumCommentList)              //3论坛 GET评论列表	desc
+		v3.POST("psychologicalTest/forum/publish/comment", apiV3.ForumPublishComment)       //4论坛 POST发布评论
+		v3.POST("psychologicalTest/forum/zan", apiV3.ForumZan)                              //5论坛 POST点赞
+
+		v3.GET("psychologicalTest/evaluation/index", apiV3.EvaluationIndex)           //1测评 GET首页
+		v3.GET("psychologicalTest/evaluation/xingge", apiV3.EvaluationXingge)         //2测评 GET 性格测试
+		v3.GET("psychologicalTest/evaluation/MBTI", apiV3.EvaluationMBTI)             //3测评 GET MBTI测试
+		v3.GET("psychologicalTest/evaluation/kuaile", apiV3.EvaluationKuaile)         //4测评 GET 快乐指数测试
+		v3.GET("psychologicalTest/evaluation/qingshang", apiV3.EvaluationQingshang)   //5测评 GET 情商测试
+		v3.POST("psychologicalTest/evaluation/xingge", apiV3.EvaluationXingges)       //6测评 POST 性格测试
+		v3.POST("psychologicalTest/evaluation/MBTI", apiV3.EvaluationMBTIs)           //7测评 POST MBTI测试
+		v3.POST("psychologicalTest/evaluation/kuaile", apiV3.EvaluationKuailes)       //8测评 POST 快乐指数测试
+		v3.POST("psychologicalTest/evaluation/qingshang", apiV3.EvaluationQingshangs) //9测评 POST 情商测试
+
+		v3.GET("psychologicalTest/mine/index", apiV3.MineIndex)           //1我的 GET首页
+		v3.GET("psychologicalTest/mine/report", apiV3.MineReport)         //2我的 GET报告
+		v3.GET("psychologicalTest/mine/public", apiV3.MinePublic)         //3我的 GET我发布的话术 desc
+		v3.GET("psychologicalTest/mine/invitation", apiV3.MineInvitation) //4我的 GET邀请用户
+		v3.GET("psychologicalTest/mine/rule", apiV3.MineRule)             //5我的 GET规则说明 积分规则 积分享受的权益
+		v3.POST("psychologicalTest/mine/getuserinfo", apiV3.MineUserinfo) //6我的 POST从微信获取我的信息  只有昵称和头像
+		v3.POST("psychologicalTest/mine/getUid", apiV3.MineReturnUid)     //7我的 POST返回系统定义的uid为openid
+		v3.POST("psychologicalTest/pay/pay", apiV3.Pay)                   //8我的 POST支付
+		v3.GET("psychologicalTest/pay/notify", apiV3.Notify)              //9我的 GET支付回调
+
+	}
+	//点餐小工具   工具类的
+	v4 := r.Group("/api/v4")
+	{
+		v4.POST("ping", apiV4.Pings)
+		v4.GET("lottery/algorithm", apiV4.LotteryAlgorithm)
+
 		v3.GET("psychologicalTest/subject/list", apiV3.SubjectList)      //题目列表接口
 		v3.GET("psychologicalTest/user/list", apiV3.UserList)            //用户列表
 		v3.POST("psychologicalTest/subject/input", apiV3.InputTitle)     //输入题目
@@ -96,13 +103,6 @@ func NewRouter() *gin.Engine {
 		v3.GET("psychologicalTest/luntan/list", apiV3.LuntanList)        //2.论坛列表
 		//首页
 		v3.POST("psychologicalTest/subject/list", apiV3.SubjectList) //2.1性格色彩测试接口
-
-	}
-	//点餐小工具   工具类的
-	v4 := r.Group("/api/v4")
-	{
-		v4.POST("ping", apiV4.Pings)
-		v4.GET("lottery/algorithm", apiV4.LotteryAlgorithm)
 	}
 	//社交类的----小众人群的社交软件
 	v5 := r.Group("/api/v5")
