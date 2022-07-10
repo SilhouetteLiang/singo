@@ -73,6 +73,8 @@ func NewRouter() *gin.Engine {
 		v3.POST("psychologicalTest/evaluation/MBTI", apiV3.EvaluationMBTIs)           //7测评 POST MBTI测试
 		v3.POST("psychologicalTest/evaluation/kuaile", apiV3.EvaluationKuailes)       //8测评 POST 快乐指数测试
 		v3.POST("psychologicalTest/evaluation/qingshang", apiV3.EvaluationQingshangs) //9测评 POST 情商测试
+		v3.GET("psychologicalTest/evaluation/zonghe", apiV3.EvaluationZonghe)         //10测评 GET 综合测试
+		v3.POST("psychologicalTest/evaluation/zonghes", apiV3.EvaluationZonghes)      //11测评 POST 综合测试
 
 		v3.GET("psychologicalTest/mine/index", apiV3.MineIndex)           //1我的 GET首页
 		v3.GET("psychologicalTest/mine/report", apiV3.MineReport)         //2我的 GET报告

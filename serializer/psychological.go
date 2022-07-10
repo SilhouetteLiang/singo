@@ -487,6 +487,13 @@ func BuildResQingshangsResponse(User model.UserReport) Response {
 	}
 }
 
+//11测评 POST 综合测试
+func BuildResZonghesResponse(User model.UserReport) Response {
+	return Response{
+		Data: User,
+	}
+}
+
 //18.我的 首页
 func BuildMineIndexResponse(User model.UserMine) Response {
 	return Response{

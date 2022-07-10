@@ -135,31 +135,11 @@ type QingShangService struct {
 	OpenId string `form:"openid" json:"openid"`
 }
 
-//Grade         int64  `gorm:"type:int(10);not null;default:0;comment:用户得分"`
-//Status        int64  `gorm:"type:int(1);not null;default:0;comment:状态值 1正常 2异常"`
-//UserName      string `gorm:"size:255;type:char(255);not null;default:0;comment:用户名字"`   // 设置字段大小为255
-//NickName      string `gorm:"size:255;type:char(255);not null;default:0;comment:用户昵称"`   // 设置字段大小为255
-//Uid           int64  `gorm:"type:int(1);not null;default:10001;comment:用户ID"`           // 设置字段大小为255
-//OpenId        string `gorm:"size:255;type:char(255);not null;comment:用户opendid"`        // 设置字段大小为255
-//ReportContent string `gorm:"size:255;type:char(255);not null;default:0;comment:报告附加内容"` // 设置字段大小为255
-//ReportType    int64  `gorm:"int(10);not null;default:1;comment:报告类型"`                   // 设置字段大小为255
-//ReportName    string `gorm:"size:255;type:char(255);not null;default:0;comment:报告名字"`   // 设置字段大小为255
-
-//Name    string `gorm:"size:255;type:char(255);not null;default:0;comment:测试题目名称"` // 设置字段大小为255
-//TestNum int64  `gorm:"type:int(11);not null;default:0;comment:已使用过的测试人数 "`        // 设置字段大小为255
-//Price   int64  `gorm:"type:int(11);not null;default:0;comment:测试价格"`              // 设置字段大小为255
-//Status  int64  `gorm:"type:int(1);not null;default:0;comment:状态值 1正常 2异常"`
-//User           string `gorm:"size:255;type:char(255);not null;default:0;comment:用户"`         // 设置字段大小为255
-//UserName       string `gorm:"size:255;type:char(255);not null;default:0;comment:用户真实名字"`     // 设置字段大小为255
-//Nickname       string `gorm:"size:255;type:char(255);not null;default:0;comment:用户昵称"`       // 设置字段大小为255
-//Avatar         string `gorm:"size:1000;not null;default:0;comment:用户头像"`                     // 设置字段大小为255
-//PasswordDigest string `gorm:"size:255;type:char(255);not null;default:0;comment:用户密码"`       // 设置字段大小为255
-//Tell           string `gorm:"size:255;type:char(255);not null;default:999999;comment:用户手机号"` // 设置字段大小为255
-//DrawTag        string `gorm:"size:255;type:char(255);not null;default:0;comment:用户标签"`       // 设置字段大小为255
-//Image          string `gorm:"size:255;type:char(255);not null;default:0;comment:用户补充图片"`     // 设置字段大小为255
-//AccessNum      int64  `gorm:"type:int(10);not null;default:1;comment:用户访问次数"`                // 设置字段大小为255
-//Status         string `gorm:"type:char(255);not null;default:0;comment:状态值 1正常 2异常"`
-//UserPoints     int64  `gorm:"type:int(10);not null;default:0;comment:用户积分"`
+//11测评 POST 综合测试
+type ZongHeService struct {
+	Grade  string `form:"grade" json:"grade"`
+	OpenId string `form:"openid" json:"openid"`
+}
 
 //18我的 首页
 type MineIndexService struct {
@@ -538,6 +518,19 @@ func (service *PsychologicalService) EvaluationQingshang(c *gin.Context) seriali
 	return serializer.BuildEvaluationXinggeResponse(Psychological)
 }
 
+// 10测评 GET 综合测试
+func (service *PsychologicalService) EvaluationZonghe(c *gin.Context) serializer.Response {
+	Psychological := []model.Psychological{}
+	arr := [4]int64{5, 6, 7, 8}
+	model.DB.Table("psychologicals").Select("*").Where("type in ?", arr).Find(&Psychological)
+	// 新增数据
+	//model.DB.Table("luntans").Where("id = ?", service.LuntanId).Update("zan", 10)
+	//if err := model.DB.Create(&Luntan).Error; err != nil {
+	//	return serializer.ParamErr("新增失败", err)
+	//}
+	return serializer.BuildEvaluationXinggeResponse(Psychological)
+}
+
 // 14测评 post 性格测试
 func (service *XinggesService) ResXingges(c *gin.Context) serializer.Response {
 	fmt.Printf("service  %v  \n", service)
@@ -589,6 +582,22 @@ func (service *KuaileService) ResKuailes(c *gin.Context) serializer.Response {
 		return serializer.ParamErr("新增失败", err)
 	}
 	return serializer.BuildResKuailesResponse(UserReport)
+}
+
+//11测评 POST 综合测试
+func (service *ZongHeService) ResZonghes(c *gin.Context) serializer.Response {
+	UserReport := model.UserReport{
+		Grade:      service.Grade,
+		OpenId:     service.OpenId,
+		ReportName: "综合测试",
+		Status:     1,
+	}
+	fmt.Printf("UserReport  %v  \n", UserReport)
+	// 新增数据
+	if err := model.DB.Create(&UserReport).Error; err != nil {
+		return serializer.ParamErr("新增失败", err)
+	}
+	return serializer.BuildResZonghesResponse(UserReport)
 }
 
 // 17测评 post 情商测试 EvaluationQingshangs

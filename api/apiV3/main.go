@@ -252,6 +252,28 @@ func EvaluationQingshangs(c *gin.Context) {
 	}
 }
 
+//10测评 GET 综合测试
+func EvaluationZonghe(c *gin.Context) {
+	var service service.PsychologicalService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.EvaluationZonghe(c) //TestSelect
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, "ErrorResponse")
+	}
+}
+
+//11测评 POST 综合测试
+func EvaluationZonghes(c *gin.Context) {
+	var service service.ZongHeService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.ResZonghes(c) //TestSelect
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, "ErrorResponse")
+	}
+}
+
 //18.我的 GET首页
 func MineIndex(c *gin.Context) {
 	openId := c.Request.URL.Query().Get("openid")
@@ -297,7 +319,7 @@ func MineInvitation(c *gin.Context) {
 	} else {
 		c.JSON(200, "ErrorResponse")
 	}
-	
+
 }
 
 //22我的 GET规则说明 积分规则 积分享受的权益
