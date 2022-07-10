@@ -25,6 +25,12 @@ type Crafts struct {
 	Content string `gorm:"not null;default:0;comment:内容"`
 	Source  string `gorm:"size:255;type:char(255);not null;default:0;comment:来源"` // 设置字段大小为255
 }
+type MyCraft struct {
+	Object  string `gorm:"size:255;type:char(255);not null;default:0;comment:对象"` // 设置字段大小为255
+	Scene   string `gorm:"size:255;type:char(255);not null;default:0;comment:场景"` // 设置字段大小为255
+	Content string `gorm:"not null;default:0;comment:内容"`
+	Title   string `gorm:"not null;default:0;comment:标题"`
+}
 
 func GetCraft(ID interface{}) (Craft, error) {
 	var Craft Craft

@@ -254,9 +254,10 @@ func EvaluationQingshangs(c *gin.Context) {
 
 //18.我的 GET首页
 func MineIndex(c *gin.Context) {
+	openId := c.Request.URL.Query().Get("openid")
 	var service service.MineIndexService
 	if err := c.ShouldBind(&service); err == nil {
-		res := service.MineIndex(c) //TestSelect
+		res := service.MineIndex(c, openId) //TestSelect
 		c.JSON(200, res)
 	} else {
 		c.JSON(200, "ErrorResponse")
@@ -265,9 +266,11 @@ func MineIndex(c *gin.Context) {
 
 //19我的 GET报告
 func MineReport(c *gin.Context) {
+	openId := c.Request.URL.Query().Get("openid")
+	//id, _ := strconv.ParseInt(commentId, 10, 64)
 	var service service.MineReportService
 	if err := c.ShouldBind(&service); err == nil {
-		res := service.MineReport(c) //TestSelect
+		res := service.MineReport(c, openId) //TestSelect
 		c.JSON(200, res)
 	} else {
 		c.JSON(200, "ErrorResponse")
@@ -276,12 +279,13 @@ func MineReport(c *gin.Context) {
 
 //20我的 GET我发布的话术 desc
 func MinePublic(c *gin.Context) {
-	array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
-	c.JSON(200, gin.H{
-		"code": 200,
-		"msg":  "获取成功",
-		"data": array,
-	})
+	var service service.MinePublicService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.MinePublic(c, service.OpenId) //TestSelect
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, "ErrorResponse")
+	}
 }
 
 //21我的 GET邀请用户
@@ -296,11 +300,17 @@ func MineInvitation(c *gin.Context) {
 
 //22我的 GET规则说明 积分规则 积分享受的权益
 func MineRule(c *gin.Context) {
-	array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
+	wenan := "1. 邀请新用户获得3积分 2. 分享话术获得3积分 3. 在平台发生支付行为获得3积分"
+	//4. 积分后期可用于平台消费
+	//5. 积分后期可参与平台分红
+	jifenxiangshouquanyi := "1. 积分后期可用于平台消费 2. 积分后期可参与平台分红"
+	//array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
 	c.JSON(200, gin.H{
-		"code": 200,
-		"msg":  "获取成功",
-		"data": array,
+		"code":            200,
+		"msg":             "获取成功",
+		"data":            "",
+		"integral_rule":   wenan,
+		"integral_equity": jifenxiangshouquanyi,
 	})
 }
 

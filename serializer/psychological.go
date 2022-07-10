@@ -19,15 +19,16 @@ type LunTan struct {
 
 // Luntan 内容序列化器
 type LunTans struct {
-	ID         uint   `json:"id"`
-	Content    string `gorm:"not null;default:内容;comment:内容"`
-	Img        string `gorm:"not null;default:Img;comment:论坛图片地址"`
-	UserId     string `gorm:"int(10);not null;default:100001;comment:用户ID"`
-	Nickname   string `gorm:"size:255;type:char(255);not null;default:张三;comment:用户昵称"`
-	Status     int64  `gorm:"type:int(1);not null;default:0;comment:状态值 1正常 2异常"`
-	Sort       int64  `gorm:"type:int(1);not null;default:2;comment:是否置顶 1 是 2否"`
-	Zan        int64  `gorm:"type:int(11);not null;default:1;comment:点赞数量"`
-	CommentNum int64  `gorm:"type:int(11);default:0;comment:评论数量"`
+	//ID         uint   `json:"id"`
+	//Content    string `gorm:"not null;default:内容;comment:内容"`
+	//Img        string `gorm:"not null;default:Img;comment:论坛图片地址"`
+	//UserId     string `gorm:"int(10);not null;default:100001;comment:用户ID"`
+	//Nickname   string `gorm:"size:255;type:char(255);not null;default:张三;comment:用户昵称"`
+	//Status     int64  `gorm:"type:int(1);not null;default:0;comment:状态值 1正常 2异常"`
+	//Sort       int64  `gorm:"type:int(1);not null;default:2;comment:是否置顶 1 是 2否"`
+	Zan       int64 `gorm:"type:int(11);not null;default:1;comment:点赞数量"`
+	IsDisplay int64
+	//CommentNum int64  `gorm:"type:int(11);default:0;comment:评论数量"`
 }
 
 //Name    string `gorm:"size:255;type:char(255);not null;default:0;comment:测试题目名称"` // 设置字段大小为255
@@ -74,18 +75,38 @@ type Craft struct {
 
 //23我的 从微信获取我的信息
 type UserInfo struct {
-	//Object  string `form:"object" json:"object"`
-	//Scene   string `form:"scene" json:"scene"`
-	//Content string `form:"content" json:"content"`
-	//Source  string `form:"source" json:"source"`
-	//Status  int64  `form:"status" json:"status"`
+	UserName       string
+	Nickname       string
+	Avatar         string
+	PasswordDigest string
+	Tell           string
+	DrawTag        string
+	Image          string
+	AccessNum      int64
+	Status         string
+	UserPoints     int64
+	OpenId         string
+	UserCode       string
 
-	UserName string `form:"userName" json:"userName"`
-	Nickname string `form:"nickname" json:"nickname"`
-	Avatar   string `form:"avatar" json:"avatar"`
-	Tell     string `form:"tell" json:"tell"`
-	DrawTag  string `form:"drawTag" json:"drawTag"`
-	OpenId   string `form:"openId" json:"openId"`
+	//User           string `gorm:"size:255;type:char(255);not null;default:0;comment:用户"`         // 设置字段大小为255
+	//UserName       string `gorm:"size:255;type:char(255);not null;default:0;comment:用户真实名字"`     // 设置字段大小为255
+	//Nickname       string `gorm:"size:255;type:char(255);not null;default:0;comment:用户昵称"`       // 设置字段大小为255
+	//Avatar         string `gorm:"size:1000;not null;default:0;comment:用户头像"`                     // 设置字段大小为255
+	//PasswordDigest string `gorm:"size:255;type:char(255);not null;default:0;comment:用户密码"`       // 设置字段大小为255
+	//Tell           string `gorm:"size:255;type:char(255);not null;default:999999;comment:用户手机号"` // 设置字段大小为255
+	//DrawTag        string `gorm:"size:255;type:char(255);not null;default:0;comment:用户标签"`       // 设置字段大小为255
+	//Image          string `gorm:"size:255;type:char(255);not null;default:0;comment:用户补充图片"`     // 设置字段大小为255
+	//AccessNum      int64  `gorm:"type:int(10);not null;default:1;comment:用户访问次数"`                // 设置字段大小为255
+	//Status         string `gorm:"type:char(255);not null;default:0;comment:状态值 1正常 2异常"`
+	//UserPoints     int64  `gorm:"type:int(10);not null;default:0;comment:用户积分"`
+	//OpenId         string `gorm:"size:255;type:char(255);not null;default:0;comment:用户OPENID"`
+	//UserCode       string `gorm:"size:255;type:char(255);not null;default:0;comment:用户code"`
+	//Appid          string `gorm:"size:255;type:char(255);not null;default:0;comment:小程序AppId"`
+	//AppSecret      string `gorm:"size:255;type:char(255);not null;default:0;comment:小程序AppSecret"`
+}
+
+type UserInfoRes struct {
+	Grade string
 }
 
 //24我的 返回系统定义的uid为openid
@@ -348,21 +369,22 @@ func BuildPublishComment(LuntanComment model.LuntanComment) LuntanComments {
 }
 
 //序列化响应 8 论坛 点赞
-func BuildForumZanResponse(Luntan model.Luntan) Response {
+func BuildForumZanResponse(Luntan model.LuntanZan, isDisplay int64) Response {
 	return Response{
-		Data: BuildForumZan(Luntan),
+		Data: BuildForumZan(Luntan, isDisplay),
 	}
 }
 
 //序列化内容 8 论坛 点赞
-func BuildForumZan(Luntan model.Luntan) LunTans {
+func BuildForumZan(Luntan model.LuntanZan, isDisplay int64) LunTans {
 	return LunTans{
 		//LuntanId   int64      `gorm:"int(11);not null;default:99999999;comment:帖子ID"`
 		//Content    string     `gorm:"not null;default:内容;comment:评论内容"`
 		//UserId     int64      `gorm:"int(10);not null;default:100001;comment:用户ID"`
 		//Nickname   string     `gorm:"size:255;type:char(255);not null;default:张三;comment:用户昵称"`
 		//Status     int64      `gorm:"type:int(1);not null;default:0;comment:状态值 1正常 2异常"`
-		Zan: Luntan.Zan,
+		Zan:       Luntan.Zan,
+		IsDisplay: isDisplay,
 	}
 }
 
@@ -479,22 +501,36 @@ func BuildMineReportResponse(UserReportList []model.UserReportList) Response {
 	}
 }
 
+//20我的 GET我发布的话术 desc
+func BuildMinePublicResponse(MyCraft []model.MyCraft) Response {
+	return Response{
+		Data: MyCraft,
+	}
+}
+
 //23我的 从微信获取我的信息
 func BuildMineUserinfoResponse(userInfo model.User) Response {
 	return Response{
 		Data: BuildMineUserinfo(userInfo),
+		//Data: 3,
 	}
 }
 
 //23我的 从微信获取我的信息
 func BuildMineUserinfo(userInfo model.User) UserInfo {
 	return UserInfo{
-		UserName: userInfo.UserName,
-		Nickname: userInfo.Nickname,
-		Avatar:   userInfo.Avatar,
-		Tell:     userInfo.Tell,
-		DrawTag:  userInfo.DrawTag,
-		OpenId:   userInfo.OpenId,
+		UserName:       userInfo.UserName,
+		Nickname:       userInfo.Nickname,
+		Avatar:         userInfo.Avatar,
+		PasswordDigest: userInfo.PasswordDigest,
+		Tell:           userInfo.Tell,
+		DrawTag:        userInfo.DrawTag,
+		Image:          userInfo.Image,
+		AccessNum:      userInfo.AccessNum,
+		Status:         userInfo.Status,
+		UserPoints:     userInfo.UserPoints,
+		OpenId:         userInfo.OpenId,
+		UserCode:       userInfo.UserCode,
 	}
 }
 

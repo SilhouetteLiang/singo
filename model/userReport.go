@@ -9,7 +9,7 @@ import (
 // content	内容模型
 type UserReport struct {
 	gorm.Model
-	Grade         int64  `gorm:"type:int(10);not null;default:0;comment:用户得分"`
+	Grade         string `gorm:"size:255;type:char(255);not null;default:0;comment:用户得分"`
 	Status        int64  `gorm:"type:int(1);not null;default:0;comment:状态值 1正常 2异常"`
 	UserName      string `gorm:"size:255;type:char(255);not null;default:0;comment:用户名字"`   // 设置字段大小为255
 	NickName      string `gorm:"size:255;type:char(255);not null;default:0;comment:用户昵称"`   // 设置字段大小为255
@@ -21,7 +21,7 @@ type UserReport struct {
 }
 
 type UserReportList struct {
-	Grade         int64  `gorm:"type:int(10);not null;default:0;comment:用户得分"`
+	Grade         string `gorm:"size:255;type:char(255);not null;default:0;comment:用户得分"`
 	Status        int64  `gorm:"type:int(1);not null;default:0;comment:状态值 1正常 2异常"`
 	UserName      string `gorm:"size:255;type:char(255);not null;default:0;comment:用户名字"`   // 设置字段大小为255
 	NickName      string `gorm:"size:255;type:char(255);not null;default:0;comment:用户昵称"`   // 设置字段大小为255

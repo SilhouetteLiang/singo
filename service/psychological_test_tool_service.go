@@ -1,6 +1,7 @@
 package service
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"
@@ -11,6 +12,7 @@ import (
 	"singo/serializer"
 )
 
+//dsadasd
 //新增论坛
 type Luntan struct {
 	Content  string `form:"content" json:"content"`
@@ -106,25 +108,25 @@ type EvaluationIndexService struct {
 
 //14测评 post 性格测试
 type XinggesService struct {
-	Grade  int64  `form:"grade" json:"grade"`
+	Grade  string `form:"grade" json:"grade"`
 	OpenId string `form:"openid" json:"openid"`
 }
 
 //15测评 post MBTI测试
 type MBTIService struct {
-	Grade  int64  `form:"grade" json:"grade"`
+	Grade  string `form:"grade" json:"grade"`
 	OpenId string `form:"openid" json:"openid"`
 }
 
 //16测评 post 快乐指数测试
 type KuaileService struct {
-	Grade  int64  `form:"grade" json:"grade"`
+	Grade  string `form:"grade" json:"grade"`
 	OpenId string `form:"openid" json:"openid"`
 }
 
 //17测评 post 情商测试
 type QingShangService struct {
-	Grade  int64  `form:"grade" json:"grade"`
+	Grade  string `form:"grade" json:"grade"`
 	OpenId string `form:"openid" json:"openid"`
 }
 
@@ -161,31 +163,25 @@ type MineIndexService struct {
 	UserPoints int64  `form:"userpoints" json:"userpoints"`
 }
 
-//Grade         int64  `gorm:"type:int(10);not null;default:0;comment:用户得分"`
-//Status        int64  `gorm:"type:int(1);not null;default:0;comment:状态值 1正常 2异常"`
-//UserName      string `gorm:"size:255;type:char(255);not null;default:0;comment:用户名字"`   // 设置字段大小为255
-//NickName      string `gorm:"size:255;type:char(255);not null;default:0;comment:用户昵称"`   // 设置字段大小为255
-//Uid           int64  `gorm:"type:int(1);not null;default:10001;comment:用户ID"`           // 设置字段大小为255
-//ReportContent string `gorm:"size:255;type:char(255);not null;default:0;comment:报告附加内容"` // 设置字段大小为255
-//ReportContent string `gorm:"size:255;type:char(255);not null;default:0;comment:报告附加内容"` // 设置字段大小为255
-//ReportType    int64  `gorm:"int(10);not null;default:1;comment:报告类型"`                   // 设置字段大小为255
-//ReportName    string `gorm:"size:255;type:char(255);not null;default:0;comment:报告名字"`   // 设置字段大小为255
 //19我的 报告
 type MineReportService struct {
-	Grade      string `form:"grade" json:"grade"`
-	UserName   string `form:"username" json:"username"`
-	UserPoints int64  `form:"userpoints" json:"userpoints"`
-	ReportName string `form:"reportname" json:"reportname"`
+	OpenId string `form:"openid" json:"openid"`
+}
+
+//20我的 GET我发布的话术 desc
+type MinePublicService struct {
+	OpenId string `form:"openid" json:"openid"`
 }
 
 //23我的 从微信获取我的信息
 type MineUserinfoService struct {
-	UserName string `form:"userName" json:"userName"`
-	Nickname string `form:"nickName" json:"nickname"`
-	Avatar   string `form:"avatar" json:"avatar"`
-	Tell     string `form:"tell" json:"tell"`
-	DrawTag  string `form:"drawTag" json:"drawTag"`
-	OpenId   string `form:"openId" json:"openId"`
+	UserName     string `form:"userName" json:"userName"`
+	Nickname     string `form:"nickName" json:"nickname"`
+	Avatar       string `form:"avatar" json:"avatar"`
+	Tell         string `form:"tell" json:"tell"`
+	DrawTag      string `form:"drawTag" json:"drawTag"`
+	OpenId       string `form:"openId" json:"openId"`
+	InvitationId string `form:"invitation_id" json:"invitation_id"`
 }
 
 //23我的 从微信获取我的信息
@@ -362,7 +358,6 @@ func (service *SpeechSkillService) InputSpeechCraft(c *gin.Context) serializer.R
 }
 
 // 7.获取评论列表
-
 func (service *IndexSearchService) ForumCommentList(c *gin.Context, id int64, pageId int) serializer.Response {
 	LuntanComment := make([]model.LuntanComment, 0)
 	var count int64
@@ -382,7 +377,7 @@ func (service *IndexSearchService) ForumCommentList(c *gin.Context, id int64, pa
 
 // 8.论坛 发布评论
 func (service *ForumPublishCommentService) ForumPublishComment(c *gin.Context) serializer.Response {
-	fmt.Printf("service  %v  \n", service)
+	//fmt.Printf("service  %v  \n", service)
 	LuntanComment := model.LuntanComment{
 		LuntanId: service.LuntanId,
 		Content:  service.Content,
@@ -400,24 +395,79 @@ func (service *ForumPublishCommentService) ForumPublishComment(c *gin.Context) s
 
 // 8.论坛 点赞
 func (service *ForumZanService) ForumZan(c *gin.Context) serializer.Response {
-	Luntan := model.Luntan{}
+	Luntan := model.LuntanZan{}
+	LuntanComment := model.LuntanComment{
+		LuntanId: service.LuntanId,
+		Openid:   service.OpenId,
+		IsZan:    3,
+	}
+	//key := fmt.Sprintf("%v_%v", service.LuntanId, service.OpenId)
+	//fmt.Printf("key  : %v \n", key)
+	//// 添加string
+	//cache.RedisClient.Set("golang_redis", "golang", 0)
+	////ClientRedis.Set("golang_string", "golang", 0)
+	//// 获取string
+	//stringCmd := cache.RedisClient.Get("golang_redis")
+	//fmt.Println(stringCmd.String(), stringCmd.Args(), stringCmd.Val())
+	//// 删除string
+	//cache.RedisClient.Del("golang_redis")
+	var isDisplay int64
 	model.DB.Table("luntans").Select("zan").Where("id = ?", service.LuntanId).Find(&Luntan)
+	model.DB.Table("luntan_comments").Select("id").Where("luntan_id = ? And openid = ?", service.LuntanId, service.OpenId).Find(&LuntanComment)
+	//LuntanComment
+	// 新增数据
+	if LuntanComment.ID == 0 {
+		if err := model.DB.Create(&LuntanComment).Error; err != nil {
+			return serializer.ParamErr("新增luntan_comments 数据失败", err)
+		}
+	}
+	//fmt.Printf("LuntanComment11111111111  : %v \n", LuntanComment.ID)
+
 	if service.Type == 1 {
+		fmt.Printf("Type  : %v \n", service.Type)
 		var num int64
 		num = Luntan.Zan + 1
-		model.DB.Table("luntans").Where("id = ?", service.LuntanId).Update("zan", num)
+		res1 := model.DB.Table("luntans").Where("id = ?", service.LuntanId).Update("zan", num)
+		if res1.RowsAffected == 0 {
+			return serializer.Response{
+				Error: "1请查看luntanId是否正确",
+			}
+		}
+
+		res2 := model.DB.Table("luntan_comments").Where("luntan_id = ? And openid = ?", service.LuntanId, service.OpenId).Update("is_zan", 1)
+		if res2.RowsAffected == 0 {
+			return serializer.Response{
+				Error: "A该用户已经点赞不可以在点赞",
+			}
+		}
+		isDisplay = 1
 	}
 	if service.Type == 2 {
+		fmt.Printf("Type  : %v \n", service.Type)
+
 		var num int64
 		num = Luntan.Zan - 1
-		model.DB.Table("luntans").Where("id = ?", service.LuntanId).Update("zan", num)
+		res1 := model.DB.Table("luntans").Where("id = ?", service.LuntanId).Update("zan", num)
+		if res1.RowsAffected == 0 {
+			return serializer.Response{
+				Error: "2请查看 luntanId 是否正确",
+			}
+		}
+
+		res2 := model.DB.Table("luntan_comments").Where("luntan_id = ? And openid = ?", service.LuntanId, service.OpenId).Update("is_zan", 2)
+		if res2.RowsAffected == 0 {
+			return serializer.Response{
+				Error: "B该用户已经取消点赞不可以连续取消赞",
+			}
+		}
+		isDisplay = 2
 	}
 	// 新增数据
 	//model.DB.Table("luntans").Where("id = ?", service.LuntanId).Update("zan", 10)
 	//if err := model.DB.Create(&Luntan).Error; err != nil {
 	//	return serializer.ParamErr("新增失败", err)
 	//}
-	return serializer.BuildForumZanResponse(Luntan)
+	return serializer.BuildForumZanResponse(Luntan, isDisplay)
 }
 
 // 9.测评 首页
@@ -544,11 +594,11 @@ func (service *QingShangService) ResQingshangs(c *gin.Context) serializer.Respon
 }
 
 // 18.我的 首页
-func (service *MineIndexService) MineIndex(c *gin.Context) serializer.Response {
+func (service *MineIndexService) MineIndex(c *gin.Context, openid string) serializer.Response {
 	User := model.UserMine{}
 	//arr := [4]int64{5, 6, 7, 8}
-	uid := 1
-	model.DB.Table("users").Select("id,nickname,user_points,avatar").Where("id = ?", uid).Find(&User)
+	//uid := 1
+	model.DB.Table("users").Select("id,nickname,user_points,avatar").Where("open_id = ?", openid).Find(&User)
 	// 新增数据
 	//model.DB.Table("luntans").Where("id = ?", service.LuntanId).Update("zan", 10)
 	//if err := model.DB.Create(&Luntan).Error; err != nil {
@@ -558,11 +608,11 @@ func (service *MineIndexService) MineIndex(c *gin.Context) serializer.Response {
 }
 
 //19.我的 报告
-func (service *MineReportService) MineReport(c *gin.Context) serializer.Response {
+func (service *MineReportService) MineReport(c *gin.Context, openid string) serializer.Response {
 	UserReportList := []model.UserReportList{}
 	//arr := [4]int64{5, 6, 7, 8}
-	uid := 1
-	model.DB.Table("user_reports").Select("*").Where("id = ?", uid).Find(&UserReportList)
+	//uid := 1
+	model.DB.Table("user_reports").Select("*").Where("open_id = ?", openid).Find(&UserReportList)
 	// 新增数据
 	//model.DB.Table("luntans").Where("id = ?", service.LuntanId).Update("zan", 10)
 	//if err := model.DB.Create(&Luntan).Error; err != nil {
@@ -571,35 +621,70 @@ func (service *MineReportService) MineReport(c *gin.Context) serializer.Response
 	return serializer.BuildMineReportResponse(UserReportList)
 }
 
+//20我的 GET我发布的话术 desc
+func (service *MinePublicService) MinePublic(c *gin.Context, openid string) serializer.Response {
+	MyCraft := []model.MyCraft{}
+	model.DB.Table("crafts").Select("*").Where("openid = ?", openid).Find(&MyCraft)
+	return serializer.BuildMinePublicResponse(MyCraft)
+}
+
 //23我的 从微信获取我的信息
 func (service *MineUserinfoService) MineUserinfo(c *gin.Context) serializer.Response {
-	//UserName string `form:"userName" json:"userName"`
-	//Nickname string `form:"nickname" json:"nickname"`
-	//Avatar   string `form:"avatar" json:"avatar"`
-	//Tell     string `form:"tell" json:"tell"`
-	//DrawTag  string `form:"drawTag" json:"drawTag"`
-	//OpenId   string `form:"openId" json:"openId"`
-	userService := model.User{
-		UserName: service.UserName,
-		Nickname: service.Nickname,
-		Avatar:   service.Avatar,
-		Tell:     service.Tell,
-		DrawTag:  service.DrawTag,
-		OpenId:   service.OpenId,
+	var Point int64
+	if len(service.InvitationId) == 0 {
+		Point = 0
 	}
-	fmt.Printf("userService  %v  \n", userService)
-	// 新增数据
-	if err := model.DB.Create(&userService).Error; err != nil {
-		return serializer.ParamErr("新增失败", err)
+	if len(service.InvitationId) != 0 {
+		Point = 3
 	}
-	return serializer.BuildMineUserinfoResponse(userService)
+	//获取用户信息
+	UserInfo := model.User{}
+	model.DB.Table("users").Select("id").Where("open_id = ?", service.OpenId).Find(&UserInfo)
+	//1.老用户修改数据
+	if UserInfo.ID != 0 { //
+		UserPoints := 3 + UserInfo.UserPoints
+		model.DB.Table("users").Where("open_id = ?", service.OpenId).Update("user_points", UserPoints)
+	}
+	//2.新用户新增数据
+	if UserInfo.ID != 0 { //
+		userService := model.User{
+			UserName:   service.UserName,
+			Nickname:   service.Nickname,
+			Avatar:     service.Avatar,
+			Tell:       service.Tell,
+			DrawTag:    service.DrawTag,
+			OpenId:     service.OpenId,
+			UserPoints: Point,
+		}
+		// 新增数据
+		if err := model.DB.Create(&userService).Error; err != nil {
+			return serializer.ParamErr("新增失败", err)
+		}
+	}
+	fmt.Printf("UserID  : %v \n", UserInfo.ID)
+	//db.Last(&user)
+	user := model.User{}
+	model.DB.Table("users").Last(&user)
+
+	return serializer.BuildMineUserinfoResponse(user)
 }
 
 const (
+	//code2sessionURL = "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code"
 	code2sessionURL = "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code"
 	appID           = "wx6902b88cb7e7ea61"
-	appSecret       = "1f568972901352eb6814e4dc1b9d50e1"
+	//appSecret       = "1f568972901352eb6814e4dc1b9d50e1" //1f568972901352eb6814e4dc1b9d50e1
+	appSecret = "85d7cc18ef1845aacd98235ecc1c2df6" //85d7cc18ef1845aacd98235ecc1c2df6
+
 )
+
+type SnsOauth2 struct {
+	AccessToken  string `json:"access_token"`
+	ExpiresIn    int    `json:"expires_in"`
+	Openid       string `json:"openid"`
+	RefreshToken string `json:"refresh_token"`
+	Scope        string `json:"scope"`
+}
 
 //24我的 返回系统定义的uid为openid
 func (service *MineReturnUidService) MineReturnUid(c *gin.Context) serializer.Response {
@@ -613,48 +698,34 @@ func (service *MineReturnUidService) MineReturnUid(c *gin.Context) serializer.Re
 		}
 	}
 	fmt.Printf("UserID  : %v \n", UserID.ID)
-	fmt.Printf("11111  : %v \n", UserID.ID)
-
-	//调用auth.code2Session接口获取openid
-	//url := fmt.Sprintf(code2sessionURL, service.Appid, service.Appsecret, service.Code)
-	//resp, err := http.Get(url)
-	//if err != nil {
-	//	return serializer.Response{
-	//		Error: "用户已经存在无法新增",
-	//	}
-	//}
-	//defer resp.Body.Close()
-	//body, err := ioutil.ReadAll(resp.Body)
-	//json := gojsonq.New().FromString(string(body)).Find("openid")
-	//openId := json.(string)
-	//fmt.Println("my openid is: ", openId)
-
 	//调用auth.code2Session接口获取openid
 	url := fmt.Sprintf(code2sessionURL, appID, appSecret, service.Code)
+	fmt.Printf("service.Code  : %v \n", service.Code)
 	resp, err := http.Get(url)
 	if err != nil {
 		return serializer.Response{
 			Error: "获取微信openid失败",
 		}
 	}
-	fmt.Printf("22  : %v \n", resp)
-
+	fmt.Printf("resp  : %v \n", resp)
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 
-	fmt.Printf("331  : %v \n", body)
-	fmt.Printf("332  : %v \n", err)
-	//
+	atr := SnsOauth2{}
+	err = json.Unmarshal(body, &atr)
+	if err != nil {
+		fmt.Println("发送get请求获取 openid 返回数据json解析错误", err)
+	}
+	fmt.Printf("atr  : %v \n", atr)
 	json := gojsonq.New().FromString(string(body)).Find("openid")
 	//微信code  5分钟之后过期
+	fmt.Printf("json  : %v \n", json)
 	if json == nil {
 		return serializer.Response{
 			Error: "获取微信openid失败 需要重新code",
 		}
 	}
-	fmt.Printf("333  : %v \n", json)
 	openId := json.(string)
-	fmt.Printf("334  : %v \n", json)
 	fmt.Println("my openid is: ", openId)
 
 	//id := uuid.NewV4()
@@ -667,13 +738,9 @@ func (service *MineReturnUidService) MineReturnUid(c *gin.Context) serializer.Re
 		AppSecret: service.Appsecret,
 		OpenId:    openId,
 	}
-	fmt.Printf("userService  %v  \n", userService)
-	fmt.Printf("333335  : %v \n", UserID.ID)
-
 	// 新增数据
 	if err := model.DB.Create(&userService).Error; err != nil {
 		fmt.Printf("44  : %v \n", UserID.ID)
-
 		return serializer.ParamErr("新增失败", err)
 	}
 	fmt.Printf("55  : %v \n", UserID.ID)
