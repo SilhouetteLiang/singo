@@ -14,6 +14,7 @@ func migration() {
 	_ = DB.AutoMigrate(&LuntanComment{})
 	_ = DB.AutoMigrate(&UserReport{})
 	_ = DB.AutoMigrate(&TestType{})
+	_ = DB.AutoMigrate(&UserInvitationRecord{})
 	//_ = DB.AutoMigrate(&Content{})
 	//	_ = DB.AutoMigrate(&Tag{})
 	//	_ = DB.AutoMigrate(&TestBasic{})

@@ -508,6 +508,13 @@ func BuildMinePublicResponse(MyCraft []model.MyCraft) Response {
 	}
 }
 
+//2121我的 GET邀请用户 desc
+func BuildMineInvitationResponse(UserInvitationInfo []model.UserInvitationInfo) Response {
+	return Response{
+		Data: UserInvitationInfo,
+	}
+}
+
 //23我的 从微信获取我的信息
 func BuildMineUserinfoResponse(userInfo model.User) Response {
 	return Response{

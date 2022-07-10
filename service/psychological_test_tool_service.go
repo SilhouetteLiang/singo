@@ -8,6 +8,7 @@ import (
 	"github.com/thedevsaddam/gojsonq/v2"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"singo/model"
 	"singo/serializer"
 )
@@ -108,8 +109,12 @@ type EvaluationIndexService struct {
 
 //14测评 post 性格测试
 type XinggesService struct {
-	Grade  string `form:"grade" json:"grade"`
-	OpenId string `form:"openid" json:"openid"`
+	Grade       string `form:"grade" json:"grade"`
+	OpenId      string `form:"openid" json:"openid"`
+	RedGrade    string `form:"red_grade" json:"red_grade"`
+	BlueGrade   string `form:"blue_grade" json:"blue_grade"`
+	YellowGrade string `form:"yellow_grade" json:"yellow_grade"`
+	GreenGrade  string `form:"green_grade" json:"green_grade"`
 }
 
 //15测评 post MBTI测试
@@ -170,6 +175,11 @@ type MineReportService struct {
 
 //20我的 GET我发布的话术 desc
 type MinePublicService struct {
+	OpenId string `form:"openid" json:"openid"`
+}
+
+//21我的 GET邀请用户 desc
+type MineInvitation struct {
 	OpenId string `form:"openid" json:"openid"`
 }
 
@@ -530,12 +540,16 @@ func (service *PsychologicalService) EvaluationQingshang(c *gin.Context) seriali
 
 // 14测评 post 性格测试
 func (service *XinggesService) ResXingges(c *gin.Context) serializer.Response {
-	//fmt.Printf("service  %v  \n", service)
+	fmt.Printf("service  %v  \n", service)
 	UserReport := model.UserReport{
-		Grade:      service.Grade,
-		OpenId:     service.OpenId,
-		ReportName: "性格测试",
-		Status:     1,
+		Grade:       service.Grade,
+		OpenId:      service.OpenId,
+		ReportName:  "性格测试",
+		Status:      1,
+		RedGrade:    service.RedGrade,
+		BlueGrade:   service.BlueGrade,
+		YellowGrade: service.YellowGrade,
+		GreenGrade:  service.GreenGrade,
 	}
 	fmt.Printf("UserReport  %v  \n", UserReport)
 	// 新增数据
@@ -628,6 +642,13 @@ func (service *MinePublicService) MinePublic(c *gin.Context, openid string) seri
 	return serializer.BuildMinePublicResponse(MyCraft)
 }
 
+//21我的 GET邀请用户 desc
+func (service *MineInvitation) MineInvitation(c *gin.Context, openid string) serializer.Response {
+	UserInvitationInfo := []model.UserInvitationInfo{}
+	model.DB.Table("user_invitation_records").Select("invitation_id,invitation_nick_name,invitation_avatar,invitation_integral").Where("open_id = ?", openid).Find(&UserInvitationInfo)
+	return serializer.BuildMineInvitationResponse(UserInvitationInfo)
+}
+
 //23我的 从微信获取我的信息
 func (service *MineUserinfoService) MineUserinfo(c *gin.Context) serializer.Response {
 	var Point int64
@@ -636,16 +657,35 @@ func (service *MineUserinfoService) MineUserinfo(c *gin.Context) serializer.Resp
 	}
 	if len(service.InvitationId) != 0 {
 		Point = 3
+		//1.1建立用户和邀请用户的关系
+		//1.2获取用户和邀请关系的信息
+		UserInvitation := model.UserInvitationRecord{}
+		model.DB.Table("users").Select("id").Where("open_id = ? And invitation_id = ", service.OpenId, service.InvitationId).Find(&UserInvitation)
+		if UserInvitation.ID != 0 {
+			return serializer.Response{
+				Error: "该用户已被邀请过，不能重复邀请",
+			}
+		}
+		//1.3 新增数据
+		userService := model.UserInvitationRecord{
+			UserName:           service.UserName,
+			OpenId:             service.OpenId,
+			InvitationId:       service.InvitationId,
+			InvitationIntegral: "2",
+		}
+		if err := model.DB.Create(&userService).Error; err != nil {
+			return serializer.ParamErr("新增 用户和邀请关系 失败", err)
+		}
 	}
 	//获取用户信息
 	UserInfo := model.User{}
 	model.DB.Table("users").Select("id").Where("open_id = ?", service.OpenId).Find(&UserInfo)
-	//1.老用户修改数据
+	//2.1老用户修改数据
 	if UserInfo.ID != 0 { //
 		UserPoints := 3 + UserInfo.UserPoints
 		model.DB.Table("users").Where("open_id = ?", service.OpenId).Update("user_points", UserPoints)
 	}
-	//2.新用户新增数据
+	//2.2新用户新增数据
 	if UserInfo.ID != 0 { //
 		userService := model.User{
 			UserName:   service.UserName,
@@ -662,21 +702,12 @@ func (service *MineUserinfoService) MineUserinfo(c *gin.Context) serializer.Resp
 		}
 	}
 	fmt.Printf("UserID  : %v \n", UserInfo.ID)
-	//db.Last(&user)
+
 	user := model.User{}
 	model.DB.Table("users").Last(&user)
 
 	return serializer.BuildMineUserinfoResponse(user)
 }
-
-const (
-	//code2sessionURL = "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code"
-	code2sessionURL = "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code"
-	appID           = "wx6902b88cb7e7ea61"
-	//appSecret       = "1f568972901352eb6814e4dc1b9d50e1" //1f568972901352eb6814e4dc1b9d50e1
-	appSecret = "85d7cc18ef1845aacd98235ecc1c2df6" //85d7cc18ef1845aacd98235ecc1c2df6
-
-)
 
 type SnsOauth2 struct {
 	AccessToken  string `json:"access_token"`
@@ -699,7 +730,12 @@ func (service *MineReturnUidService) MineReturnUid(c *gin.Context) serializer.Re
 	}
 	fmt.Printf("UserID  : %v \n", UserID.ID)
 	//调用auth.code2Session接口获取openid
-	url := fmt.Sprintf(code2sessionURL, appID, appSecret, service.Code)
+	//os.Getenv("MYSQL_DSN")
+
+	//os.Getenv("CODE_SESSION_URL")
+	//os.Getenv("APP_ID")
+	//os.Getenv("APP_SECRET")
+	url := fmt.Sprintf(os.Getenv("CODE_SESSION_URL"), os.Getenv("APP_ID"), os.Getenv("APP_SECRET"), service.Code)
 	fmt.Printf("service.Code  : %v \n", service.Code)
 	resp, err := http.Get(url)
 	if err != nil {

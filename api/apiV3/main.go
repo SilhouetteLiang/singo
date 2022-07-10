@@ -290,12 +290,14 @@ func MinePublic(c *gin.Context) {
 
 //21我的 GET邀请用户
 func MineInvitation(c *gin.Context) {
-	array := [5]string{"亲子关系", "亲密关系", "职场晋升", "刚毕业", "怎么和领导相处"}
-	c.JSON(200, gin.H{
-		"code": 200,
-		"msg":  "获取成功",
-		"data": array,
-	})
+	var service service.MineInvitation
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.MineInvitation(c, service.OpenId) //TestSelect
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, "ErrorResponse")
+	}
+	
 }
 
 //22我的 GET规则说明 积分规则 积分享受的权益
