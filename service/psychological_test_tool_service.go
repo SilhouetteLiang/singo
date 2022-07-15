@@ -726,25 +726,27 @@ type SnsOauth2 struct {
 	Scope        string `json:"scope"`
 }
 
+//CODE_SESSION_URL = "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code"
+//APP_ID           = "wx6902b88cb7e7ea61"
+//APP_SECRET = "85d7cc18ef1845aacd98235ecc1c2df6"
+
 //24我的 返回系统定义的uid为openid
 func (service *MineReturnUidService) MineReturnUid(c *gin.Context) serializer.Response {
 	//获取code
 	//code := c.PostForm("code")
-	UserID := model.User{}
-	model.DB.Table("users").Select("id").Where("user_code = ?", service.Code).Find(&UserID)
-	if UserID.ID != 0 {
+	UserInfo := model.User{}
+	model.DB.Table("users").Select("id").Where("user_code = ?", service.Code).Find(&UserInfo)
+	if UserInfo.ID != 0 {
 		return serializer.Response{
 			Error: "用户已经存在无法新增",
 		}
 	}
-	fmt.Printf("UserID  : %v \n", UserID.ID)
-	//调用auth.code2Session接口获取openid
-	//os.Getenv("MYSQL_DSN")
+	fmt.Printf("UserID  : %v \n", UserInfo.ID)
 
-	//os.Getenv("CODE_SESSION_URL")
-	//os.Getenv("APP_ID")
-	//os.Getenv("APP_SECRET")
 	url := fmt.Sprintf(os.Getenv("CODE_SESSION_URL"), os.Getenv("APP_ID"), os.Getenv("APP_SECRET"), service.Code)
+	//url := fmt.Sprintf(code2sessionURL, appID, appSecret, service.Code)
+	//https://api.weixin.qq.com/sns/jscode2session?appid=wx6902b88cb7e7ea61&secret="85d7cc18ef1845aacd98235ecc1c2df6" //85d7cc18ef1845aacd98235ecc1c2df6&js_code=063nLk000sbWbO1I5v1009YN0Y2nLk0S&grant_type=authorization_code
+	fmt.Printf("url  : %v \n", url)
 	fmt.Printf("service.Code  : %v \n", service.Code)
 	resp, err := http.Get(url)
 	if err != nil {
@@ -783,12 +785,14 @@ func (service *MineReturnUidService) MineReturnUid(c *gin.Context) serializer.Re
 		AppSecret: service.Appsecret,
 		OpenId:    openId,
 	}
-	// 新增数据
-	if err := model.DB.Create(&userService).Error; err != nil {
-		fmt.Printf("44  : %v \n", UserID.ID)
-		return serializer.ParamErr("新增失败", err)
+	//查看openid是否存在
+	model.DB.Table("users").Select("id").Where("user_code = ?", service.Code).Find(&UserInfo)
+	if UserInfo.OpenId != "openId" {
+		//新增数据
+		if err := model.DB.Create(&userService).Error; err != nil {
+			return serializer.ParamErr("新增失败", err)
+		}
 	}
-	fmt.Printf("55  : %v \n", UserID.ID)
 
 	return serializer.BuildMineReturnUidResponse(userService)
 }
