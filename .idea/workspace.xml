@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1a950de5-a1e4-4939-8e6f-e9c977b4ad92" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/server/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/router.go" afterDir="false" />
-    </list>
+    <list default="true" id="1a950de5-a1e4-4939-8e6f-e9c977b4ad92" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,11 +25,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server/router.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
+            <state relative-caret-position="108">
               <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
-              <folding>
-                <element signature="e#16#138#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -63,8 +58,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="551" />
-    <option name="y" value="25" />
+    <option name="x" value="660" />
+    <option name="y" value="83" />
     <option name="width" value="1789" />
     <option name="height" value="1340" />
   </component>
@@ -81,11 +76,6 @@
               <item name="singo" type="b2602c69:ProjectViewProjectNode" />
               <item name="singo" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="singo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="singo" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -93,6 +83,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
@@ -114,7 +105,7 @@
     </option>
   </component>
   <component name="ToolWindowManager">
-    <frame x="551" y="25" width="1789" height="1340" extended-state="0" />
+    <frame x="660" y="83" width="1789" height="1340" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24986026" />
@@ -154,11 +145,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server/router.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
+        <state relative-caret-position="108">
           <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
-          <folding>
-            <element signature="e#16#138#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
