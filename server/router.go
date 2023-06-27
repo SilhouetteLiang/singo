@@ -47,7 +47,6 @@ func NewRouter() *gin.Engine {
 	{
 		v2.POST("ping", apiV2.Pings)
 		v2.GET("lottery/algorithm", apiV2.LotteryAlgorithm)
-
 	}
 	//心里测试项目--小众人群的社交软件
 	v3 := r.Group("/api/v3")

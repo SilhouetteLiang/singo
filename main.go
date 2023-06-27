@@ -5,10 +5,21 @@ import (
 	"singo/server"
 )
 
+https://www.google-analytics.com/mp/collect?api_secret=SDm3qjFNQqm1rhiC6VyTVA&firebase_app_id=1:341713635272:android:3595aeaaa9d77ce2
+
+https://www.google-analytics.com/mp/collect?api_secret=SDm3qjFNQqm1rhiC6VyTVA&firebase_app_id=1:341713635272:android:3595aeaaa9d77ce2
+
+
+https://www.google-analytics.com/mp/collect?api_secret=SDm3qjFNQqm1rhiC6VyTVA&firebase_app_id=1:341713635272:android:3595aeaaa9d77ce2
+
+
+https://www.google-analytics.com/mp/collect?api_secret=SDm3qjFNQqm1rhiC6VyTVA&firebase_app_id=1:341713635272:android:3595aeaaa9d77ce2
+
+
 func main() {
 	// 从配置文件读取配置
 	conf.Init()
-	// 装载路由
+	// 装载路由x
 	r := server.NewRouter()
 	//r.Run(":80")
 
