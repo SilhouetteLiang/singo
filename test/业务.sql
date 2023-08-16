@@ -1,3 +1,739 @@
+
+1010    300000 
+1011    330000
+1012    370000
+1013    410000
+1014    450000
+1015    480000
+1016    520000
+
+
+1350
+1351
+1352
+1353
+1354
+1355
+1356
+
+
+Plafon Pinjaman Telah Naik!
+Content: 
+Karena riwayatmu baik, kami sudah menaikkan plafonmu dari Rp{{$ds.amount}}menjadi Rp{{$ds.new_amount}}. Ayo buka UangMe untuk bisa cairkan limit barumu!
+
+
+Pinjam Lagi Dengan Limit Lebih Besar!
+Kuota Pinjamanmu sudah diupgrade loh dari Rp{{$ds.amount}} menjadi Rp{{$ds.new_amount}}! Ayo cairkan kembali di UangMe dan manfaatkan semaksimal mungkin!
+
+
+
+
+
+
+
+
+INSERT INTO `market_event_field` (`source`, `name`, `value`, `target_name`, `target_value`, `created`, `updated`)
+VALUES
+	( 'google', 'ltv', '280', 'user_rc_lev_3', '1', 1690771655, 1690771655),
+	( 'google', 'ltv', '250', 'user_rc_lev_3', '2', 1690771655, 1690771655),
+	( 'google', 'ltv', '60', 'user_rc_lev_3', '3', 1690771655, 1690771655),
+	( 'google', 'ltv', '34', 'user_rc_lev_3', '4', 1690771655, 1690771655),
+	( 'google', 'ltv', '8', 'user_rc_lev_3', '5', 1690771655, 1690771655),
+	( 'google', 'ltv', '0', 'user_rc_lev_3', '6', 1690771655, 1690771655),
+	( 'google', 'ltv', '0', 'user_rc_lev_3', '7', 1690771655, 1690771655);
+
+INSERT INTO `market_event_rule` (`strategy_id`, `action`, `filters`, `template`, `event_name`, `event_value`, `source`, `status`, `ext`, `created`, `updated`)
+VALUES
+	(4, 'market_event_action', '[{\"name\":\"user_rc_lev_3\",\"label\":\"用户等级过滤器\",\"params\":{\"user_rc_lev_3\":[1,2,3,4,5,6,7]}},{\"name\":\"promote_platform\",\"label\":\"渠道过滤器\",\"params\":{\"promote_platform\":[2]}}]', '{\"value\": \"{{$ds.market_event_field.ltv.user_rc_lev_3}}\"}', 'new_user_limit', '1009', 'google', 1, NULL, 0, 0);
+
+
+
+1005老客营销普调PUSH 2250000≤限额<3000000 2023年07月29日 110000
+1006老客营销普调PUSH 3000000≤限额<3750000 2023年07月29日 150000
+1007老客营销普调PUSH 3750000≤限额<4500000 2023年07月29日 180000
+1008老客营销普调PUSH 4500000≤限额<5250000 2023年07月29日 220000
+1009老客营销普调PUSH 5250000≤限额<6000000 2023年07月29日 260000
+
+1005老客营销普调PUSH 2250000≤限额<3000000 2023年07月29日
+1006老客营销普调PUSH 3000000≤限额<3750000 2023年07月29日
+1007老客营销普调PUSH 3750000≤限额<4500000 2023年07月29日
+1008老客营销普调PUSH 4500000≤限额<5250000 2023年07月29日
+1009老客营销普调PUSH 5250000≤限额<6000000 2023年07月29日
+
+提额券ID    提额额度
+1005        110000
+1006        150000
+1007        180000
+1008        220000
+1009        260000
+
+1334-
+1335
+1336
+1337
+1338
+
+1329-82319  28号
+1330-82318  28号
+1331-82317  28号
+1332-82321  28号
+1333-82320  28号
+
+1329-83371  29号
+1330-83372  29号
+1331-83369  29号
+1332-83370  29号
+1333-83368  29号
+
+
+
+
+
+
+1010老客营销普调PUSH 6000000≤限额<6750000   
+1011老客营销普调PUSH 6750000≤限额<7500000
+1012老客营销普调PUSH 7500000≤限额<8250000
+1013老客营销普调PUSH 8250000≤限额<9000000
+1014老客营销普调PUSH 9000000≤限额<9750000
+1015老客营销普调PUSH 9750000≤限额<10500000
+1016老客营销普调PUSH 6750000≤限额<7500000
+
+
+SELECT DISTINCT(ual.uid) AS uid,
+        pa.total_amount AS amount,
+        pa.total_amount+260000 AS new_amount
+FROM user_active_log AS ual
+LEFT JOIN product_account pa
+    ON ual.uid = pa.uid
+LEFT JOIN user_rc_info uri
+    ON ual.uid = uri.uid
+LEFT JOIN user_loan ul
+    ON ual.uid = ul.uid
+WHERE ual.created
+    BETWEEN UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 30 DAY))
+        AND UNIX_TIMESTAMP()
+        AND pa.use_amount/pa.total_amount >= 0.5
+        AND uri.is_no_cycle = 0
+        AND ul.status IN (3,4)
+        AND pa.total_amount >= 5250000
+        AND pa.total_amount <  6000000
+ORDER BY  ul.uid 
+
+[UangMe] Kuota Pinjamanmu sudah diupgrade loh dari Rp{{$ds.amount}} menjadi Rp ({{$ds.amount}}+110000)! Ayo cairkan kembali di UangMe dan manfaatkan semaksimal mungkin!
+
+
+select count(id) as num from (
+select id,message_id,state,substring_index(substring_index(description,'"result":',-1),',"',1) AS 'result' from hokuto_msg_topic where created between 1680278400 and 1682870400
+) as t where t.result = false
+
+2023年07月26日 星期三
+
+
+select * from task_log where task_id in (1172,1173,1174,1199) and created=0 and status = 1 and event_type = 2
+
+
+SELECT count(task_id) AS data FROM(SELECT count(id) AS num, event_type , task_id FROM task_log WHERE task_id in(1166,1185,1167,1172,1178,1173,1199,1179,1172,1175,1173,1176,1199,1200,1174,1177,1178,1179,1180,1181,1182,1183) AND status = 1 AND event_type=2 AND created >= UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL -1 DAY))-16*3600 GROUP BY event_type, task_id) AS a
+
+SELECT count(task_id) AS data FROM(SELECT count(id) AS num, event_type , task_id FROM task_log WHERE task_id in(1166, 1167, 1168, 1169, 1170, 1171, 1172, 1173, 1174, 1175, 1176, 1177, 1199, 1200, 1178, 1179, 1180, 1181, 1182, 1183) AND status = 1 AND event_type=2 AND created >= UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL -1 DAY))-16*3600 GROUP BY event_type, task_id) AS a
+  
+
+update task_log set created = 1687742068 where task_id in (1172,1173,1174,1199) and created=0 and status = 1 and event_type = 2
+
+UPDATE `task_log` SET `created` = '1687742068' WHERE `task_id` in (1172,1173,1174,1199) and created=0 and status = 1 and event_type = 2;
+
+select * from task_log WHERE `task_id` in (1172,1173,1174,1199) and created=0 and status = 1 and event_type = 2;
+
+UPDATE `task_log` SET `created` = '1687742068' WHERE `task_id` in (1172,1173,1174,1199,1175,1176,1177,1200,1178,1179,1180,1181,1182,1183) and created=0 and status = 1 and event_type = 2;
+
+select count(id) as num,task_id from task_log  WHERE `task_id` in (1172,1173,1174,1199,1175,1176,1177,1200,1178,1179,1180,1181,1182,1183) and created>=1687742067 and status = 1 and event_type = 2  group by task_id;
+
+select count(id) as num,task_id from task_log  WHERE `task_id` in (1172,1173,1174,1199,1175,1176,1177,1200,1178,1179,1180,1181,1182,1183) and created=0 and status = 1 and event_type = 1  group by task_id;
+
+
+
+select * from task_log where event_name = 'strategy_account_amount_action' and  limit  100
+
+select * from task_log  WHERE `task_id` in (1172,1173,1174,1199,1175,1176,1177,1200,1178,1179,1180,1181,1182,1183) and created=0 ;
+
+select task_id,count(id) as num from task_log where created=0 group by task_id
+
+select 
+count(id) as data,
+event_type ,
+task_id
+from task_log 
+where task_id in (1172,1175,1173,1176,1199,1200,1174,1177,1178,1179,1180,1181,1182,1183) 
+and status = 1  
+and event_type=2
+and created >= UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL -1 DAY))-16*3600
+group by  event_type,
+task_id 
+order by data limit 1
+
+select from_unixtime(UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL -1 DAY))-16*3600) as da,UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 5 DAY))-7*3600,UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL -1 DAY))-14*3600
+select count(id) as data, event_type , task_id from task_log where task_id in(1166,1185,1167,1172,1178,1173,1199,1179,1172,1175,1173,1176,1199,1200,1174,1177,1178,1179,1180,1181,1182,1183) and status = 1 and event_type=2 and created >= UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL -1 DAY))-16*3600 group by event_type, task_id 
+order by data limit 1;
+
+select count(id) as data, event_type , task_id from task_log where task_id in(1166,1185,1167,1172,1178,1173,1199,1179,1172,1175,1173,1176,1199,1200,1174,1177,1178,1179,1180,1181,1182,1183) and status = 1 and event_type=2 and created >= UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL -1 DAY))-16*3600 group by event_type, task_id order by data limit 1;
+
+select  from_unixtime(UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL -1 DAY))-16*3600)
+
+select count(id) as num from task_log where task_id = 1185 and event_name = 'incentive_push_action' and created >= UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL -1 DAY))-16*3600 
+
+
+
+select 
+count(id) as num,
+event_type,
+task_id
+from task_log 
+where task_id in (1166,1185,1167,1172,1178,1173,1199,1179) 
+and status = 1  
+and event_type=2
+and created >=1689721995 
+group by  event_type,
+task_id 
+
+(1166, 1167, 1168, 1169, 1170, 1171) 
+(1166, 1167, 1168, 1169, 1170, 1171, 1172, 1173, 1174, 1175, 1176, 1177, 1199, 1200, 1178, 1179, 1180, 1181, 1182, 1183)
+select 
+count(id) as num,
+event_type,
+task_id
+from task_log 
+where task_id in(1172, 1173, 1174, 1175, 1176, 1177, 1199, 1200, 1178, 1179, 1180, 1181, 1182, 1183) 
+and status = 1  
+and event_type=2
+and created >=1689523200 
+group by  event_type,
+task_id 
+
+select * from task_log where task_id = 1260 and  created between UNIX_TIMESTAMP()-86400 and UNIX_TIMESTAMP() 
+
+select count(id) as num from  market_event_log where event_name = 'google_registration' and created between UNIX_TIMESTAMP()-1800 and UNIX_TIMESTAMP()
+
+select count(id) as num,event_name from market_event_log where status = 1 and event_value in ('1005','1006','1007','1008') and created between UNIX_TIMESTAMP()-86400 and UNIX_TIMESTAMP()-101*60 group by event_name
+
+select count(id) as num,event_name from market_event_log where status = 1 and event_value in ('1005','1006','1007','1008') and created between UNIX_TIMESTAMP()-86400 and UNIX_TIMESTAMP() group by event_name
+
+(1172,1178,1173,1199,1179) 
+1172,1178
+
+select * from (
+select uid,task_id from task_log where task_id in (1172,1178) 
+and status = 1  
+and event_type=2
+and created >=1689721995 order by task_id desc)
+as a where a.uid   in (2091257, 1482358, 4727543, 5946982, 9355997, 10500242, 11076946, 11041087, 11233671, 11291988, 11293674, 11867671, 11446648, 11366664, 11383765, 11483942, 10865642, 11509365, 11883693, 11667257, 11014779, 11236859, 11373440, 11228279, 11473881, 11376355, 11584040, 11515762, 11676140, 11630241, 11953540, 4006844, 5066071, 7302278, 6133268, 11172457, 11325748, 11392342, 11313151, 11246940, 11698942, 11530874, 11478040, 11399968, 11674443, 11597773, 11610996, 401986, 1214248, 1575090, 3315766, 1767142, 3717865, 3025948, 2270050, 4353051, 4071445, 5013071, 5693885, 5789850, 3342943, 3816740, 5037450, 4443681, 6057075, 6206745, 4878540, 4627253, 5747986, 7244758, 8816966, 10502372)
+
+select * from task_log where created >=1689721995 and uid = 11373440
+
+select uid,
+         JSON_EXTRACT(event_result,
+         "$.amount") AS amount,
+         JSON_EXTRACT(event_result,
+         "$.raise_amount") AS raise_amount,
+         JSON_EXTRACT(event_result,
+         "$.new_amount") AS new_amount from task_log where uid in(11858880, 11755263, 11713891, 11704369, 11686765, 11575655, 11568684, 11486970, 11456966, 11413079, 11385083, 11384163, 11327981, 11275170, 11268054, 11265854, 11228268, 11226091, 11183876, 11141774, 11039671, 10793361, 10752453, 10742089, 10163591, 10048758, 8245177, 6173051, 5279786, 3432398, 581074) and task_id in (1173,1199,1179) and event_type = 2 and status = 1 AND created >=1688343688
+         
+       select UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 2 DAY)),UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 1 DAY))
+       
+       select UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 2 DAY))-7*3600,UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 1 DAY))-7*3600
+
+select * from (
+select uid from task_log where task_id in (1172,1178) 
+and status = 1  
+and event_type=2
+and created >=1688343688 order by uid desc)
+as a where a.uid not in (3390359, 7491653, 7518370, 11240773, 1383895, 3365754, 3966785, 4040162, 4186060, 7366683, 9021372, 3741791, 3660589, 4232476, 6266550, 5613779, 5823397, 11102876, 11185278, 11123893, 11259198, 11315057, 11048695, 11202088, 11493159, 11479761, 11504793, 11508372, 11523080, 11276367, 11326677, 11364987, 11602595, 11215074, 11621596, 11259582, 575159, 1143172, 2248397, 1924697, 1660190, 2708767, 2324179, 2405895, 2482988, 4337997, 3610176, 3239467, 3675386, 4335684, 2881778, 3655598, 4676363, 5028251, 2527567, 3537956, 3479095, 3809859, 3543976, 3021256, 4145455, 3238156, 3822497, 3657352, 3558892, 6267459, 4453374, 3309267, 7233991, 5427462, 5418892, 7198071, 4259187, 5491052, 4349062, 8271198, 5033974, 4828399, 4348395, 4631761, 6483471, 6136071, 4611371, 8684764, 6702377, 6176859, 7040469, 5557856, 5940682, 7300553, 5742183, 10200683, 7374568)
+
+select * from task_log where uid in(7029653, 5729283, 5726375, 5237381, 4820774, 4733970, 3252595, 2289071) and task_id in (1172,1178) and event_type = 2 and status = 1
+
+
+SELECT uid,
+         JSON_EXTRACT(event_result,
+         "$.amount") AS amount,
+         JSON_EXTRACT(event_result,
+         "$.raise_amount") AS raise_amount,
+         JSON_EXTRACT(event_result,
+         "$.new_amount") AS new_amount
+FROM task_log
+WHERE task_id IN (1167)
+        AND status = 1
+        AND event_type=2
+        AND created >=1688343688
+ORDER BY  uid desc
+
+select * from task_log where task_id = 1207
+
+select count(task_id) as data from (
+select count(id) as num, event_type , task_id from task_log where task_id in(1166,1185,1167,1172,1178,1173,1199,1179,1172,1175,1173,1176,1199,1200,1174,1177,1178,1179,1180,1181,1182,1183) and status = 1 and event_type=2 and created >= UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL -1 DAY))-16*3600 group by event_type, task_id) as a
+
+SELECT count(t.task_id) AS data FROM
+    (SELECT count(id) AS num,
+         event_type ,
+         task_id
+    FROM task_log
+    WHERE task_id in(1166, 1167, 1168, 1169, 1170, 1171, 1172, 1173, 1174, 1175, 1176, 1177, 1199, 1200, 1178, 1179, 1180, 1181, 1182, 1183)
+            AND status = 1
+            AND event_type=2
+            AND created >= UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL -1 DAY))-16*3600
+    GROUP BY  event_type, task_id) AS t
+
+select from_unixtime(created) as date,uid,event_name,params,event_result from task_log where uid = 1866499 and task_id = 1179 order by id desc;
+select * from task_log where uid = 1866499 and task_id = 1179 order by id desc;
+
+select * from task_log where task_id = 1185 and batch_id = 60139 and status = 1 and event_type = 2 AND event_name = 'uangme_coupon_action'
+select * from task_log where task_id = 1166 and batch_id = 62076 and status = 1 and event_type = 2
+
+
+
+select * from hokuto_msg_topic where message_id in ('1683295187947765760', '1683295187897434112', '1683295187847102464', '1683295187998097408', '1683295188224589824', '1683295188836958208', '1683295189541601280', '1683295189667430400', '1683295189956837376', '1683295189973614592')
+
+
+select * from hokuto_uangme_token where open_id in ('12174850', '12174133', '12176926', '12173606', '12176839', '12177856', '12179283', 12178734, 12176184, 12179267)
+
+
+SELECT round((S1.num/S2.total)*100,0) AS data FROM ( SELECT count('id') as num FROM `third_req_res_record` WHERE `type` = '2' and `code` = 'FAIL' ) S1,( SELECT count('id') as total FROM `third_req_res_record` WHERE `type` = '2') S2;、
+
+
+
+select *,unix_timestamp(created)
+
+select count(id) as num from third_req_res_record where 
+
+SELECT round((S1.num/S2.total)*100,
+        0) AS data
+FROM 
+    (SELECT count('id') AS num
+    FROM `third_req_res_record`
+    WHERE `type` = '2'
+            AND `code` = 'FAIL' AND created >= unix_timestamp(NOW()-INTERVAL 1 HOUR)) S1,
+    (SELECT count('id') AS total
+    FROM `third_req_res_record`
+    WHERE `type` = '2' AND created >= unix_timestamp(NOW()-INTERVAL 1 HOUR)) S2;
+    
+    SELECT count('id') AS num
+    FROM `third_req_res_record`
+    WHERE `type` = '2'
+            AND created >= unix_timestamp(NOW()-INTERVAL 7 HOUR)
+            
+            select unix_timestamp(NOW()-INTERVAL 7 HOUR) as a,NOW()-INTERVAL 1 HOUR as b
+            
+            select count(id) as num,from_unixtime(created) as a from google_event where event_name = 'high_value_disburse' and created between 1689609600 and 1689696000
+            
+            	select FROM_UNIXTIME(created,'%Y-%m-%d') as dt ,count(id) as num from google_event  WHERE `event_name` = 'high_value_disburse' and created >= 1688918400 group by dt 
+
+            
+            
+            SELECT round((S1.num/S2.total)*100, 0) AS data FROM(SELECT count('id') AS num FROM `third_req_res_record` WHERE `type` = '2' AND `code` = 'FAIL' AND created >= unix_timestamp(NOW()-INTERVAL 1 HOUR)) S1, (SELECT count('id') AS total FROM `third_req_res_record` WHERE `type` = '2' AND created >= unix_timestamp(NOW()-INTERVAL 1 HOUR)) S2
+
+
+
+
+
+
+
+select advertising_id,from_unixtime(created) from app_flyer where advertising_id in ("627edadd-66d5-4b50-aba0-5bee9a347617") 
+
+
+
+
+ created between 1687104030 and 1687190430 and
+
+select advertising_id from app_flyer where created between 1687104030 and 1687190430 
+
+SELECT a.id AS uid,
+         c.total_amount AS amount,
+         d.product_id AS pid
+FROM user_info a
+LEFT JOIN user_loan b
+    ON a.id=b.uid
+LEFT JOIN product_account c
+    ON a.id=c.uid
+LEFT JOIN user_product d
+    ON a.id=d.uid
+LEFT JOIN user_rc_info u
+    ON a.id = u.uid
+WHERE a.last_submit_time
+        AND a.id=11944148 limit 1
+        
+        
+        SELECT DISTINCT a.uid,a.ctime,a.mtime,
+         c.product_id AS pid,a.rtime as real_repayment_time,
+         d.total_amount AS amount FROM
+    (SELECT *,
+         MAX(real_repayment_time) AS rtime
+    FROM user_loan_plan
+    where uid = 1866499) a
+LEFT JOIN user_loan_plan b
+    ON a.uid=b.uid
+        AND b.ctime>a.rtime
+LEFT JOIN user_product c
+    ON a.uid=c.uid
+LEFT JOIN product_account d
+    ON a.uid=d.uid
+WHERE  a.uid = 1866499
+
+
+
+SELECT DISTINCT a.uid,
+         c.product_id AS pid,a.rtime as real_repayment_time,
+         d.total_amount AS amount FROM
+    (SELECT uid,
+         MAX(real_repayment_time) AS rtime
+    FROM user_loan_plan
+    WHERE real_repayment_time
+        BETWEEN UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 5 DAY))-7*3600
+            AND UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 4 DAY))-7*3600 and `status`=2
+    GROUP BY  uid) a
+LEFT JOIN user_loan_plan b
+    ON a.uid=b.uid
+        AND b.ctime>a.rtime
+LEFT JOIN user_product c
+    ON a.uid=c.uid
+LEFT JOIN product_account d
+    ON a.uid=d.uid
+WHERE c.is_pass='YES'
+        AND c.product_id IN(108,119,116,120,121)
+        AND b.id is NULL
+        AND d.account_type=2
+        AND a.uid % 100 >= 50
+GROUP BY  a.uid
+
+select uid,from_unixtime(real_repayment_time) as date,from_unixtime(ctime) as a ,from_unixtime(ctime) as b from user_loan_plan where uid = 12008261
+select from_unixtime(last_submit_time) as a from user_info where id = 12008261
+
+
+select UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 4 DAY))-7*3600,UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 5 DAY))-7*3600
+
+SELECT a.id AS uid
+FROM user_info a
+LEFT JOIN user_loan b
+    ON a.id=b.uid
+LEFT JOIN product_account c
+    ON a.id=c.uid
+LEFT JOIN user_product d
+    ON a.id=d.uid
+LEFT JOIN user_rc_info u
+    ON a.id = u.uid
+WHERE a.last_submit_time
+    BETWEEN UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 2 DAY)) - 7*3600
+        AND UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 1 DAY)) - 7*3600
+        AND a.verify_status=2
+        AND b.loan_id is NULL
+        AND c.account_type=2
+        AND d.is_pass='YES'
+        AND u.user_risk_lev_v2 in(1,2)
+ AND u.id % 100 >= 50
+        
+GROUP BY  a.id;
+
+ select uid,total_amount as amount from product_account where uid in (11858880, 11755263, 11713891, 11704369, 11686765, 11575655, 11568684, 11486970, 11456966, 11413079, 11385083, 11384163, 11327981, 11275170, 11268054, 11265854, 11228268, 11226091, 11183876, 11141774, 11039671, 10793361, 10752453, 10742089, 10163591, 10048758, 8245177, 6173051, 5279786, 3432398, 581074) AND account_type=2
+ 
+  select uid,total_amount as amount from product_account where uid in (11858880, 11755263, 11713891, 11704369, 11686765, 11575655, 11568684, 11486970, 11456966, 11413079, 11385083, 11384163, 11327981, 11275170, 11268054, 11265854, 11228268, 11226091, 11183876, 11141774, 11039671, 10793361, 10752453, 10742089, 10163591, 10048758, 8245177, 6173051, 5279786, 3432398, 581074) AND account_type=2 order by uid asc
+
+SELECT a.id AS uid, c.total_amount AS amount, d.product_id AS pid FROM user_info a LEFT JOIN user_loan b ON a.id=b.uid LEFT JOIN product_account c ON a.id=c.uid LEFT JOIN user_product d ON a.id=d.uid LEFT JOIN user_rc_info u ON a.id = u.uid WHERE a.last_submit_time BETWEEN UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 3 DAY)) - 7*3600 AND UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 2 DAY)) - 7*3600 AND a.verify_status=2 AND b.loan_id is NULL AND c.account_type=2 AND d.is_pass='YES' AND u.user_risk_lev_v2 in(1,2) AND u.id % 100 >= 50 GROUP BY a.id;
+
+
+
+select * from (
+SELECT a.id AS uid, c.total_amount AS amount, d.product_id AS pid FROM user_info a LEFT JOIN user_loan b ON a.id=b.uid LEFT JOIN product_account c ON a.id=c.uid LEFT JOIN user_product d ON a.id=d.uid LEFT JOIN user_rc_info u ON a.id = u.uid WHERE a.last_submit_time BETWEEN UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 2 DAY))-7*3600 AND UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 1 DAY))-7*3600 AND a.verify_status=2 AND b.loan_id is NULL AND c.account_type=2 AND d.is_pass='YES' AND u.user_risk_lev_v2 in(1,2) AND u.id % 100 >= 50 GROUP BY a.id) as b where b.uid = 12008261
+
+select * from (
+SELECT a.id AS uid, c.total_amount AS amount, d.product_id AS pid FROM user_info a LEFT JOIN user_loan b ON a.id=b.uid LEFT JOIN product_account c ON a.id=c.uid LEFT JOIN user_product d ON a.id=d.uid LEFT JOIN user_rc_info u ON a.id = u.uid WHERE a.last_submit_time BETWEEN UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 2 DAY)) - 7*3600 AND UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 1 DAY)) - 7*3600 AND a.verify_status=2 AND b.loan_id is NULL AND c.account_type=2 AND d.is_pass='YES' AND u.user_risk_lev_v2 in(1,2) AND u.id % 100 >= 50 GROUP BY a.id ) as s where s.uid = 12008261
+
+
+select * from user_coupon where uid in (4364879, 11711716, 11984030, 11955762, 11972096, 9156132, 11977557, 11987825, 11986962, 11988778, 11986869, 11988697, 11990083, 11988271, 11988263, 11989681, 11989431, 11989845, 11990181, 11990878, 11991817, 11991738, 11991283, 11988777, 11993037, 11990981, 11991001, 11992785, 11990149, 11994620, 11992041, 11991741, 11989847, 11993780, 11992998, 11990720, 11993491, 11994583, 11992935, 11994827, 11991670, 11995102, 11993479) and c_id = 9325
+
+SELECT a.id AS uid,u.user_risk_lev_v2, from_unixtime(u.created) as created,from_unixtime(u.updated) as updated,u.ext,
+         c.total_amount AS amount,
+         d.product_id AS pid
+FROM user_info a
+LEFT JOIN user_loan b
+    ON a.id=b.uid
+LEFT JOIN product_account c
+    ON a.id=c.uid
+LEFT JOIN user_product d
+    ON a.id=d.uid
+LEFT JOIN user_rc_info u
+    ON a.id = u.uid
+WHERE a.last_submit_time
+    BETWEEN UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 2 DAY))-7*3600
+        AND UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 1 DAY))-7*3600
+        AND a.verify_status=2
+        AND b.loan_id is NULL
+        AND c.account_type=2
+        AND d.is_pass='YES'
+       
+GROUP BY  a.id 
+
+SELECT DISTINCT a.uid,
+         c.product_id AS pid,a.rtime as real_repayment_time,
+         d.total_amount AS amount FROM
+    (SELECT uid,
+         MAX(real_repayment_time) AS rtime
+    FROM user_loan_plan
+    WHERE real_repayment_time
+        BETWEEN UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 5 DAY))-7*3600
+            AND UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 4 DAY))-7*3600 and `status`=2
+    GROUP BY  uid) a
+LEFT JOIN user_loan_plan b
+    ON a.uid=b.uid
+        AND b.ctime>a.rtime
+LEFT JOIN user_product c
+    ON a.uid=c.uid
+LEFT JOIN product_account d
+    ON a.uid=d.uid
+WHERE c.is_pass='YES'
+        AND c.product_id IN(108,119,116,120,121)
+        AND b.id is NULL
+        AND d.account_type=2
+        AND a.uid % 100 < 50
+GROUP BY  a.uid
+
+select from_unixtime(UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 2 DAY))-7*3600),from_unixtime(UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 1 DAY))-7*3600)
+
+SELECT DISTINCT a.uid,
+         c.product_id AS pid,a.rtime as real_repayment_time, 
+         d.total_amount AS amount FROM
+    (SELECT uid,
+         MAX(real_repayment_time) AS rtime
+    FROM user_loan_plan
+    WHERE real_repayment_time
+        BETWEEN UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 3 DAY))-7*3600
+            AND UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 2 DAY))-7*3600 and `status`=2
+    GROUP BY  uid) a
+LEFT JOIN user_loan_plan b
+    ON a.uid=b.uid
+        AND b.ctime>a.rtime
+LEFT JOIN user_product c
+    ON a.uid=c.uid
+LEFT JOIN product_account d
+    ON a.uid=d.uid
+WHERE c.is_pass='YES'
+        AND c.product_id IN(108,119,116,120,121)
+        AND b.id is NULL
+        AND d.account_type=2
+        AND a.uid % 100 < 50
+GROUP BY  a.uid
+
+SELECT a.id AS uid,
+         c.total_amount AS amount,
+         d.product_id AS pid
+FROM user_info a
+LEFT JOIN user_loan b
+    ON a.id=b.uid
+LEFT JOIN product_account c
+    ON a.id=c.uid
+LEFT JOIN user_product d
+    ON a.id=d.uid
+LEFT JOIN user_rc_info u
+    ON a.id = u.uid
+WHERE a.last_submit_time
+    BETWEEN UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 4 DAY))-7*3600
+        AND UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 3 DAY))-7*3600
+        AND a.verify_status=2
+        AND b.loan_id is NULL
+        AND c.account_type=2
+        AND d.is_pass='YES'
+
+        AND u.id % 100 >= 50
+GROUP BY  a.id
+
+select distinct a.uid,a.user_level from user_fdc_score as a left join user_info as b on a.uid = b.id where a.user_level in (2,3) and a.created >= UNIX_TIMESTAMP() - 3*3600 and a.created <= UNIX_TIMESTAMP() and b.verify_status<=0;
+
+select distinct a.uid from user_fdc_score as a left join user_info as b on a.uid = b.id where a.user_level =2 and a.created >= UNIX_TIMESTAMP() - 3*3600 and a.created <= UNIX_TIMESTAMP() and b.verify_status<=0;
+select ul.uid,ul.id,ul.loan_id,ul.status,ulp.status as s,ul.loan_product_id,ul.money,from_unixtime(ul.ctime) as cdate,from_unixtime(ul.mtime) as mdate from user_loan ul left join user_loan_plan as ulp on ul.uid = ulp.uid where ul.uid = 658710
+order by cdate desc
+
+select * from user_rc_info where uid in (10156955,10160970,10165161,10461570,1065730,10807951,10843371,10850355,1183556,1242362,1358600,1392170,1418195,151291,1584661,1737154,1773160,1984456,2074184,2092996,2230551,2381266,2548280,2567360,2691796,2743770,2794756,2823665,3041573,3122376,3236053,3331770,3439693,3751230,385070,4003182,4405865,4413830,4491293,4759291,4980976,5184852,5429081,5493771,6187766,6304081,6363966,6898840,6927171,6930075,7022394,7097306,7431665,7524592,7568261,76280,7858684,8006454,8156866,8503302,8582672,8826340,903256,9134356,9172684,9414362,9457950) order by updated desc
+
+
+select distinct a.uid from user_fdc_score as a left join user_info as b on a.uid = b.id where a.user_level = 2 and a.created >= UNIX_TIMESTAMP() - 1800 and a.created <= UNIX_TIMESTAMP() and b.verify_status<=0;
+select distinct a.uid from user_fdc_score as a left join user_info as b on a.uid = b.id where a.user_level = 3 and a.created >= UNIX_TIMESTAMP() - 1800 and a.created <= UNIX_TIMESTAMP() and b.verify_status<=0;
+select distinct a.uid from user_fdc_score as a left join user_info as b on a.uid = b.id where a.user_level = 2 and a.created >= UNIX_TIMESTAMP() - 3*3600 and a.created <= UNIX_TIMESTAMP() and b.verify_status<=0;
+select distinct a.uid from user_fdc_score as a left join user_info as b on a.uid = b.id where a.user_level = 3 and a.created >= UNIX_TIMESTAMP() - 3*3600 and a.created <= UNIX_TIMESTAMP() and b.verify_status<=0;
+
+select distinct a.uid from user_fdc_score as a left join user_info as b on a.uid = b.id where a.user_level = 3 and a.created between UNIX_TIMESTAMP() - 2400 and  UNIX_TIMESTAMP()-1800 and b.verify_status<=0;
+
+select distinct a.uid from user_fdc_score as a left join user_info as b on a.uid = b.id where a.user_level = 3 and a.created between UNIX_TIMESTAMP() - 3*3600-2400 and  UNIX_TIMESTAMP()-1800 and b.verify_status<=0;
+
+SELECT DISTINCT ufs.uid FROM user_fdc_score AS ufs LEFT JOIN user_info AS ui ON ufs.uid = ui.id WHERE ufs.created BETWEEN UNIX_TIMESTAMP() - 600 AND UNIX_TIMESTAMP() - 300 AND ui.verify_status = 0 AND ui.first_input_base_info_time = 0;
+user_fdc_score
+
+SELECT DISTINCT ufs.uid FROM user_info AS ui LEFT JOIN user_fdc_score AS ufs ON ui.id = ufs.uid WHERE ufs.created BETWEEN UNIX_TIMESTAMP() - 600 AND UNIX_TIMESTAMP() - 300 AND ui.verify_status = 0 AND ui.first_input_base_info_time = 0 AND ufs.uid % 100 <= 25;
+
+SELECT  id AS uid FROM user_info WHERE created BETWEEN UNIX_TIMESTAMP() - 2400 AND UNIX_TIMESTAMP() - 300 AND verify_status = 0 AND first_input_base_info_time = 0 
+
+AND id % 100 <= 25;
+
+SELECT id AS uid FROM user_info WHERE created BETWEEN UNIX_TIMESTAMP() - 600 AND UNIX_TIMESTAMP() - 300 AND verify_status = 0 AND first_input_base_info_time = 0 AND id % 100 <= 25; 
+select UNIX_TIMESTAMP()
+SELECT id AS uid
+FROM user_info
+WHERE created
+    BETWEEN UNIX_TIMESTAMP() - 1800
+        AND UNIX_TIMESTAMP() - 900
+        AND verify_status = 0
+        AND first_input_base_info_time = 0
+        AND id % 100 <= 25; 
+
+select  UNIX_TIMESTAMP() - 1800
+
+between UNIX_TIMESTAMP() - 1800 and UNIX_TIMESTAMP()
+between UNIX_TIMESTAMP() - 3*3600 and UNIX_TIMESTAMP()
+
+SELECT id AS uid
+FROM user_info
+WHERE created
+    BETWEEN UNIX_TIMESTAMP() - 1200
+        AND UNIX_TIMESTAMP() - 600
+        AND verify_status = 0
+        AND first_input_base_info_time = 0
+        AND id % 100 <= 24; 
+
+
+
+select * from (
+SELECT DISTINCT a.uid,
+         c.product_id AS pid,a.rtime as real_repayment_time,
+         d.total_amount AS amount FROM
+    (SELECT uid,
+         MAX(real_repayment_time) AS rtime
+    FROM user_loan_plan
+    WHERE real_repayment_time
+        BETWEEN UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 5 DAY))-7*3600
+            AND UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 4 DAY))-7*3600 and `status`=2
+    GROUP BY  uid) a
+LEFT JOIN user_loan_plan b
+    ON a.uid=b.uid
+        AND b.ctime>a.rtime
+LEFT JOIN user_product c
+    ON a.uid=c.uid
+LEFT JOIN product_account d
+    ON a.uid=d.uid
+WHERE c.is_pass='YES'
+        AND c.product_id IN(108,119,116,120,121)
+        AND b.id is NULL
+        AND d.account_type=2
+        AND a.uid % 100 >= 40
+GROUP BY  a.uid) as a where uid = 11373440
+
+
+SELECT DISTINCT a.uid,pa.total_amount as amount
+FROM user_fdc_score AS a
+LEFT JOIN user_info AS b
+    ON a.uid = b.id
+    left join product_account as pa
+    ON a.uid = pa.uid
+WHERE a.user_level = 3
+        AND a.created
+    BETWEEN UNIX_TIMESTAMP() - 3*3600 - 2400
+        AND UNIX_TIMESTAMP() - 1800
+        AND b.verify_status<=0; 
+
+        INSERT INTO `market_strategy` (`strategy_name`, `project`, `filters`, `action`, `status`, `is_test`)
+VALUES
+	('注册成功', 'uangme', NULL, '[{\"label\":\"market_event执行器\",\"name\":\"market_event_action\"}]', 1, 2);
+
+
+INSERT INTO `market_event_rule` (`strategy_id`, `action`, `filters`, `template`, `event_name`, `event_value`, `source`, `status`, `ext`)
+VALUES
+	(4, 'market_event_action', '', '{\"value\": \"{{$value}}\"}', 'google_loan_success', '1004', 'google', 1, NULL);
+
+
+INSERT INTO `coupon_temporary_quota`(`name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`) VALUES ('Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 80.000</b></font> untuk meningkatkan batas kredit Anda!', 80000, 999999, 1, 1689868800, 1918742400, 2, 1, '',1689907503,1689907503); 
+INSERT INTO `coupon_temporary_quota`(`name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`) VALUES ('Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 40.000</b></font> untuk meningkatkan batas kredit Anda!', 40000, 999999, 1, 1689868800, 1918742400, 2, 1, '',1689907503,1689907503); 
+
+
+
+INSERT INTO `coupon_temporary_quota`(`name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`) VALUES('Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 80.000</b></font> untuk meningkatkan batas kredit Anda!', 80000, 999999, 1, 1689868800, 1918742400, 2, 1, '',1689907503,1689907503), ('Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 40.000</b></font> untuk meningkatkan batas kredit Anda!', 40000, 999999, 1, 1689868800, 1918742400, 2, 1, '',1689907503,1689907503); 
+
+INSERT INTO `market_strategy` (`strategy_name`, `project`, `filters`, `action`, `status`, `is_test`, `created`, `updated`)
+VALUES
+	('贷前V3评级打点事件1-4', 'uangme', NULL, '[{\"label\":\"market_event执行器\",\"name\":\"market_event_action\"}]', 1, 2, 0, 0);
+	
+INSERT INTO `market_event_rule` ( `strategy_id`, `action`, `filters`, `template`, `event_name`, `event_value`, `source`, `status`, `ext`, `created`, `updated`)
+VALUES
+	( 22, 'market_event_action', '', '', 'google_v3_1_3', '1005', 'google', 1, NULL, 0, 0);
+	
+	INSERT INTO `market_event_rule` ( `strategy_id`, `action`, `filters`, `template`, `event_name`, `event_value`, `source`, `status`, `ext`, `created`, `updated`)
+VALUES
+	( 22, 'market_event_action', '', '', 'google_v3_1_4', '1006', 'google', 1, NULL, 0, 0);
+	
+	INSERT INTO `market_event_rule` ( `strategy_id`, `action`, `filters`, `template`, `event_name`, `event_value`, `source`, `status`, `ext`, `created`, `updated`)
+VALUES
+	( 22, 'market_event_action', '', '', 'appflyer_v3_1_3', '1007', 'appflyer', 1, NULL, 0, 0);
+	
+	INSERT INTO `market_event_rule` ( `strategy_id`, `action`, `filters`, `template`, `event_name`, `event_value`, `source`, `status`, `ext`, `created`, `updated`)
+VALUES
+	( 22, 'market_event_action', '', '', 'appflyer_v3_1_4', '1008', 'appflyer', 1, NULL, 0, 0);
+	
+	
+	INSERT INTO `market_strategy` ( `strategy_name`, `project`, `filters`, `action`, `status`, `is_test`, `created`, `updated`)
+VALUES
+	('贷前V3评级打点事件', 'uangme', NULL, '[{\"label\":\"market_event执行器\",\"name\":\"market_event_action\"}]', 1, 2, 0, 0);
+
+
+SELECT DISTINCT a.uid
+FROM user_fdc_score AS a
+LEFT JOIN user_info AS b
+    ON a.uid = b.id
+    left join device as d
+    On d.
+WHERE a.id = null
+        AND a.created
+    BETWEEN UNIX_TIMESTAMP() - 3*3600 - 2400
+        AND UNIX_TIMESTAMP() - 1800
+        AND b.verify_status<=0; 
+        
+        
+SELECT DISTINCT ui.id as uid
+FROM user_info AS ui
+LEFT JOIN user_fdc_score AS ufs
+    ON ui.id = ufs.uid
+    left join device as d
+    On ui.id = d.u_id
+WHERE ufs.id = null and d.user_level = 1
+        AND ui.created
+    BETWEEN UNIX_TIMESTAMP() - 3*3600 - 2400
+        AND UNIX_TIMESTAMP() - 1800
+        AND ui.verify_status<=0; 
+        
+        
+        
+        SELECT DISTINCT ui.id AS uid
+FROM user_info AS ui
+LEFT JOIN user_fdc_score AS ufs
+    ON ui.id = ufs.uid
+LEFT JOIN device AS d
+    ON ui.id = d.u_id
+WHERE ufs.id is null
+        AND d.user_level = 1
+        AND ui.created
+    BETWEEN UNIX_TIMESTAMP() - 3*3600 - 2400
+        AND UNIX_TIMESTAMP() - 1800
+        AND ui.verify_status<=0; 
+        
+           SELECT DISTINCT ui.id AS uid
+FROM user_info AS ui,user_fdc_score AS ufs
+LEFT JOIN device AS d
+    ON ui.id = d.u_id
+WHERE ufs.id = null
+        AND d.user_level = 1
+        AND ui.created
+    BETWEEN UNIX_TIMESTAMP() - 3*3600 - 2400
+        AND UNIX_TIMESTAMP() - 1800
+        AND ui.verify_status<=0;
+        
+        
+        INSERT INTO `coupon_temporary_quota`(`name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`) VALUES ('Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 80.000</b></font> untuk meningkatkan batas kredit Anda!', 80000, 999999, 1, 1689868800, 1729440000, 2, 1, ''); 
+
+
+
+
+
 恢复数据：
 
 UPDATE `task_log` SET `created` = '1687742068' WHERE `task_id` in (1166, 1167, 1168) and created=0 and status = 1 and event_type= 2;
@@ -12,8 +748,296 @@ UPDATE `task_log` SET `created` = '1687742068' WHERE `task_id` in (1181,1182,118
 UPDATE `task_log` SET `created` = '1687742068' WHERE `task_id` in (1172,1173,1174,1199,1175,1176,1177,1200,1178,1179,1180,1181,1182,1183) and created=0 and status = 1 and event_type = 2;
 
 
+(1166,
+1167,
+1168,
+1169,
+1170,
+1171,
+1172,
+1173,
+1174,
+1175,
+1176,
+1177,
+1199,
+1200,
+1178,
+1179,
+1180,
+1181,
+1182,
+1183)
 
 
+
+
+(7029653,
+5729283,
+5726375,
+5237381,
+4820774,
+4733970,
+3252595,
+2289071)
+
+
+(3390359,
+7491653,
+7518370,
+11240773,
+1383895,
+3365754,
+3966785,
+4040162,
+4186060,
+7366683,
+9021372,
+3741791,
+3660589,
+4232476,
+6266550,
+5613779,
+5823397,
+11102876,
+11185278,
+11123893,
+11259198,
+11315057,
+11048695,
+11202088,
+11493159,
+11479761,
+11504793,
+11508372,
+11523080,
+11276367,
+11326677,
+11364987,
+11602595,
+11215074,
+11621596,
+11259582,
+575159,
+1143172,
+2248397,
+1924697,
+1660190,
+2708767,
+2324179,
+2405895,
+2482988,
+4337997,
+3610176,
+3239467,
+3675386,
+4335684,
+2881778,
+3655598,
+4676363,
+5028251,
+2527567,
+3537956,
+3479095,
+3809859,
+3543976,
+3021256,
+4145455,
+3238156,
+3822497,
+3657352,
+3558892,
+6267459,
+4453374,
+3309267,
+7233991,
+5427462,
+5418892,
+7198071,
+4259187,
+5491052,
+4349062,
+8271198,
+5033974,
+4828399,
+4348395,
+4631761,
+6483471,
+6136071,
+4611371,
+8684764,
+6702377,
+6176859,
+7040469,
+5557856,
+5940682,
+7300553,
+5742183,
+10200683,
+7374568)
+
+
+
+-7*3600
+
+SELECT a.id AS uid,
+         c.total_amount AS amount,
+         d.product_id AS pid
+FROM user_info a
+LEFT JOIN user_loan b
+    ON a.id=b.uid
+LEFT JOIN product_account c
+    ON a.id=c.uid
+LEFT JOIN user_product d
+    ON a.id=d.uid
+LEFT JOIN user_rc_info u
+    ON a.id = u.uid
+WHERE a.last_submit_time
+    BETWEEN UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 2 DAY))-7
+        AND UNIX_TIMESTAMP(DATE_SUB(CURRENT_DATE,INTERVAL 1 DAY))
+        AND a.verify_status=2
+        AND b.loan_id is NULL
+        AND c.account_type=2
+        AND d.is_pass='YES'
+        AND u.user_risk_lev_v2 in(1,2)
+        AND u.id % 100 >= 50
+GROUP BY  a.id
+
+
+
+
+ {
+      "label": "激励推送执行器",
+      "name": "incentive_push_action",
+      "params": {
+          "amount": {
+              "label": "用户当前额度",
+              "field_type": "tag_input",
+              "type": "",
+              "value": ""
+          },
+          "strategy_push": {
+              "label": "是否推送激励",
+              "field_type": "select",
+              "options": [
+                  {"label": "否","value":0},
+                  {"label": "是","value":1}
+              ],
+              "type": "int",
+              "value": 0
+          },
+          "strategy_repeat": {
+              "label": "激励类型",
+              "field_type": "select",
+              "options": [
+                  {"label": "首贷","value":1},
+                  {"label": "复贷","value":2}
+              ],
+              "type": "int",
+              "value": 1
+          },
+          "strategy_day": {
+              "label": "推送激励策略",
+              "field_type": "select",
+              "options": [
+                  {"label": "无","value":0},
+                  {"label": "D1","value":1},
+                  {"label": "D2","value":2},
+                  {"label": "D3","value":3},
+                  {"label": "D4","value":4},
+                  {"label": "D5","value":5}
+              ],
+              "type": "int",
+              "value": 0
+          }
+      }
+ },
+
+type BindEmpQuotaArgs struct {
+	Uid         int64  `form:"uid" binding:"required"`
+	CouponId    int64  `form:"coupon_id"`
+	TotalAmount int64  `form:"total_amount"`
+	StartTime   int64  `form:"start_time" binding:"required"`
+	EndTime     int64  `form:"end_time" binding:"required"`
+	Status      int8   `form:"status"`
+	IsRead      int8   `form:"is_read"`
+	Source      string `form:"source"`
+}
+
+(4364879,
+11711716,
+11984030,
+11955762,
+11972096,
+9156132,
+11977557,
+11987825,
+11986962,
+11988778,
+11986869,
+11988697,
+11990083,
+11988271,
+11988263,
+11989681,
+11989431,
+11989845,
+11990181,
+11990878,
+11991817,
+11991738,
+11991283,
+11988777,
+11993037,
+11990981,
+11991001,
+11992785,
+11990149,
+11994620,
+11992041,
+11991741,
+11989847,
+11993780,
+11992998,
+11990720,
+11993491,
+11994583,
+11992935,
+11994827,
+11991670,
+11995102,
+11993479)
+
+ internal_api_ip: 
+        - "121.78.231.21/32"
+        - "127.0.0.1/32"
+        - "10.50.100.40/32"
+        - "10.84.100.68/32"
+        - "103.69.155.90/32"
+        - "103.69.155.91/32"
+        - "103.69.155.92/32"
+        - "103.69.155.93/32"
+        - "182.18.33.196/32"
+        - "182.18.33.197/32"
+        - "182.18.33.198/32"
+        - "182.18.33.199/32"
+        - "202.66.35.243/32"
+        - "202.66.35.244/32"
+        - "202.66.35.245/32"
+        - "202.66.35.246/32"
+        - "13.228.49.19/32"
+        - "103.69.155.80/32"
+        - "137.59.101.109/32"
+        - "208.90.121.182/32"
+        - "103.220.76.131/32"
+        - "103.220.76.132/32"
+        - "121.78.231.21/32"
+        - "121.78.231.22/32"
+        - "147.139.185.188/32"
+        - "10.185.9.133/32"
+        - "103.150.185.227/32"
+        - "182.253.84.191/32"
+        - "182.253.127.230/32"
 
 
 
@@ -76,6 +1100,39 @@ select count(id) as num ,event_type,task_id from task_log where task_id in (1166
 11911505,
 9889486,
 11315932)
+
+
+(11858880,
+11755263,
+11713891,
+11704369,
+11686765,
+11575655,
+11568684,
+11486970,
+11456966,
+11413079,
+11385083,
+11384163,
+11327981,
+11275170,
+11268054,
+11265854,
+11228268,
+11226091,
+11183876,
+11141774,
+11039671,
+10793361,
+10752453,
+10742089,
+10163591,
+10048758,
+8245177,
+6173051,
+5279786,
+3432398,
+581074)
 
 
 SELECT t1.id,
@@ -189,757 +1246,14 @@ WHERE c.is_pass='YES'
 GROUP BY  a.uid
 
 
+select uid,
+         JSON_EXTRACT(event_result,
+         "$.amount") AS amount,
+         JSON_EXTRACT(event_result,
+         "$.raise_amount") AS raise_amount,
+         JSON_EXTRACT(event_result,
+         "$.new_amount") AS new_amount from task_log where uid in(11858880, 11755263, 11713891, 11704369, 11686765, 11575655, 11568684, 11486970, 11456966, 11413079, 11385083, 11384163, 11327981, 11275170, 11268054, 11265854, 11228268, 11226091, 11183876, 11141774, 11039671, 10793361, 10752453, 10742089, 10163591, 10048758, 8245177, 6173051, 5279786, 3432398, 581074) and task_id in (1173,1199,1179) and event_type = 2 and status = 1 AND created >=1688343688
 
 
-template:
-    config: '{
-  "uangme": {
-    "filters": [
-      {
-        "label": "黑名单过滤器",
-        "name": "blacklist_filter",
-        "params": {
-          "filter": {
-            "label": "过滤",
-            "field_type": "input",
-            "hidden": "hidden",
-            "type": "int",
-            "value": "1"
-          }
-        }
-      },
-      {
-        "label": "用户短账龄等级过滤器",
-        "name": "user_dz_level_short_v2_filter",
-        "params": {
-          "filter": {
-            "label": "过滤",
-            "field_type": "input",
-            "type": "int",
-            "value": "1"
-          }
-        }
-      },
-       {
-            "label": "用户风控评分过滤器",
-            "name": "user_risk_score_filter",
-            "params": {
-                "score": {
-                    "label": "最低分值",
-                    "field_type": "input",
-                    "type": "int",
-                    "value": "620"
-                }
-            }
-        },
-        {
-            "label": "用户账龄过滤器",
-            "name": "user_account_age_filter",
-            "params": {
-                "condition": {
-                    "label": "条件",
-                    "field_type": "input",
-                    "type": "",
-                    "value": ">="
-                },
-                "day": {
-                    "label": "账龄(天)",
-                    "field_type": "input",
-                    "type": "int",
-                    "value": "120"
-                }
-            }
-        },
-      {
-            "label": "谷歌账号过滤器",
-            "name": "google_account_filter",
-            "params": {
-                "uids": {
-                    "label": "uids(逗号分隔)",
-                    "field_type": "input",
-                    "type": "",
-                    "value": "6894787"
-                }
-            }
-      },
-      {
-            "label": "重复提额限制过滤器",
-            "name": "raise_amount_days_filter",
-            "params": {
-                "method": {
-                    "label": "操作类型(逗号分隔)",
-                    "field_type": "input",
-                    "type": "",
-                    "value": "recall"
-                },
-                "op": {
-                    "label": "提降",
-                    "field_type": "input",
-                    "type": "",
-                    "value": "add"
-                },
-                "day": {
-                    "label": "天数",
-                    "field_type": "input",
-                    "type": "int",
-                    "value": "18"
-                }
-            }
-       },
-       {
-            "label": "逾期中过滤器",
-            "name": "is_overdue_user_filter",
-            "params": {
-                "filter": {
-                    "label": "过滤",
-                    "field_type": "input",
-                    "hidden": "hidden",
-                    "type": "int",
-                    "value": "1"
-                }
-            }
-        },
-      {
-        "label": "批次过滤器",
-        "name": "task_batch_filter",
-        "params": {
-          "batch_ids": {
-            "label": "批次id(英文,逗号分隔)",
-            "field_type": "input",
-            "type": "",
-            "value": ""
-          }
-        }
-      },
-      {
-        "label": "风控分过滤器",
-        "name": "rc_score_filter",
-        "params": {
-          "min_score": {
-            "label": "最低分",
-            "field_type": "input",
-            "type": "int",
-            "value": ""
-          },
-          "max_score": {
-            "label": "最高分",
-            "field_type": "input",
-            "type": "int",
-            "value": ""
-          }
-        }
-      },
-      {
-        "label": "用户在贷过滤器",
-        "name": "user_in_loan_filter",
-        "params": {
-          "filter": {
-            "label": "过滤",
-            "field_type": "input",
-            "hidden": "hidden",
-            "type": "int",
-            "value": "1"
-          }
-        }
-      }
-    ],
-    "actions": [
-        {
-            "label": "策略调额营销执行器",
-            "name": "strategy_account_amount_action",
-            "params": {
-                "scene": {
-                    "label": "场景",
-                    "field_type": "select",
-                    "options": [
-                        {
-                            "label": "贷前未借款",
-                            "value": "noloan"
-                        },
-                        {
-                            "label": "贷中",
-                            "value": "inloan"
-                        },
-                        {
-                            "label": "贷中v2",
-                            "value": "inloanv2"
-                        }
-                    ],
-                    "type": "",
-                    "value": "noloan"
-                },
-                "amount": {
-                    "label": "用户当前额度",
-                    "field_type": "tag_input",
-                    "type": "",
-                    "value": ""
-                },
-                 "level": {
-                    "label": "用户当前等级",
-                    "field_type": "tag_input",
-                    "type": "",
-                    "value": "0"
-                },
-                "pid": {
-                    "label": "授信通过的产品",
-                    "field_type": "tag_input",
-                    "type": "",
-                    "value": ""
-                },
-                "is_change_user_account_amount": {
-                    "label": "是否开启提额",
-                    "field_type": "tag_input",
-                    "type": "",
-                    "value": ""
-                },
-                "sms_channel_type": {
-                    "label": "短信通道",
-                    "field_type": "select",
-                    "options": [
-                        {"label": "默认","value":"0"},
-                        {"label": "召回营销","value":"6"},
-                        {"label": "VIP通道","value":"9"}
-                    ],
-                    "type": "",
-                    "value": "6"
-                },
-                "sms_content": {
-                    "label": "短信内容",
-                    "field_type": "tag_input",
-                    "type": "",
-                    "value": ""
-                },
-                "push_title": {
-                    "label": "push标题",
-                    "field_type": "tag_input",
-                    "type": "",
-                    "value": ""
-                },
-                "push_content": {
-                    "label": "push内容",
-                    "field_type": "tag_input",
-                    "type": "",
-                    "value": ""
-                },
-                "click_action": {
-                    "label": "push跳转路由",
-                    "field_type": "input",
-                    "type": "",
-                    "value": "uangme://api.uangme.com/main"
-                }
-            }
-        },
-      {
-        "label": "发送短信",
-        "name": "sendmsg_action",
-        "params": {
-          "sms_channel_type": {
-            "label": "短信通道",
-            "field_type": "select",
-            "options": [
-                {"label": "召回营销","value":"6"},
-                {"label": "默认","value":"0"},
-                {"label": "VIP通道","value":"9"}
-            ],
-            "type": "",
-            "value": "6"
-          },
-          "sms_content": {
-            "label": "短信内容",
-            "field_type": "tag_input",
-            "type": "",
-            "value": ""
-          }
-        }
-      },
-      {
-        "label": "发送push",
-        "name": "send_push_action",
-        "params": {
-          "project": {
-            "label": "项目",
-            "field_type": "select",
-            "options": [
-                {"label": "uangme","value":"uangme"}
-            ],
-            "type": "",
-            "value": "uangme"
-          },
-           "device_id": {
-            "label": "设备id",
-            "field_type": "tag_input",
-            "type": "",
-            "value": ""
-          },
-          "title": {
-            "label": "push标题",
-            "field_type": "tag_input",
-            "type": "",
-            "value": ""
-          },
-          "content": {
-            "label": "push内容",
-            "field_type": "tag_input",
-            "type": "",
-            "value": ""
-          },
-          "click_action": {
-            "label": "跳转路由",
-            "field_type": "tag_input",
-            "type": "",
-            "value": "uangme://api.uangme.com/main"
-          }
-        }
-      },
-      {
-            "label": "发送站内信",
-            "name": "send_news_action",
-            "params": {
-                "content": {
-                    "label": "内容",
-                    "field_type": "input",
-                    "type": "",
-                    "value": ""
-                },
-                "title": {
-                    "label": "标题",
-                    "field_type": "input",
-                    "type": "",
-                    "value": ""
-                }
-            }
-        },
-        {"label": "发放优惠券",
-            "name": "send_coupon_action",
-            "params": {
-                "coupon_id": {
-                    "label": "优惠券id",
-                    "field_type": "input",
-                    "type": "int",
-                    "value": 0
-                }
-            }
-        },
-       {
-        "label": "消息触达执行器",
-        "name": "strategy_msg_action",
-        "params": {
-          "project": {
-            "label": "项目",
-            "field_type": "select",
-            "options": [
-                {"label": "uangme","value":"uangme"}
-            ],
-            "type": "",
-            "value": "uangme"
-          },
-          "msg_Key": {
-            "label": "场景",
-            "field_type": "tag_input",
-            "type": "",
-            "value": ""
-          },
-          "device_id": {
-            "label": "设备id",
-            "field_type": "tag_input",
-            "type": "",
-            "value": ""
-          }
-        }
-      },
-      {
-        "label": "uangme发券执行器",
-        "name": "uangme_coupon_action",
-        "params": {
-          "c_id": {
-            "label": "券id",
-            "field_type": "input",
-            "type": "int",
-            "value": ""
-          },
-          "expire_days": {
-            "label": "有效期（天）",
-            "field_type": "input",
-            "type": "int",
-            "value": "0"
-          },
-          "send_rule": {
-            "label": "覆盖发卷",
-            "field_type": "select",
-            "options": [
-                {"label": "否","value":0},
-                {"label": "是","value":1}
-            ],
-            "type": "int",
-            "value": 0
-          },
-          "loan_id": {
-            "label": "LoanId",
-            "field_type": "tag_input",
-            "type": "",
-            "value": ""
-          },
-          "plan_id": {
-            "label": "PlanId",
-            "field_type": "tag_input",
-            "type": "",
-            "value": ""
-          }
-        }
-      },
-       {
-        "label": "uangme调额执行器",
-        "name": "adjust_amount_action",
-        "params": {
-          "pid": {
-            "label": "产品id",
-            "field_type": "select",
-            "options": [
-                {"label": "分期二期","value":100},
-                {"label": "分期三期","value":101},
-                {"label": "分期四期","value":102},
-                {"label": "分期116","value":116},
-                {"label": "分期303","value":303},
-                {"label": "分期501","value":501},
-                {"label": "payday30天","value":202},
-                {"label": "payday21天","value":203},
-                {"label": "hartno30天","value":20001}
-            ],
-            "type": "int",
-            "value": ""
-          },
-          "op": {
-            "label": "操作类型",
-            "field_type": "select",
-            "options": [
-                {"label": "提额","value":"add"},
-                {"label": "降额","value":"dec"}
-            ],
-            "type": "",
-            "value": ""
-          },
-          "amount": {
-            "label": "调额金额",
-            "field_type": "tag_input",
-            "type": "",
-            "value": ""
-          }
-        }
-      },
-      {
-        "label": "uangme产品修改执行器",
-        "name": "product_modify_action",
-        "params": {
-          "pid": {
-            "label": "产品id",
-            "field_type": "select",
-            "options": [
-                {"label": "分期二期-100","value":100},
-                {"label": "分期三期-101","value":101},
-                {"label": "分期四期-102","value":102},
-                {"label": "分期110","value":110},
-                {"label": "分期111","value":111},
-                {"label": "分期112","value":112},
-                {"label": "分期113","value":113},
-                {"label": "分期114","value":114},
-                {"label": "分期116","value":116},
-                {"label": "分期117","value":117},
-                {"label": "分期119","value":119},
-                {"label": "分期120","value":120},
-                {"label": "分期121","value":121},
-                {"label": "分期303","value":303},
-                {"label": "分期108","value":108},
-                {"label": "分期109","value":109},
-                {"label": "payday201","value":201},
-                {"label": "payday202","value":202},
-                {"label": "payday203","value":203},
-                {"label": "payday205","value":205},
-                {"label": "payday206","value":206},
-                {"label": "payday207","value":207},
-                {"label": "payday208","value":208},
-                {"label": "payday209","value":209},
-                {"label": "payday301","value":301},
-                {"label": "payday302","value":302},
-                {"label": "payday601","value":601},
-                {"label": "hartno30天","value":20001},
-                {"label": "horton-10001","value":10001},
-                {"label": "horton-10002","value":10002},
-                {"label": "ecomm-20001","value":20001},
-                {"label": "epp-commerce-10003","value":10003},
-                {"label": "epp-commerce-10004","value":10004},
-                {"label": "信用卡-701","value":701},
-                {"label": "月付-501","value":501},
-                {"label": "月付-502","value":502},
-                {"label": "月付-503","value":503},
-                {"label": "月付-504","value":504},
-                {"label": "月付-505","value":505},
-                {"label": "月付-506","value":506},
-                {"label": "月付-507","value":507},
-                {"label": "月付-508","value":508}
-            ],
-            "type": "int",
-            "value": ""
-          },
-          "is_pass": {
-            "label": "产品状态",
-            "field_type": "select",
-            "options": [
-                {"label": "开启","value":"YES"},
-                {"label": "关闭","value":"NO"}
-            ],
-            "type": "",
-            "value": ""
-          },
-          "total_amount": {
-            "label": "授信金额",
-            "field_type": "tag_input",
-            "type": "",
-            "value": "0"
-          },
-          "service_rate": {
-            "label": "服务费率",
-            "field_type": "input",
-            "type": "",
-            "value": "0"
-          },
-          "interest_rate": {
-            "label": "利率",
-            "field_type": "input",
-            "type": "",
-            "value": "0"
-          },
-          "use_default":{
-              "label": "默认值填充",
-              "field_type": "select",
-              "options": [
-                {"label": "是","value":true},
-                {"label": "否","value":false}
-            ],
-            "type": "",
-            "value": ""
-          }
-        }
-      },
-       {
-        "label": "渠道转换",
-        "name": "appflyer_channel_convert",
-        "params": {}
-      },
-      {
-        "label": "老渠道转换",
-        "name": "appflyer_channel_old_convert",
-        "params": {}
-      },
-      {
-        "label": "刷新渠道",
-        "name": "refresh_channel_action",
-        "params": {
-            "platform_id": {
-                "label": "平台id",
-                "field_type": "tag_input",
-                "type": "",
-                "value": 0
-            },
-            "channel_id": {
-                "label": "代理id",
-                "field_type": "tag_input",
-                "type": "",
-                "value": 0
-            },
-             "os": {
-                "label": "设备系统",
-                "field_type": "tag_input",
-                "type": "",
-                "value": 0
-            }
-        }
-      },
-      {
-            "label": "默认执行器",
-            "name": "default_action",
-            "params": {
-                
-            }
-      }
-    ]
-  },
-  "lender": {
-    "filters": [
-      {
-        "label": "批次过滤器",
-        "name": "task_batch_filter",
-        "params": {
-          "batch_ids": {
-            "label": "批次id(英文,逗号分隔)",
-            "field_type": "input",
-            "type": "",
-            "value": ""
-          }
-        }
-      }
-    ],
-    "actions": [
-      {
-        "label": "发送短信",
-        "name": "sendmsg_action",
-        "params": {
-          "sms_channel_type": {
-            "label": "短信通道",
-            "field_type": "select",
-            "options": [
-                {"label": "召回营销","value":"6"},
-                {"label": "默认","value":"0"},
-                {"label": "VIP通道","value":"9"}
-            ],
-            "type": "",
-            "value": "6"
-          },
-          "sms_content": {
-            "label": "短信内容",
-            "field_type": "tag_input",
-            "type": "",
-            "value": ""
-          }
-        }
-      },
-      {
-            "label": "发送站内信",
-            "name": "send_news_action",
-            "params": {
-                "content": {
-                    "label": "内容",
-                    "field_type": "input",
-                    "type": "",
-                    "value": ""
-                },
-                "title": {
-                    "label": "标题",
-                    "field_type": "input",
-                    "type": "",
-                    "value": ""
-                }
-            }
-        },
-      {
-        "label": "消息触达执行器",
-        "name": "strategy_msg_action",
-        "params": {
-          "project": {
-            "label": "项目",
-            "field_type": "select",
-            "options": [
-                {"label": "uangme","value":"uangme"}
-            ],
-            "type": "",
-            "value": "uangme"
-          },
-          "msg_Key": {
-            "label": "场景",
-            "field_type": "tag_input",
-            "type": "",
-            "value": ""
-          },
-          "device_id": {
-            "label": "设备id",
-            "field_type": "tag_input",
-            "type": "",
-            "value": ""
-          }
-        }
-      },
-      {
-        "label": "lender发券执行器",
-        "name": "lender_coupon_action",
-        "params": {
-          "coupon_type": {
-            "label": "优惠券类型",
-            "field_type": "select",
-            "options": [
-                {"label": "体验金","value":1},
-                {"label": "现金券","value":2},
-                {"label": "加息券","value":3}
-            ],
-            "type": "",
-            "value": 1
-          },
-          "amount": {
-            "label": "金额/利息",
-            "field_type": "input",
-            "type": "",
-            "value": "0"
-          },
-          "amount_limit": {
-            "label": "满多少金额可用",
-            "field_type": "input",
-            "type": "",
-            "value": "0"
-          },
-          "product_term_limit": {
-            "label": "投资满多少天可用",
-            "field_type": "input",
-            "type": "int",
-            "value": "0"
-          },
-          "product_limit": {
-            "label": "投资产品限制\r\n不填无限制\r\n多个产品id用|分隔\r\n如|1|2|3|4|",
-            "field_type": "input",
-            "type": "",
-            "value": ""
-          },
-          "expire_days": {
-            "label": "有效期（天）",
-            "field_type": "input",
-            "type": "int",
-            "value": "0"
-          }
-        }
-      },
-     {
-        "label": "渠道转换",
-        "name": "appflyer_channel_convert",
-        "params": {}
-      },
-      {
-        "label": "发送push",
-        "name": "send_push_action",
-        "params": {
-          "project": {
-            "label": "项目",
-            "field_type": "select",
-            "options": [
-                {"label": "uangme","value":"uangme"}
-            ],
-            "type": "",
-            "value": "uangme"
-          },
-           "device_id": {
-            "label": "设备id",
-            "field_type": "tag_input",
-            "type": "",
-            "value": ""
-          },
-          "title": {
-            "label": "push标题",
-            "field_type": "tag_input",
-            "type": "",
-            "value": ""
-          },
-          "content": {
-            "label": "push内容",
-            "field_type": "tag_input",
-            "type": "",
-            "value": ""
-          },
-          "click_action": {
-            "label": "跳转路由",
-            "field_type": "tag_input",
-            "type": "",
-            "value": "uangme://api.uangme.com/main"
-          }
-        }
-      }
-    ]
-  }
-}'
 
 

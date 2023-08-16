@@ -10,16 +10,15 @@ func Pings(c *gin.Context) {
 	c.JSON(200, serializer.Response{
 		Code: 0,
 		Msg:  "Pong",
-		Data:	"这里是数据",
+		Data: "这里是数据",
 	})
 }
 
 func LotteryAlgorithm(c *gin.Context) {
 
-
 	c.JSON(200, serializer.Response{
 		Code: 0,
 		Msg:  "Pong",
-		Data:	"这里是数据",
+		Data: "这里是数据",
 	})
 }

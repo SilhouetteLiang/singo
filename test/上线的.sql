@@ -1,3 +1,174 @@
+/* 13:25:02 dev opadmin */ UPDATE `market_event_field` SET `value` = '200' WHERE `id` = '15';
+/* 13:25:06 dev opadmin */ UPDATE `market_event_field` SET `value` = '77' WHERE `id` = '16';
+/* 13:25:22 dev opadmin */ UPDATE `market_event_field` SET `value` = '46' WHERE `id` = '17';
+/* 13:25:25 dev opadmin */ UPDATE `market_event_field` SET `value` = '26' WHERE `id` = '18';
+/* 13:25:27 dev opadmin */ UPDATE `market_event_field` SET `value` = '6' WHERE `id` = '19';
+
+
+
+INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`) VALUES (1005, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 110.000</b></font> untuk meningkatkan batas kredit Anda!', 110000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030); INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`) VALUES (1006, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 150.000</b></font> untuk meningkatkan batas kredit Anda!', 150000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030); INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`) VALUES (1007, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 180.000</b></font> untuk meningkatkan batas kredit Anda!', 180000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030); INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`) VALUES (1008, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 220.000</b></font> untuk meningkatkan batas kredit Anda!', 220000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030); INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`) VALUES (1009, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 260.000</b></font> untuk meningkatkan batas kredit Anda!', 260000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030); INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`) VALUES (1010, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 300.000</b></font> untuk meningkatkan batas kredit Anda!', 300000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030); INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`) VALUES (1011, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 330.000</b></font> untuk meningkatkan batas kredit Anda!', 330000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030); INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`) VALUES (1012, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 370.000</b></font> untuk meningkatkan batas kredit Anda!', 370000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030); INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`) VALUES (1013, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 410.000</b></font> untuk meningkatkan batas kredit Anda!', 410000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030); INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`) VALUES (1014, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 450.000</b></font> untuk meningkatkan batas kredit Anda!', 450000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030); INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`) VALUES (1015, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 480.000</b></font> untuk meningkatkan batas kredit Anda!', 480000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030); INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`) VALUES (1015, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 520.000</b></font> untuk meningkatkan batas kredit Anda!', 520000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030);
+
+
+Limit Pinjaman Kamu Sudah Ditambahkan!
+Karena Riwayatmu Baik, UangMe sudah tambahkan limitmu dari Rp{{$ds.amount}} jadi Rp{{$ds.new_amount}}. Yuk pinjam lagi agar bisa dimanfaatkan untuk berbagai kebutuhanmu!
+
+
+[UangMe] Kuota Pinjamanmu sudah diupgrade loh dari Rp{{$ds.amount}} menjadi Rp{{$ds.new_amount}}! Ayo cairkan kembali di UangMe dan manfaatkan semaksimal mungkin!
+
+
+
+
+
+
+
+
+
+
+
+INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`)
+VALUES
+	(1005, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 110.000</b></font> untuk meningkatkan batas kredit Anda!', 110000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030);
+INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`)
+VALUES
+	(1006, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 150.000</b></font> untuk meningkatkan batas kredit Anda!', 150000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030);
+INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`)
+VALUES
+	(1007, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 180.000</b></font> untuk meningkatkan batas kredit Anda!', 180000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030);
+
+INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`)
+VALUES
+	(1008, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 220.000</b></font> untuk meningkatkan batas kredit Anda!', 220000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030);
+
+INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`)
+VALUES
+	(1009, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 260.000</b></font> untuk meningkatkan batas kredit Anda!', 260000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030);
+
+INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`)
+VALUES
+	(1010, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 300.000</b></font> untuk meningkatkan batas kredit Anda!', 300000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030);
+INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`)
+VALUES
+	(1011, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 330.000</b></font> untuk meningkatkan batas kredit Anda!', 330000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030);
+INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`)
+VALUES
+	(1012, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 370.000</b></font> untuk meningkatkan batas kredit Anda!', 370000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030);
+
+INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`)
+VALUES
+	(1013, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 410.000</b></font> untuk meningkatkan batas kredit Anda!', 410000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030);
+INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`)
+VALUES
+	(1014, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 450.000</b></font> untuk meningkatkan batas kredit Anda!', 450000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030);
+INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`)
+VALUES
+	(1015, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 480.000</b></font> untuk meningkatkan batas kredit Anda!', 480000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030);
+INSERT INTO `coupon_temporary_quota` (`id`, `name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`)
+VALUES
+	(1016, 'Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 520.000</b></font> untuk meningkatkan batas kredit Anda!', 520000, 999999, 1, 1690533960, 1918742400, 2, 1, '', 1690534030, 1690534030);
+
+
+
+
+UPDATE `user_temporary_quota` SET `end_time` = '1697731200' WHERE `id` >= 1;
+
+google_registration/google_stepComplete/google_loan_success/google_product_cashloan_credit
+UPDATE `market_event_rule` SET `event_name` = 'go_registration' WHERE `event_id` = 53;
+UPDATE `market_event_rule` SET `event_name` = 'go_step_complete' WHERE `event_id` = 54;
+UPDATE `market_event_rule` SET `event_name` = 'go_product_cashloan_credit' WHERE `event_id` = 55;
+UPDATE `market_event_rule` SET `event_name` = 'go_loan_success' WHERE `event_id` = 56;
+
+go_registration  注册
+go_step_complete  进件
+go_product_cashloan_credit  授信
+go_loan_success  首贷
+
+INSERT INTO `market_event_rule` (`strategy_id`, `action`, `filters`, `template`, `event_name`, `event_value`, `source`, `status`, `ext`, `created`, `updated`)
+VALUES
+	(5, 'market_event_action', '[{\"name\":\"user_rc_lev_3\",\"label\":\"用户等级过滤器\",\"params\":{\"user_rc_lev_3\":[1,2,3]}}]', '', 'google_v3_1_3', '1005', 'google', 1, NULL, 0, 0),
+	(5, 'market_event_action', '[{\"name\":\"user_rc_lev_3\",\"label\":\"用户等级过滤器\",\"params\":{\"user_rc_lev_3\":[1,2,3,4]}}]', '', 'google_v3_1_4', '1006', 'google', 1, NULL, 0, 0),
+	(5, 'market_event_action', '[{\"name\":\"user_rc_lev_3\",\"label\":\"用户等级过滤器\",\"params\":{\"user_rc_lev_3\":[1,2,3]}}]', '', 'appflyer_v3_1_3', '1007', 'appflyer', 1, NULL, 0, 0),
+	(5, 'market_event_action', '[{\"name\":\"user_rc_lev_3\",\"label\":\"用户等级过滤器\",\"params\":{\"user_rc_lev_3\":[1,2,3,4]}}]', '', 'appflyer_v3_1_4', '1008', 'appflyer', 1, NULL, 0, 0);
+
+
+
+
+INSERT INTO `market_strategy` (`strategy_name`, `project`, `filters`, `action`, `status`, `is_test`, `created`, `updated`)
+VALUES
+	('贷前V3评级打点事件', 'uangme', NULL, '[{\"label\":\"market_event执行器\",\"name\":\"market_event_action\"}]', 1, 2, 0, 0);
+	
+  INSERT INTO `market_event_rule` ( `strategy_id`, `action`, `filters`, `template`, `event_name`, `event_value`, `source`, `status`, `ext`, `created`, `updated`)
+VALUES
+	( 22, 'market_event_action', '', '', 'google_v3_1_3', '1005', 'google', 1, NULL, 0, 0);
+	
+	INSERT INTO `market_event_rule` ( `strategy_id`, `action`, `filters`, `template`, `event_name`, `event_value`, `source`, `status`, `ext`, `created`, `updated`)
+VALUES
+	( 22, 'market_event_action', '', '', 'google_v3_1_4', '1006', 'google', 1, NULL, 0, 0);
+	
+	INSERT INTO `market_event_rule` ( `strategy_id`, `action`, `filters`, `template`, `event_name`, `event_value`, `source`, `status`, `ext`, `created`, `updated`)
+VALUES
+	( 22, 'market_event_action', '', '', 'appflyer_v3_1_3', '1007', 'appflyer', 1, NULL, 0, 0);
+	
+	INSERT INTO `market_event_rule` ( `strategy_id`, `action`, `filters`, `template`, `event_name`, `event_value`, `source`, `status`, `ext`, `created`, `updated`)
+VALUES
+	( 22, 'market_event_action', '', '', 'appflyer_v3_1_4', '1008', 'appflyer', 1, NULL, 0, 0);
+
+
+
+INSERT INTO `market_strategy` (`strategy_id`, `strategy_name`, `project`, `filters`, `action`, `status`, `is_test`, `created`, `updated`)
+VALUES
+	(22, '贷前V3评级打点事件1-3', 'uangme', NULL, '[{\"label\":\"market_event执行器\",\"name\":\"market_event_action\"}]', 1, 0, 0, 0),
+	(23, '贷前V3评级打点事件1-4', 'uangme', NULL, '[{\"label\":\"market_event执行器\",\"name\":\"market_event_action\"}]', 1, 0, 0, 0);
+
+
+INSERT INTO `market_event_rule`(`strategy_id`, `action`, `filters`, `template`, `event_name`, `event_value`, `source`, `status`, `ext`, `created`, `updated`) VALUES (22, 'market_event_action', '', '', 'google_v3_1_3', '1005', 'google', 1, NULL, 0, 0), (22, 'market_event_action', '', '', 'google_v3_1_4', '1006', 'google', 1, NULL, 0, 0), (22, 'market_event_action', '', '', 'appflyer_v3_1_3', '1007', 'appflyer', 1, NULL, 0, 0), (22, 'market_event_action', '', '', 'appflyer_v3_1_4', '1008', 'appflyer', 1, NULL, 0, 0); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+INSERT INTO `coupon_temporary_quota` (`name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`)
+VALUES
+	('Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 160.000</b></font>  untuk meningkatkan batas kredit Anda!', 160000, 999999, 1, 1689782400, 1697729039, 2, 1, '', 1689837193, 1689837193);
+
+INSERT INTO `coupon_temporary_quota`(`name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`) VALUES ('Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 160.000</b></font> untuk meningkatkan batas kredit Anda!', 160000, 999999, 1, 1689782400, 1697729039, 2, 1, '', 1689837193, 1689837193); 
+
+INSERT INTO `coupon_temporary_quota`(`name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`) VALUES ('Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 80.000</b></font> untuk meningkatkan batas kredit Anda!', 80000, 999999, 1, 1689868800, 1918742400, 2, 1, '',1689907503,1689907503); 
+INSERT INTO `coupon_temporary_quota`(`name`, `desc`, `amount`, `total_count`, `user_limit`, `start_time`, `end_time`, `is_combine`, `is_open`, `loan_product_id`, `created`, `updated`) VALUES ('Kupon Kenaikan Kuota', 'tambahan <font color=\'#246CFD\'><b>Rp 40.000</b></font> untuk meningkatkan batas kredit Anda!', 40000, 999999, 1, 1689868800, 1918742400, 2, 1, '',1689907503,1689907503); 
+
+40元额度券
+Name：Kupon Kenaikan Kuota
+Desc：tambahan Rp 80.000 untuk meningkatkan batas kredit Anda!
+有效期：三个月
+
+20元额度券
+Name：Kupon Kenaikan Kuota 
+Desc：tambahan Rp 40.000 untuk meningkatkan batas kredit Anda!
+有效期：三个月
+
+
+/* 15:48:48 dev rupiah_loan */ ALTER TABLE `user_rc_info` ADD `user_risk_lev_v3` INT(11)  NOT NULL  DEFAULT '0'  COMMENT '用户风控等级V3'  AFTER `user_risk_lev_v2`;
+
+INSERT INTO `market_event_rule` (`strategy_id`, `action`, `filters`, `template`, `event_name`, `event_value`, `source`, `status`, `ext`, `created`, `updated`)
+VALUES
+
+	(2, 'market_event_action', '', '', 'google_stepComplete', '1002', 'google', 1, NULL, 0, 0),
+	(3, 'market_event_action', '', '', 'google_product_cashloan_credit', '1003', 'google', 1, NULL, 0, 0),
+	(4, 'market_event_action', '', '', 'google_loan_success', '1004', 'google', 1, NULL, 0, 0);
+
+INSERT INTO `market_event_rule` (`strategy_id`, `action`, `filters`, `template`, `event_name`, `event_value`, `source`, `status`, `ext`, `created`, `updated`)
+VALUES
+	(1, 'market_event_action', '', '', 'google_registration', '1001', 'google', 1, NULL, 0, 0);
+
+
+
 
 cfg: "root:?cr12alD0KLT@tcp(147.139.185.188:3306)/rupiah_loan?timeout=3s&parseTime=true&loc=Local&charset=utf8" 		#api 库
 
