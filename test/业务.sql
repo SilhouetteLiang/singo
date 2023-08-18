@@ -149,7 +149,7 @@ select count(id) as num,task_id from task_log  WHERE `task_id` in (1172,1173,117
 
 select count(id) as num,task_id from task_log  WHERE `task_id` in (1172,1173,1174,1199,1175,1176,1177,1200,1178,1179,1180,1181,1182,1183) and created=0 and status = 1 and event_type = 1  group by task_id;
 
-
+/Users/superstom/go/src/singo/test/业务.sql
 
 select * from task_log where event_name = 'strategy_account_amount_action' and  limit  100
 
